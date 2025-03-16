@@ -170,12 +170,18 @@ input[type=file] {
 }
 
 .fixe {
-    position: fixed;
-    top: 12px
+    position: sticky;
+    top: 0;
+    display: flex;
+    z-index: 3;
+    gap: 1em;
+    place-content: center;
+    background: #eee;
+    padding: 1em 0;
+    box-shadow: 0 0 4px;
 }
 
 .save {
-    margin: 0 0 1em;
     background: #6bb89d
 }
 

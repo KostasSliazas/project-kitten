@@ -132,19 +132,26 @@
 
   // Create div for buttons place
   const wraper = createHTMLElement('div', '', buttonsWrap);
-  body.appendChild(wraper);
+  body.prepend(wraper);
+
+  // Create default class for buttons
+  const classButtons = 'save border-solid shd';
 
   // Button configuration for 'close' button in blocks
   const button = {
-    class: 'shd border-solid w24 save',
+    class: classButtons,
     href: '#',
     id: 'close',
   };
 
+  // Prepend 'close' button to the first block
+  const infoButton = createHTMLElement('button', 'about', button);
+  wraper.appendChild(infoButton);
+
   // Create and configure the 'Save CV' button
   const saveCV = 'Save HTML';
   const buttonSave = {
-    class: 'save border-solid shd',
+    class: classButtons,
     href: '#',
   };
   // Create 'Save CV' button and append to the body
@@ -155,7 +162,7 @@
     // Create and configure the 'Save JSON' button
   const saveJSON = 'Save JSON';
   const buttonJSON = {
-    class: 'save border-solid shd',
+    class: classButtons,
     href: '#',
   };
 
@@ -185,10 +192,6 @@
   infoDiv.appendChild(infoContent);
   infoDiv.appendChild(infoTextDiv);
   body.insertBefore(infoDiv, body.firstChild);
-
-  // Prepend 'close' button to the first block
-  const infoButton = createHTMLElement('button', 'i', button);
-  wraper.appendChild(infoButton);
 
   // Add 'minus' and 'plus' buttons to other blocks for manipulation
   const elem = document.querySelectorAll('.section');
@@ -224,7 +227,7 @@
   // Create and configure the 'Import JSON' button
   const importButtonText = 'Import JSON';
   const importButtonConfig = {
-    class: 'import fixe border-solid shd remove',
+    class: 'import border-solid shd remove',
     id: 'importButton',
   };
 
