@@ -1589,7 +1589,7 @@
   if ('serviceWorker' in navigator) {
     try {
       navigator.serviceWorker
-        .register('/project-k/sw.js?v=7')
+        .register('/project-kitten/sw.js?v=7')
         .then(registration => {
           console.log('Service Worker registered with scope:', registration.scope);
         })
