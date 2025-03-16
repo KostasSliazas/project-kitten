@@ -173,7 +173,7 @@ input[type=file] {
     position: sticky;
     top: 0;
     display: flex;
-    z-index: 3;
+    z-index: 999;
     gap: 1em;
     place-content: center;
     background: #eee;
