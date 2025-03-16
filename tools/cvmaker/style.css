@@ -256,7 +256,7 @@ button::-moz-focus-inner {
 #info {
     background: #fff;
     border-radius: 3px;
-    z-index: 777;
+    z-index: 1000;
     font-size: .75em;
     line-height: 2;
     text-align: center;
