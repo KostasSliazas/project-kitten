@@ -263,7 +263,7 @@ button::-moz-focus-inner {
     font-family: "Sarpanch",Arial,sans-serif;
     display: block;
     position: fixed;
-    top: 48px;
+    top: 0;
     max-width: 500px;
     left: 0;
     right: 0;
