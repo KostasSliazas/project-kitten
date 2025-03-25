@@ -238,7 +238,7 @@ button::-moz-focus-inner {
 }
 
 #info-text {
-    padding: 0 24px 24px
+    padding: 1.5em
 }
 
 #info-content {
@@ -260,7 +260,6 @@ button::-moz-focus-inner {
     font-size: .75em;
     line-height: 2;
     text-align: center;
-    font-family: "Sarpanch",Arial,sans-serif;
     display: block;
     position: fixed;
     top: 0;
