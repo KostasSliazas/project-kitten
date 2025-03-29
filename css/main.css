@@ -599,14 +599,16 @@ form {
 .mode-numbering {
   counter-reset: section;
 }
-
+.mode-numbering .links i:nth-child(odd)::before,
+.mode-numbering .links p::before,
 .mode-numbering .links a::before {
   counter-increment: section;
   content: counter(section, decimal-leading-zero) '.';
   color: var(--color3);
   display: inline-block;
 }
-
+.mode-numbering .links i:nth-child(odd)::before,
+.mode-numbering .links p::before,
 .local.links a::before,
 .movable::before,
 a {
