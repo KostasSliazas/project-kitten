@@ -13,8 +13,8 @@
             "type": "image/png"
         }
     ],
-    "start_url": "/project-k/calculator",
-    "scope": "/project-k/calculator",
+    "start_url": "/project-kitten/tools/calculator",
+    "scope": "/project-kitten/tools/calculator",
     "theme_color": "#ffffff",
     "background_color": "#ffffff",
     "display": "fullscreen"
