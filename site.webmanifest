@@ -14,8 +14,8 @@
             "type": "image/png"
         }
     ],
-    "start_url": "/project-k/",
-    "scope": "/project-k/",
+    "start_url": "/project-kitten/",
+    "scope": "/project-kitten/",
     "theme_color": "#ffffff",
     "background_color": "#ffffff",
     "display": "standalone"
