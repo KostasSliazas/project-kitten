@@ -67,12 +67,9 @@ html {
 }
 
 #loader {
-  display: flex;
-  flex-direction: column;
-  place-content: center;
+  text-align: center;
+  line-height: 100dvh;
   background: url(../safari-pinned-tab.svg) no-repeat center/contain;
-  place-items: center;
-  height: 100vh;
   font-size: 12px;
 }
 
@@ -1651,7 +1648,8 @@ input[type='text']:focus {
   .tetris {
     clip-path: none;
   }
-  #timer,#vr {
+  #timer,
+  #vr {
     display: none !important;
   }
   .main {
