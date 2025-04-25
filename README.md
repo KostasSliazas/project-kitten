@@ -9,8 +9,6 @@ This repository contains a collection of web-based tools and links for Web Devel
 
 ## Getting Started
 
-Clone the repository and open the desired project folder. All tools are separate, small projects in the folder named 'tools'. Each tool can be used individually by opening the respective index.html file.
-
 ```bash
 git clone https://github.com/KostasSliazas/project-kitten.git
 ```
