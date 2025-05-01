@@ -1,5 +1,6 @@
 # Ignore screenshot files
 screenshots*.png
+screenshots*.jpg
 
 # OS generated files
 .DS_Store
