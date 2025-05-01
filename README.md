@@ -62,4 +62,6 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Disclaimer
 
+This is a free project provided as-is. If you choose to use it, please do so at your own risk. No responsibility is taken for any damage or issues that may arise from its use.
+
 Please note that the external links included in this project are not owned or maintained by me. They are used for reference and convenience to enhance the functionality of the tools. I do not take responsibility for the content or availability of these external resources.
