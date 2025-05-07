@@ -117,7 +117,7 @@
   }
 
   const root = d.documentElement;
-  const version = 3.4;
+  const version = 7;
   const negativeOrPositive = number => (number > 0 ? `+${number}` : `${number}`);
   const main = d.getElementById('main');
   const overlay = d.getElementById('overlay');
@@ -189,7 +189,7 @@
   const textArea = d.getElementsByTagName('TEXTAREA')[0];
   const bg = d.querySelector('#bg-file');
   const styles = ['width', 'height', 'left', 'top'];
-  const blockDefaults = 'width:960px;height:48px;left:0px;top:0px;,width:84px;height:48px;left:432px;top:72px;,width:120px;height:48px;left:840px;top:48px;,width:108px;height:48px;left:624px;top:48px;,width:960px;height:60px;left:0px;top:672px;,width:168px;height:576px;left:324px;top:96px;,width:180px;height:168px;left:936px;top:528px;,width:156px;height:252px;left:168px;top:96px;,width:144px;height:96px;left:492px;top:576px;,width:168px;height:576px;left:0px;top:96px;,width:108px;height:48px;left:516px;top:48px;,width:108px;height:48px;left:732px;top:48px;,width:120px;height:48px;left:168px;top:72px;,width:144px;height:48px;left:288px;top:72px;,width:156px;height:324px;left:168px;top:348px;,width:960px;height:48px;left:0px;top:24px;,width:168px;height:48px;left:0px;top:72px;,width:168px;height:48px;left:0px;top:48px;,width:156px;height:96px;left:636px;top:96px;,width:348px;height:48px;left:168px;top:48px;,width:144px;height:480px;left:492px;top:96px;,width:156px;height:480px;left:636px;top:192px;,width:168px;height:576px;left:792px;top:96px;';
+  const blockDefaults = 'width:960px;height:48px;left:228px;top:0px;,width:84px;height:48px;left:660px;top:72px;,width:120px;height:48px;left:1068px;top:48px;,width:108px;height:48px;left:852px;top:48px;,width:636px;height:72px;left:228px;top:672px;,width:168px;height:576px;left:552px;top:96px;,width:36px;height:144px;left:1164px;top:600px;,width:156px;height:252px;left:396px;top:96px;,width:144px;height:96px;left:720px;top:576px;,width:168px;height:576px;left:228px;top:96px;,width:108px;height:48px;left:744px;top:48px;,width:108px;height:48px;left:960px;top:48px;,width:120px;height:48px;left:396px;top:72px;,width:144px;height:48px;left:516px;top:72px;,width:156px;height:324px;left:396px;top:348px;,width:960px;height:48px;left:228px;top:24px;,width:168px;height:48px;left:228px;top:72px;,width:168px;height:48px;left:228px;top:48px;,width:156px;height:96px;left:864px;top:96px;,width:348px;height:48px;left:396px;top:48px;,width:144px;height:480px;left:720px;top:96px;,width:156px;height:552px;left:864px;top:192px;,width:168px;height:648px;left:1020px;top:96px;';
   const textAreaDefaults = 'Good day. You have the ability to reposition these blocks by clicking (□ or ▭) and holding (the left) corner or by pressing the ` key on your keyboard. ([ctrl]+[`]=Reset to Defaults) Alternatively, double-click (▭) to maximize them or minimize (□). You can also change the theme by right-clicking (context menu) and customize the colors and background image through the user interface. If locked, you can unlock it by clicking a few times on the background and then entering the default PIN: 520. Alternatively, you can clear the localStorage (since this project stores data such as PIN(password) and other settings in localStorage).';
   const counts = {
     allMouseClicks: 0,
@@ -1607,6 +1607,11 @@
   }
 
   console.log('%c🐾Welcome to the Cuddle Zone of Coding!🐾\n%cKeep your coding paws steady and have fun!', 'font-size: 20px; background-color: #f7f7f7; color: #000000; padding: 0 4px; border-radius: 5px;', 'font-size: 16px; background-color: #e0e6ed; color: #000000; padding: 0 4px; border-radius: 5px;');
+
+  textArea.addEventListener('wheel', function(e) {
+    e.preventDefault();
+    e.target.scrollTop += Math.sign(e.deltaY) * 24;
+  });
 
   d.addEventListener('DOMContentLoaded', init /*, { once: true }*/);
   w.addEventListener('keyup', classToggle);

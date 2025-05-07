@@ -434,7 +434,6 @@ html {
 .e .movable:nth-child(3),
 .e .movable:nth-child(4),
 .e .movable:nth-child(7),
-.e .movable:nth-child(5),
 .e .movable:nth-child(11),
 .e .movable:nth-child(12),
 .e .movable:nth-child(13),
@@ -755,7 +754,7 @@ a {
 }
 
 .tetris {
-  clip-path: polygon(107% -7%, 107% 431px, 143px 431px, 143px 107%, -7% 107%, -7% -7%);
+  clip-path: polygon(107% -7%,107% 503px,143px 503px,143px 107%,-7% 107%,-7% -7%);
 }
 
 .center h1,
