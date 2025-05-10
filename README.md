@@ -1,4 +1,10 @@
 # Project Kitten
+[![License](https://img.shields.io/github/license/KostasSliazas/project-kitten)](LICENSE)
+[![Stars](https://img.shields.io/github/stars/KostasSliazas/project-kitten?style=social)](https://github.com/KostasSliazas/project-kitten/stargazers)
+[![Forks](https://img.shields.io/github/forks/KostasSliazas/project-kitten?style=social)](https://github.com/KostasSliazas/project-kitten/forks)
+[![Issues](https://img.shields.io/github/issues/KostasSliazas/project-kitten)](https://github.com/KostasSliazas/project-kitten/issues)
+[![Last Commit](https://img.shields.io/github/last-commit/KostasSliazas/project-kitten)](https://github.com/KostasSliazas/project-kitten/commits)
+
 This repository contains a collection of web-based tools and links for Web Developers and Creators.
 
 [Screenshots](#screenshots) | [Getting Started](#getting-started) | [License](#license)
