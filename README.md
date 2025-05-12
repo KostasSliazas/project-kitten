@@ -69,7 +69,5 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 [![](https://contrib.rocks/image?repo=KostasSliazas/project-kitten)](https://github.com/KostasSliazas/project-kitten/graphs/contributors)
 
 ## Disclaimer
+If you choose to use this project, please do so at your own risk.
 
-This is a free project. If you choose to use it, please do so at your own risk.
-
-Please note that the external links included in this project are not owned or maintained by me. They are used for reference and convenience to enhance the functionality of the tools. I do not take responsibility for the content or availability of these external resources.
