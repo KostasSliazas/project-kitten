@@ -51,15 +51,6 @@ git clone https://github.com/KostasSliazas/project-kitten.git
 | **Questionnaire**        | A game for answering customizable sets of questions.       | [Live Demo](https://kostassliazas.github.io/project-kitten/games/questionnaire)     |
 | **Roulette**             | A simple roulette game for fun and entertainment.          | [Live Demo](https://kostassliazas.github.io/project-kitten/games/roulette)          |
 
-## Technologies Used
-
-This project is built using the following technologies:
-
-- **HTML**: For structuring the web applications.
-- **CSS**: For styling and layout design.
-- **JavaScript(Vanilla)**: For implementing core functionalities without any frameworks.
-- **Vue.js**: A progressive JavaScript framework for building user interfaces.
-
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
