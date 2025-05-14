@@ -1,60 +1,91 @@
-# Project Kitten
-[![License](https://img.shields.io/github/license/KostasSliazas/project-kitten)](LICENSE)
-[![Stars](https://img.shields.io/github/stars/KostasSliazas/project-kitten?style=social)](https://github.com/KostasSliazas/project-kitten/stargazers)
-[![Forks](https://img.shields.io/github/forks/KostasSliazas/project-kitten?style=social)](https://github.com/KostasSliazas/project-kitten/forks)
-[![Issues](https://img.shields.io/github/issues/KostasSliazas/project-kitten)](https://github.com/KostasSliazas/project-kitten/issues)
-[![Last Commit](https://img.shields.io/github/last-commit/KostasSliazas/project-kitten)](https://github.com/KostasSliazas/project-kitten/commits)
+# image gallery
 
-This repository contains a collection of web-based tools and links for Web Developers and Creators.
+[![License](https://img.shields.io/github/license/KostasSliazas/K7)](LICENSE)
+[![Stars](https://img.shields.io/github/stars/KostasSliazas/K7?style=social)](https://github.com/KostasSliazas/K7/stargazers)
+[![Forks](https://img.shields.io/github/forks/KostasSliazas/K7?style=social)](https://github.com/KostasSliazas/K7/forks)
+[![Issues](https://img.shields.io/github/issues/KostasSliazas/K7)](https://github.com/KostasSliazas/K7/issues)
+[![Last Commit](https://img.shields.io/github/last-commit/KostasSliazas/K7)](https://github.com/KostasSliazas/K7/commits)
 
-[Screenshots](#screenshots) | [Getting Started](#getting-started) | [License](#license)
+## Table of Contents
 
-## Screenshots
-![Project K Screenshot](screenshots.png)
-![Project K Screenshot](screenshots1.png)
+* [Features](#features)
+* [Installation](#installation)
+* [Usage](#usage)
+* [Configuration](#configuration)
+* [Build](#build)
+* [License](#license)
+* [Contributing](#contributing)
+* [Contributors](#contributors)
+* [Author](#author)
 
-## Getting Started
+
+## Description
+
+Simple image gallery built with vanilla JavaScript (~7.7KB in size). It’s lightweight, responsive.
+## Features
+
+- Responsive Design: Works seamlessly on all screen sizes, from mobile to desktop.
+- Keyboard Navigation: Navigate through images using keyboard arrow keys for a more interactive experience.
+- Download Button: Users can easily download the gallery images with a click of a button.
+- Autoplay Button: Automatically cycle through images when the autoplay button is clicked.
+## Installation
 
 ```bash
-git clone https://github.com/KostasSliazas/project-kitten.git
+Include the script inside the `head` tag using the `defer` attribute,  
+or place it just before the closing `</body>` tag for optimal loading.
+
 ```
-## Available tools
+<script defer src="src/k7.min.js?v=7"></script>
+```
+```
+## Usage
 
-| Project Name             | Description                                               | Quick Link                  |
-|--------------------------|-----------------------------------------------------------|-----------------------------|
-| **border-radius**        | A tool for generating CSS border-radius values.           | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/border-radius)         |
-| **borders-gen**          | A generator for different types of CSS borders.           | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/borders-gen)           |
-| **calculator**           | A simple calculator application for basic arithmetic operations. | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/calculator)         |
-| **canvas-magic**         | A creative canvas tool for drawing and designing.         | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/canvas-magic)         |
-| **code-to-html**         | A utility for converting code snippets into HTML format.  | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/code-to-html)         |
-| **colorzebra**           | A color scheme generator for web design.                  | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/colorzebra)           |
-| **cvmaker**              | A simple tool for creating resumes (CVs).                 | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/cvmaker)              |
-| **dancing-text**         | A fun application that animates text with various effects.| [Live Demo](https://kostassliazas.github.io/project-kitten/tools/dancing-text)         |
-| **gradient-generator**   | A tool for generating beautiful gradients.                | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/gradient-generator)   |
-| **gradients-two-colors** | A simple gradient generator for two colors.               | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/gradients-two-colors) |
-| **grids-creator**        | A utility for creating CSS grid layouts.                  | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/grids-creator)        |
-| **keywords**             | A tool for generating SEO-friendly keywords.              | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/keywords)             |
-| **links**                | A basic link shortener and organizer.                     | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/links)                |
-| **links-webpage**        | A web page for managing and displaying links.             | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/links-webpage)        |
-| **regex-extractor**      | A tool for extracting data using regular expressions.     | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/regex-extractor)      |
-| **resistor-calculator**  | A calculator for determining resistor values.             | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/resistor-calculator)  |
-| **text-shadow**          | A tool for generating CSS text shadows.                   | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/text-shadow)          |
-| **todo-app**             | A simple to-do list application.                          | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/todo-app)             |
-| **todo-app-1**           | An enhanced version of the to-do list application.        | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/todo-app-1)           |
-| **word-generator**       | A tool for generating random words.                       | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/word-generator)       |
+Add class `images` or all images will be selected.
+```
+<div class="images">
+  <img src="photos/photo01.webp" loading="lazy" alt="photo01">
+</div>
+```
+## Configuration
 
+To override the default extension, add a data-ext attribute to the tag:
+```
+<img src="photos/photo16.webp" loading="lazy" alt="photo16" data-ext="webp">
+````
+This replaces the default .jpg extension with .webp for higher-resolution loading. If the data-ext attribute is set, it overrides the default extension. If not, the extensions should match (e.g., .jpg remains .jpg). For optimization, the index.dataset.ext check can be removed if unnecessary, as a micro-optimization. Note: This does not apply to .svg files.
 
-## Available games
-| Game Name                | Description                                               | Quick Link                  |
-|--------------------------|-----------------------------------------------------------|-----------------------------|
-| **Memory Game2**         | A fun memory matching game to improve memory skills.       | [Live Demo](https://kostassliazas.github.io/project-kitten/games/memory-game)       |
-| **Questionnaire**        | A game for answering customizable sets of questions.       | [Live Demo](https://kostassliazas.github.io/project-kitten/games/questionnaire)     |
-| **Roulette**             | A simple roulette game for fun and entertainment.          | [Live Demo](https://kostassliazas.github.io/project-kitten/games/roulette)          |
+Configurations can be found in the code ([// user config]
 
+CSS background colors, update the CSS variables like so:
+```
+:root { --color1: #ee7; --color2: #777; }
+```
+CSS is encoded in Base64, which typically increases the file size. However, the CSS file is still included and can be separated from the JavaScript.
+
+Note: There's no need to include a separate stylesheet; all styles are managed directly in JavaScript.
+## Build
+
+```bash
+```
+google-closure-compiler -O ADVANCED k7.js --js_output_file k7.min.js
+```
+```
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the [MIT License](LICENSE).
+## Contributing
 
+To contribute, please fork this repository, create a new branch, and submit a pull request.
+
+Clone:
+```bash
+git clone https://github.com/KostasSliazas/K7
+```
 ## Contributors
 
-[![](https://contrib.rocks/image?repo=KostasSliazas/project-kitten)](https://github.com/KostasSliazas/project-kitten/graphs/contributors)
+- [@KostasSliazas](https://github.com/KostasSliazas)
+- [@syed-ghufran-hassan](https://github.com/syed-ghufran-hassan)
+
+## Author
+
+Kostas Šliažas
