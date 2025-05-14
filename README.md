@@ -30,13 +30,12 @@ Simple image gallery built with vanilla JavaScript (~7.7KB in size). It’s ligh
 - Autoplay Button: Automatically cycle through images when the autoplay button is clicked.
 ## Installation
 
-```bash
+
 Include the script inside the `head` tag using the `defer` attribute,  
 or place it just before the closing `</body>` tag for optimal loading.
 
-```
+```bash
 <script defer src="src/k7.min.js?v=7"></script>
-```
 ```
 ## Usage
 
@@ -66,9 +65,7 @@ Note: There's no need to include a separate stylesheet; all styles are managed d
 ## Build
 
 ```bash
-```
 google-closure-compiler -O ADVANCED k7.js --js_output_file k7.min.js
-```
 ```
 ## License
 
