@@ -1458,70 +1458,82 @@
       return callback(Number(num1), Number(num2));
     }
   };
+const btn = e => {
+  // Prevent invalid clicks on non-number/operator inputs
+  if (!e.target.matches('input') || e.target.id === 'c-sound' || e.target.id === 'src') {
+    e.preventDefault();
+    e.stopPropagation();
+    return;
+  }
 
-  const btn = e => {
-    // e.preventDefault()
-    // e.stopPropagation()
-    // if don't mach input or screen or c-sound return
-    if (!e.target.matches('input') || e.target.id === 'c-sound' || e.target.id === 'src') {
-      e.preventDefault();
-      e.stopPropagation();
-      return;
+  CALC_SCREEN.classList.add('blink');
+
+  // If checked sound, play sound
+  if (d.getElementById('c-sound').checked) sound();
+
+  // Handle operator button (e.g. +, -, ×, ÷)
+  if (e.target.dataset.fun) {
+    op = e.target.value;
+  }
+
+  // Handle number button press
+  if (e.target.dataset.num) {
+    op = null;  // Reset operator when a number is pressed
+    if (n1[0] === '0' && n1[1] !== '.') n1.length = 0;  // Remove leading zero if not a decimal
+    n1.push(e.target.value);  // Add pressed number to n1
+  }
+
+  // Handle backspace (⌫)
+if (op === '⌫') {
+  n1.pop();
+  if (!n1.length || (n1.length === 1 && n1[0] === '')) {
+    n1 = ['0'];
+  }
+  op = null;
+}
+
+
+  // Prevent empty number, default to 0
+  if (n1.length === 0) n1 = ['0'];
+
+  // Handle decimal (if not already added)
+  if (op === ',' && !n1.includes('.')) {
+    n1.push('.');
+  }
+
+  result = n1.join('');  // Join n1 array into a string
+  // Handle operators and calculate results (÷, ×, +, -, =)
+  if (op === '÷' || op === '×' || op === '+' || op === '-' || op === '=') {
+    if(last === op) return;
+
+    // If we have a second number (n2) and last operator, calculate the result
+    if (n2 !== null && last !== null) {
+      result = cal(Number(n2), Number(result), calc[last]);
     }
-    CALC_SCREEN.classList.add('blink');
 
-    // if checked sound play sound
-    if (d.getElementById('c-sound').checked) sound();
+    last = res(op);  // Store the last operator
 
-    // set operator when target is fun
-    if (e.target.dataset.fun) op = e.target.value;
-
-    // when number pressed push to array number
-    if (e.target.dataset.num) {
-      op = null;
-      if (n1[0] === '0' && n1[1] !== '.') n1.length = 0;
-      n1.push(e.target.value);
-    }
-
-    // operator delete last number
-    if (op === '⌫') {
-      n1 = result
-        .toString(10)
-        .substring(0, 14)
-        .replace(/[^0-9]/g, '.')
-        .split('');
-      n1.pop();
-      if (n1.join('').charAt(n1.join('').length - 1) === '.') n1.pop();
-    }
-
-    // if no number set 0
-    if (!n1.length) n1 = ['0'];
-    if (op === ',' && !n1.includes('.')) n1.push('.');
-    result = n1.join('');
-
-    // operator is /*+-=
-    if (op === '÷' || op === '×' || op === '+' || op === '-' || op === '=') {
-      if (n2 && last) {
-        result = cal(Number(n2), Number(result), calc[last]);
-      }
-      last = res(op);
-      if (n1[0] === '0' && n1.length === 1) return;
+    // Avoid calculation if n1 is just '0' (to prevent accidental operations)
+    if (!(n1.length === 1 && n1[0] === '0')) {
       n2 = result;
-      n1.length = 0;
     }
+    n1.length = 0;
 
-    // operator clear all
-    if (op === 'C') {
-      op = last = null;
-      result = n2 = n1.length = 0;
-    }
+  }
 
-    // convert to string and change length
-    if (result.toString().length > 10) result = result.toString(10).substring(0, 14);
+  // Handle clear operation (C)
+  if (op === 'C') {
+    op = last = null;
+    result = n2 = n1.length = 0;  // Reset everything
+  }
 
-    CALC_SCREEN.value = isFinite(result) ? result : 'ERROR';
-    //e.stopImmediatePropagation()
-  };
+  // Limit result to 10 characters
+  if (result.toString().length > 10) result = result.toString(10).substring(0, 10);
+
+  // Display result or error if invalid
+  CALC_SCREEN.value = isFinite(result) ? result : 'ERROR';
+};
+
 
   CALC.addEventListener('mousedown', e => btn(e));
   CALC.addEventListener('mouseup', () => {
