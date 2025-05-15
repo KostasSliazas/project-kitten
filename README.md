@@ -55,7 +55,7 @@ git clone https://github.com/KostasSliazas/project-kitten.git
 
 [![](https://contrib.rocks/image?repo=KostasSliazas/project-kitten)](https://github.com/KostasSliazas/project-kitten/graphs/contributors)
 
-## 💖 Support
+## Support
 
 If you find this project helpful, consider supporting it:
 
