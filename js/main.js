@@ -186,11 +186,11 @@
   const done = d.querySelector('#done');
   const start = d.querySelector('#start');
   const codeDivElms = Array.from(codeDiv.children[0].children);
-  const textArea = d.getElementsByTagName('TEXTAREA')[0];
+  const textarea = d.getElementsByTagName('TEXTAREA')[0];
   const bg = d.querySelector('#bg-file');
   const styles = ['width', 'height', 'left', 'top'];
   const blockDefaults = 'width:960px;height:48px;left:228px;top:0px;,width:84px;height:48px;left:660px;top:72px;,width:120px;height:48px;left:1068px;top:48px;,width:108px;height:48px;left:852px;top:48px;,width:636px;height:72px;left:228px;top:672px;,width:168px;height:576px;left:552px;top:96px;,width:36px;height:144px;left:1164px;top:600px;,width:156px;height:252px;left:396px;top:96px;,width:144px;height:96px;left:720px;top:576px;,width:168px;height:576px;left:228px;top:96px;,width:108px;height:48px;left:744px;top:48px;,width:108px;height:48px;left:960px;top:48px;,width:120px;height:48px;left:396px;top:72px;,width:144px;height:48px;left:516px;top:72px;,width:156px;height:324px;left:396px;top:348px;,width:960px;height:48px;left:228px;top:24px;,width:168px;height:48px;left:228px;top:72px;,width:168px;height:48px;left:228px;top:48px;,width:156px;height:96px;left:864px;top:96px;,width:348px;height:48px;left:396px;top:48px;,width:144px;height:480px;left:720px;top:96px;,width:156px;height:552px;left:864px;top:192px;,width:168px;height:648px;left:1020px;top:96px;';
-  const textAreaDefaults = 'Good day. You have the ability to reposition these blocks by clicking (□ or ▭) and holding (the left) corner or by pressing the ` key on your keyboard. ([ctrl]+[`]=Reset to Defaults) Alternatively, double-click (▭) to maximize them or minimize (□). You can also change the theme by right-clicking (context menu) and customize the colors and background image through the user interface. If locked, you can unlock it by clicking a few times on the background and then entering the default PIN: 520. Alternatively, you can clear the localStorage (since this project stores data such as PIN(password) and other settings in localStorage).';
+  const textAreaDefaults = ' Good day. You have the ability to reposition these blocks by clicking (□ or ▭) and holding (the left) corner or by pressing the ` key on your keyboard. ([ctrl]+[`]=Reset to Defaults) Alternatively, double-click (▭) to maximize them or minimize (□). You can also change the theme by right-clicking (context menu) and customize the colors and background image through the user interface. If locked, you can unlock it by clicking a few times on the background and then entering the default PIN: 520. Alternatively, you can clear the localStorage (since this project stores data such as PIN(password) and other settings in localStorage).';
   const counts = {
     allMouseClicks: 0,
     clicks: 0,
@@ -205,9 +205,9 @@
     moving: false,
   };
   // add all movable class eventlistener mousedown
-  textArea.addEventListener('input', async e => {
+  textarea.addEventListener('input', async e => {
     await delay(3000);
-    StorageNamespace.setItem('textArea', e.target.value.trim());
+    StorageNamespace.setItem('textarea', e.target.value.trim());
   });
 
   // https://stackoverflow.com/questions/45071353/copy-text-string-on-click/53977796#53977796
@@ -295,7 +295,7 @@
           e.style.height = roundToTen(e.offsetHeight) + 'px';
         }
         if (e.firstElementChild) e.firstElementChild.title = ' (block index' + movable.indexOf(e) + ')';
-        if (e.id === 'text-area') textArea.style.height = e.style.height;
+        if (e.id === 'text-area') textarea.style.height = e.style.height;
         e.addEventListener('dblclick', e => {
           if (clickTimeout) {
             w.clearTimeout(clickTimeout);
@@ -904,7 +904,10 @@
 
     d.getElementById('day-of-week').textContent = showWeekDay();
     const documentTitle = d.title;
-    textArea.value = StorageNamespace.getItem('textArea') || textAreaDefaults;
+
+    const loacalStorageText = StorageNamespace.getItem('textarea');
+
+    textarea.value = loacalStorageText ? loacalStorageText : typeof typeText(textarea, textAreaDefaults) === 'string'? typeText(textarea, textAreaDefaults) : '';
     const widthMatch = w.matchMedia('(min-width: 960px)').matches;
     const storageVersion = StorageNamespace.getItem('version');
     if (version !== storageVersion) {
@@ -913,7 +916,7 @@
 
       root.removeAttribute('class');
       root.removeAttribute('style');
-      textArea.removeAttribute('style');
+      textarea.removeAttribute('style');
       setColors();
       changerClass(0);
       applyStyles(true, widthMatch);
@@ -981,6 +984,15 @@
   }
 
   // const concat = (...arrays) => [].concat(...arrays.filter(Array.isArray));
+
+  async function typeText(textarea, text, delayMs = 70) {
+    for (let i = 0; i < text.length; i++) {
+      await delay(delayMs);            // wait before next char, don't append delay!
+      textarea.value += text[i];       // append single character
+      textarea.scrollTop = textarea.scrollHeight;
+    }
+  }
+
 
   function setColors() {
     const compStyles = w.getComputedStyle(root);
@@ -1103,7 +1115,7 @@
       StorageNamespace.clear();
       root.removeAttribute('class');
       root.removeAttribute('style');
-      textArea.removeAttribute('style');
+      textarea.removeAttribute('style');
       setColors();
       changerClass(0);
       applyStyles(true, false);
@@ -1458,81 +1470,83 @@
       return callback(Number(num1), Number(num2));
     }
   };
-const btn = e => {
-  // Prevent invalid clicks on non-number/operator inputs
+
+function btn(e) {
+  // Ignore clicks on non-button elements or excluded inputs
   if (!e.target.matches('input') || e.target.id === 'c-sound' || e.target.id === 'src') {
     e.preventDefault();
     e.stopPropagation();
     return;
   }
 
+  // Blink the screen to indicate input activity
   CALC_SCREEN.classList.add('blink');
 
-  // If checked sound, play sound
+  // Play sound if sound checkbox is enabled
   if (d.getElementById('c-sound').checked) sound();
 
-  // Handle operator button (e.g. +, -, ×, ÷)
+  // Store operator if an operator button is pressed (+, -, ×, ÷, etc.)
   if (e.target.dataset.fun) {
     op = e.target.value;
+    if (last === op) return; // Prevent repeating the same operator
   }
 
-  // Handle number button press
+  // Handle number input
   if (e.target.dataset.num) {
-    op = null;  // Reset operator when a number is pressed
-    if (n1[0] === '0' && n1[1] !== '.') n1.length = 0;  // Remove leading zero if not a decimal
-    n1.push(e.target.value);  // Add pressed number to n1
+    op = null;  // Reset operator when number is pressed (indicates new input)
+    if (n1[0] === '0' && n1[1] !== '.') n1.length = 0;  // Remove leading zero unless part of a decimal
+    n1.push(e.target.value);  // Append digit to current number
   }
 
   // Handle backspace (⌫)
-if (op === '⌫') {
-  n1.pop();
-  if (!n1.length || (n1.length === 1 && n1[0] === '')) {
-    n1 = ['0'];
+  if (op === '⌫') {
+    n1.pop(); // Remove last digit
+    if (!n1.length || (n1.length === 1 && n1[0] === '')) {
+      n1 = ['0']; // Default back to zero if empty
+    }
+    op = null;
   }
-  op = null;
-}
 
-
-  // Prevent empty number, default to 0
+  // Ensure input is never fully empty; default to 0
   if (n1.length === 0) n1 = ['0'];
 
-  // Handle decimal (if not already added)
+  // Handle decimal point (,) input, only if not already present
   if (op === ',' && !n1.includes('.')) {
     n1.push('.');
   }
 
-  result = n1.join('');  // Join n1 array into a string
-  // Handle operators and calculate results (÷, ×, +, -, =)
-  if (op === '÷' || op === '×' || op === '+' || op === '-' || op === '=') {
-    if(last === op) return;
+  // Convert current number array into a string result
+  result = n1.join('');
 
-    // If we have a second number (n2) and last operator, calculate the result
+  // Handle operator actions (÷, ×, +, -, =) and perform calculation
+  if (op === '÷' || op === '×' || op === '+' || op === '-' || op === '=') {
+    // If a previous number (n2) and operator exist, calculate result
     if (n2 !== null && last !== null) {
       result = cal(Number(n2), Number(result), calc[last]);
     }
 
-    last = res(op);  // Store the last operator
+    last = res(op);  // Store current operator for next calculation
 
-    // Avoid calculation if n1 is just '0' (to prevent accidental operations)
+    // If input is not just zero, update n2 with the result
     if (!(n1.length === 1 && n1[0] === '0')) {
       n2 = result;
     }
-    n1.length = 0;
 
+    n1.length = 0; // Clear input for next number
   }
 
-  // Handle clear operation (C)
+  // Handle clear (C): reset all calculator state
   if (op === 'C') {
     op = last = null;
-    result = n2 = n1.length = 0;  // Reset everything
+    result = n2 = n1.length = 0;
   }
 
-  // Limit result to 10 characters
+  // Truncate result to max 10 characters
   if (result.toString().length > 10) result = result.toString(10).substring(0, 10);
 
-  // Display result or error if invalid
+  // Display the result in the screen, or show 'ERROR' if invalid
   CALC_SCREEN.value = isFinite(result) ? result : 'ERROR';
-};
+}
 
 
   CALC.addEventListener('mousedown', e => btn(e));
@@ -1620,7 +1634,7 @@ if (op === '⌫') {
 
   console.log('%c🐾Welcome to the Cuddle Zone of Coding!🐾\n%cKeep your coding paws steady and have fun!', 'font-size: 20px; background-color: #f7f7f7; color: #000000; padding: 0 4px; border-radius: 5px;', 'font-size: 16px; background-color: #e0e6ed; color: #000000; padding: 0 4px; border-radius: 5px;');
 
-  textArea.addEventListener('wheel', function(e) {
+  textarea.addEventListener('wheel', function(e) {
     e.preventDefault();
     e.target.scrollTop += Math.sign(e.deltaY) * 24;
   });
