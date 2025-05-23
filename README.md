@@ -61,6 +61,6 @@ If you find this project helpful, consider supporting it:
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.com/paypalme/kostassliazas/)
 
-## 📄 License
+## License
 
 This project is licensed under the [MIT License](LICENSE).
