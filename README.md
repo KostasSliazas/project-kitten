@@ -51,7 +51,7 @@ git clone https://github.com/KostasSliazas/project-kitten.git
 | **Questionnaire**        | A game for answering customizable sets of questions.       | [Live Demo](https://kostassliazas.github.io/project-kitten/games/questionnaire)     |
 | **Roulette**             | A simple roulette game for fun and entertainment.          | [Live Demo](https://kostassliazas.github.io/project-kitten/games/roulette)          |
 
-## Contributors
+## Author
 
 [![](https://contrib.rocks/image?repo=KostasSliazas/project-kitten)](https://github.com/KostasSliazas/project-kitten/graphs/contributors)
 
