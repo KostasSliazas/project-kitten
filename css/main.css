@@ -433,15 +433,14 @@ html {
 .e .movable:nth-child(2),
 .e .movable:nth-child(3),
 .e .movable:nth-child(4),
-.e .movable:nth-child(7),
-.e .movable:nth-child(11),
-.e .movable:nth-child(12),
-.e .movable:nth-child(13),
-.e .movable:nth-child(14),
+.e .movable:nth-child(5),
 .e .movable:nth-child(16),
 .e .movable:nth-child(17),
 .e .movable:nth-child(18),
-.e .movable:nth-child(20) {
+.e .movable:nth-child(19),
+.e .movable:nth-child(21),
+.e .movable:nth-child(22),
+.e .movable:nth-child(23) {
   visibility: hidden;
 }
 
@@ -754,7 +753,7 @@ a {
 }
 
 .tetris {
-  clip-path: polygon(107% -7%,107% 503px,143px 503px,143px 107%,-7% 107%,-7% -7%);
+  clip-path: polygon(107% -7%,107% 335px,143px 335px,143px 107%,-7% 107%,-7% -7%);
 }
 
 .center h1,
