@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>README Generator</title>
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font: 16px/1.5 'Arial', sans-serif;
+      color: #333;
+    }
+
+    .wrapper {
+      padding: 1em;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      color: #222;
+    }
+
+    label {
+      margin-bottom: 10px;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    input[type="text"], textarea, select {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    textarea {
+      min-height: 100px;
+    }
+
+    #output {
+      margin-top: 20px;
+      background-color: #f4f4f9;
+      padding: 20px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <h1>README Generator</h1>
+
+    <!-- Input Fields for README Information -->
+    <label for="username">GitHub Username</label>
+    <input type="text" id="username" placeholder="Enter your GitHub username">
+
+    <label for="repo">Repository Name</label>
+    <input type="text" id="repo" placeholder="Enter repository name">
+
+    <label for="projectName">Project Name</label>
+    <input type="text" id="projectName" placeholder="Enter project name">
+
+    <label for="description">Description</label>
+    <textarea id="description" placeholder="Enter a description of the project"></textarea>
+
+    <label for="features">Features (one per line)</label>
+    <textarea id="features" placeholder="Enter the features of the project"></textarea>
+
+    <label for="installation">Installation Instructions</label>
+    <textarea id="installation" placeholder="Enter installation instructions"></textarea>
+
+    <label for="usage">Usage Instructions</label>
+    <textarea id="usage" placeholder="Enter usage instructions"></textarea>
+
+    <label for="configuration">Configuration</label>
+    <textarea id="configuration" placeholder="Enter configuration details"></textarea>
+
+    <label for="build">Build Instructions</label>
+    <textarea id="build" placeholder="Enter build instructions"></textarea>
+
+    <label for="structure">Folder Structure</label>
+    <textarea id="structure" placeholder="Enter folder structure details"></textarea>
+
+    <label for="licenseType">License Type</label>
+    <select id="licenseType">
+      <option value="">Select License Type</option>
+      <option value="MIT">MIT</option>
+      <option value="Apache-2.0">Apache-2.0</option>
+      <option value="GPL-3.0">GPL-3.0</option>
+      <!-- Add more license types as needed -->
+    </select>
+
+    <label for="licensePath">License File Path</label>
+    <input type="text" id="licensePath" placeholder="Enter the path to your license file (optional)">
+
+    <label for="author">Author</label>
+    <input type="text" id="author" placeholder="Enter the author name">
+
+    <label>
+    <input type="checkbox" id="includeGitHubBadges" checked>
+    Include GitHub badges (stars, forks, issues, last commit, license)
+    </label>
+
+    <label for="contributors">Contributors (GitHub usernames, comma separated)</label>
+    <input type="text" id="contributors" placeholder="Enter GitHub usernames">
+
+    <button id="generateReadme">Generate README</button>
+    <button id="downloadReadme">Download README.md</button>
+    <button id="copyToClipboard">Copy to Clipboard</button>
+
+    <h2>Generated README</h2>
+    <pre id="output">Waiting for input...</pre>
+  </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const fields = {
+      user: document.getElementById('username'),
+      repo: document.getElementById('repo'),
+      project: document.getElementById('projectName'),
+      desc: document.getElementById('description'),
+      featuresRaw: document.getElementById('features'),
+      install: document.getElementById('installation'),
+      usage: document.getElementById('usage'),
+      config: document.getElementById('configuration'),
+      build: document.getElementById('build'),
+      structure: document.getElementById('structure'),
+      licenseType: document.getElementById('licenseType'),
+      licensePath: document.getElementById('licensePath'),
+      author: document.getElementById('author'),
+      includeGitHubBadges: document.getElementById('includeGitHubBadges'),
+      contributors: document.getElementById('contributors')
+    };
+
+    function formatCodeBlock(content) {
+      if (!content) return '';
+      return `\`\`\`bash\n${content.trim()}\n\`\`\``;
+    }
+
+    function section(title, content, wrapCode = false) {
+      if (!content) return '';
+      const wrapped = wrapCode ? formatCodeBlock(content) : content;
+      return `\n## ${title}\n\n${wrapped}`;
+    }
+
+    async function fetchContributors(user, repo) {
+      try {
+        const res = await fetch(`https://api.github.com/repos/${user}/${repo}/contributors`);
+        if (!res.ok) throw new Error('Failed to fetch contributors');
+        const data = await res.json();
+        return data.map(contrib => contrib.login);
+      } catch (err) {
+        console.warn('GitHub contributors fetch error:', err);
+        return [];
+      }
+    }
+
+    async function generateReadme() {
+      const user = fields.user.value.trim();
+      const repo = fields.repo.value.trim();
+      const project = fields.project.value.trim();
+      const desc = fields.desc.value.trim();
+      const featuresRaw = fields.featuresRaw.value.trim();
+      const install = fields.install.value.trim();
+      const usage = fields.usage.value.trim();
+      const config = fields.config.value.trim();
+      const build = fields.build.value.trim();
+      const structure = fields.structure.value.trim();
+      const licenseType = fields.licenseType.value.trim();
+      const licensePath = fields.licensePath.value.trim() || 'LICENSE';
+      const repoUrl = `https://github.com/${user}/${repo}`;
+      const author = fields.author.value.trim();
+
+      let contributors = [];
+      if (user && repo) {
+        contributors = await fetchContributors(user, repo);
+      } else {
+        const raw = fields.contributors.value.trim();
+        contributors = raw ? raw.split(',').map(c => c.trim()) : [];
+      }
+
+      const features = featuresRaw ? featuresRaw.split('\n').map(f => `- ${f}`).join('\n') : '';
+
+      let toc = '';
+      let content = '';
+
+      if (features) toc += `* [Features](#features)\n`;
+      if (install) toc += `* [Installation](#installation)\n`;
+      if (usage) toc += `* [Usage](#usage)\n`;
+      if (config) toc += `* [Configuration](#configuration)\n`;
+      if (build) toc += `* [Build](#build)\n`;
+      if (structure) toc += `* [Folder Structure](#folder-structure)\n`;
+      if (licenseType) toc += `* [License](#license)\n`;
+      if (repoUrl) toc += `* [Contributing](#contributing)\n`;
+      if (contributors.length > 0) toc += `* [Contributors](#contributors)\n`;
+      if (author) toc += `* [Author](#author)\n`;
+
+      content += `# ${project}\n\n`;
+
+      if ((fields.includeGitHubBadges.checked && user && repo)) {
+        if (fields.includeGitHubBadges.checked && user && repo) {
+          content += `[![License](https://img.shields.io/github/license/${user}/${repo})](${licensePath || 'LICENSE'})\n`;
+          content += `[![Stars](https://img.shields.io/github/stars/${user}/${repo}?style=social)](https://github.com/${user}/${repo}/stargazers)\n`;
+          content += `[![Forks](https://img.shields.io/github/forks/${user}/${repo}?style=social)](https://github.com/${user}/${repo}/forks)\n`;
+          content += `[![Issues](https://img.shields.io/github/issues/${user}/${repo})](https://github.com/${user}/${repo}/issues)\n`;
+          content += `[![Last Commit](https://img.shields.io/github/last-commit/${user}/${repo})](https://github.com/${user}/${repo}/commits)\n`;
+        }
+
+        content += '\n';
+      }
+
+
+
+      content += `## Table of Contents\n\n${toc}\n`;
+
+      if (desc) content += section('Description', desc);
+      if (features) content += section('Features', features);
+      if (install) content += section('Installation', install, true);
+      if (usage) content += section('Usage', usage);
+      if (config) content += section('Configuration', config);
+      if (build) content += section('Build', build, true);
+      if (structure) content += section('Folder Structure', structure, true);
+      if (licenseType) content += section('License', `This project is licensed under the [${licenseType} License](${licensePath}).`);
+      if (repoUrl) content += section('Contributing', `To contribute, please fork this repository, create a new branch, and submit a pull request.\n\nClone:\n\`\`\`bash\ngit clone ${repoUrl}\n\`\`\``);
+
+      if (contributors.length > 0) {
+        content += `\n## Contributors\n\n`;
+        contributors.forEach(contributor => {
+          content += `- [@${contributor}](https://github.com/${contributor})\n`;
+        });
+      }
+
+      if (author) content += section('Author', author);
+      document.getElementById('output').textContent = content;
+    }
+
+    function downloadReadme() {
+      const content = document.getElementById('output').textContent;
+      const blob = new Blob([content], { type: 'text/markdown' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'README.md';
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function copyToClipboard() {
+      const text = document.getElementById('output').textContent;
+      navigator.clipboard.writeText(text)
+        .then(() => alert('Copied to clipboard!'))
+        .catch(err => alert('Failed to copy text: ' + err));
+    }
+
+    document.querySelector('#generateReadme').addEventListener('click', generateReadme);
+    document.querySelector('#downloadReadme').addEventListener('click', downloadReadme);
+    document.querySelector('#copyToClipboard').addEventListener('click', copyToClipboard);
+  });
+</script>
+
+
+</body>
+</html>
