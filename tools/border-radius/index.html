@@ -1,66 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes">
-  <meta name="description" content="Border radius">
-  <meta name="keywords" content="border-radius generator,css rounded corners,border-radius tool,rounded border css">
-  <meta name="author" content="Kostas Šliažas">
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-  <link rel="manifest" href="site.webmanifest">
-  <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
-  <meta name="msapplication-TileColor" content="#da532c">
-  <meta name="theme-color" content="#ffffff">
-  <title>Border Radius</title>
-  <link rel="stylesheet" href="css/style.min.css">
-</head>
-
-<body>
-  <div class="wrap">
-    <h1>Border radius</h1>
-    <div id="bordersRadius">
-      <div class="container">
-        <div class="g1">
-          <div class="arows">
-            <div class="uarrow"></div>
-            <input type="text" value="7">
-            <div class="darrow"></div>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes">
+    <meta name="description" content="Border radius">
+    <meta name="keywords" content="border-radius generator,css rounded corners,border-radius tool,rounded border css">
+    <meta name="author" content="Kostas Šliažas">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="css/style.min.css">
+    <title>Border Radius Generator</title>
+  </head>
+  <body>
+    <div class="page-wrapper">
+      <h1 class="page-wrapper__title">Border Radius Generator</h1>
+      <div class="grid-container">
+        <div class="grid-item corner">
+          <label class="lock-control">
+            <input type="checkbox" class="lock-control__checkbox" data-lock-corner="top-left">
+            <span class="lock-control__label">lock</span>
+          </label>
+        </div>
+        <div class="grid-item edge">
+          <div class="arrow-control" data-axis="h" id="tl-h-control">
+            <div class="arrow-control__arrow--up"></div>
+            <input type="text" class="arrow-control__input" value="7">
+            <div class="arrow-control__arrow--down"></div>
           </div>
         </div>
-        <div class="g2"></div>
-        <div class="g3">
-          <div class="arows">
-            <div class="uarrow"></div>
-            <input type="text" value="7">
-            <div class="darrow"></div>
+        <div class="grid-item edge">
+          <div class="arrow-control" data-axis="h" id="tr-h-control">
+            <div class="arrow-control__arrow--up"></div>
+            <input type="text" class="arrow-control__input" value="7">
+            <div class="arrow-control__arrow--down"></div>
           </div>
         </div>
-        <div class="g4">
-          <div id="borders">□ border radius □</div>
+        <div class="grid-item corner">
+          <label class="lock-control">
+            <input type="checkbox" class="lock-control__checkbox" data-lock-corner="top-right">
+            <span class="lock-control__label">lock</span>
+          </label>
         </div>
-        <div class="g7">
-          <div class="arows">
-            <div class="uarrow"></div>
-            <input type="text" value="7">
-            <div class="darrow"></div>
+        <div class="grid-item edge">
+          <div class="arrow-control" data-axis="v" id="tl-v-control">
+            <div class="arrow-control__arrow--up"></div>
+            <input type="text" class="arrow-control__input" value="7">
+            <div class="arrow-control__arrow--down"></div>
           </div>
         </div>
-        <div class="g8"></div>
-        <div class="g9">
-          <div class="arows">
-            <div class="uarrow"></div>
-            <input type="text" value="7">
-            <div class="darrow"></div>
+        <div class="spanning-center-div border-preview"></div>
+        <div class="grid-item edge">
+          <div class="arrow-control" data-axis="v" id="tr-v-control">
+            <div class="arrow-control__arrow--up"></div>
+            <input type="text" class="arrow-control__input" value="7">
+            <div class="arrow-control__arrow--down"></div>
           </div>
+        </div>
+        <div class="grid-item edge">
+          <div data-axis="v" class="arrow-control" id="bl-v-control">
+            <div class="arrow-control__arrow--up"></div>
+            <input type="text" class="arrow-control__input" value="7">
+            <div class="arrow-control__arrow--down"></div>
+          </div>
+        </div>
+        <div class="grid-item edge">
+          <div class="arrow-control" data-axis="v" id="br-v-control">
+            <div class="arrow-control__arrow--up"></div>
+            <input type="text" class="arrow-control__input" value="7">
+            <div class="arrow-control__arrow--down"></div>
+          </div>
+        </div>
+        <div class="grid-item corner">
+          <label class="lock-control">
+            <input type="checkbox" class="lock-control__checkbox" data-lock-corner="bottom-left">
+            <span class="lock-control__label">lock</span>
+          </label>
+        </div>
+        <div class="grid-item edge">
+          <div data-axis="h" id="bl-h-control" class="arrow-control">
+            <div class="arrow-control__arrow--up"></div>
+            <input type="text" class="arrow-control__input" value="7">
+            <div class="arrow-control__arrow--down"></div>
+          </div>
+        </div>
+        <div class="grid-item edge">
+          <div data-axis="h" id="br-h-control" class="arrow-control">
+            <div class="arrow-control__arrow--up"></div>
+            <input type="text" class="arrow-control__input" value="7">
+            <div class="arrow-control__arrow--down"></div>
+          </div>
+        </div>
+        <div class="grid-item corner">
+          <label class="lock-control">
+            <input type="checkbox" class="lock-control__checkbox" data-lock-corner="bottom-right">
+            <span class="lock-control__label">lock</span>
+          </label>
         </div>
       </div>
-    </div>
-    <footer>by Kostas Šliažas</footer>
-  </div>
-  <script src="js/script.min.js"></script>
-</body>
+      <label class="lock-control">
+        <input type="checkbox" id="lock-all" class="lock-control__checkbox">
+        <span class="lock-control__label">Lock All</span>
+      </label>
+      <label class="lock-control">
+        <input type="checkbox" id="simplify-css" class="lock-control__checkbox">
+        <span class="lock-control__label">Simplify CSS</span>
+      </label>
+      <button class="reset-button" id="reset-all">Reset All</button>
+      <footer class="page-footer">by Kostas Šliažas</footer>
 
+    </div>
+    <script src="js/script.min.js"></script>
+  </body>
 </html>
