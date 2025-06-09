@@ -1,0 +1,215 @@
+body {
+    color: #8c8c8c;
+    background: #212425;
+    overflow-x: hidden
+}
+
+blockquote,label,p,pre,td,th {
+    display: flex
+}
+
+.page-wrapper__title {
+    font-size: 1.5em;
+    line-height: 1em;
+    color: #777;
+    margin: 0 0 24px;
+    text-align: center;
+    text-transform: uppercase
+}
+
+h2 {
+    font-size: 1.25em;
+    line-height: 1.2em;
+    margin: 0
+}
+
+blockquote,h3,h4,h5,label,p,pre,td,th {
+    font-size: 1em;
+    line-height: 1.5em;
+    margin: 0
+}
+
+.page-wrapper {
+    margin: 1.5em auto;
+    flex-direction: column;
+    place-content: center;
+    place-items: center;
+    display: flex
+}
+
+.text {
+    width: max-content;
+    margin: 1em auto
+}
+
+.arrow-control__arrow--down {
+    border-width: 32px 32px 0
+}
+
+.arrow-control__arrow--up {
+    border-width: 0 32px 32px
+}
+
+.arrow-control__arrow--down,.arrow-control__arrow--up {
+    border-color: #555 transparent;
+    border-style: solid;
+    height: 0;
+    width: 0;
+    cursor: pointer;
+    transition: border-color .2s ease;
+    border-radius: 2px
+}
+
+.arrow-control__arrow--down:active,.arrow-control__arrow--up:active {
+    border-color: #f09 transparent
+}
+
+.arrow-control__input {
+    max-width: 100%;
+    text-align: center;
+    appearance: none;
+    border: 0;
+    display: block;
+    margin: 0;
+    width: 100%;
+    padding: 0;
+    font-size: 20px;
+    background: #eee;
+    color: #333;
+    border-radius: 2px
+}
+
+.arrow-control {
+    display: flex;
+    flex-direction: column;
+    place-content: center;
+    background: #eee;
+    user-select: none;
+    width: 64px;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,.2)
+}
+
+.arrow-control span {
+    height: 48px;
+    line-height: 54px;
+    display: block;
+    font-size: 48px
+}
+
+.border-preview {
+    background: #757575;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 102px;
+    box-sizing: border-box;
+    padding: 10px;
+    transition: border-radius .2s ease-out;
+    box-shadow: inset 0 0 7px rgba(0,0,0,.7)
+}
+
+.page-footer {
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    right: 0;
+    padding: 1em;
+    color: #555;
+    font-size: .9em
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    grid-template-rows: repeat(4,100px);
+    min-width: 400px;
+    border: 1px solid #333;
+    box-shadow: 0 4px 8px rgba(0,0,0,.1);
+    margin: 0 auto;
+    width: max-content;
+    min-height: 400px
+}
+
+.grid-item,.spanning-center-div {
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+.grid-item {
+    box-sizing: border-box;
+    text-align: center
+}
+
+.spanning-center-div {
+    grid-column: 2/span 2;
+    grid-row: 2/span 2;
+    max-width: 200px;
+    text-wrap: wrap
+}
+
+.notification {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: rgba(0,0,0,.8);
+    color: #fff;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-size: 1.1em;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s ease-in-out,visibility .3s ease-in-out;
+    box-shadow: 0 5px 15px rgba(0,0,0,.3);
+    text-align: center
+}
+
+.notification--show {
+    opacity: 1;
+    visibility: visible
+}
+
+.lock-control {
+  margin: 1em;
+}
+#reset-all {
+  padding: 0 1.5em;
+  margin: 1em;
+}
+button, input[type="checkbox"] {
+    cursor: pointer;
+}
+@media (max-width:600px) {
+    .page-wrapper__title {
+        font-size: 1.2em
+    }
+
+    .arrow-control {
+        width: 50px;
+        padding: 6px 0
+    }
+
+    .arrow-control__arrow--down {
+        border-width: 24px 24px 0
+    }
+
+    .arrow-control__arrow--up {
+        border-width: 0 24px 24px
+    }
+
+    .arrow-control__input {
+        font-size: 16px
+    }
+
+    .border-preview {
+        min-height: 80px;
+        min-width: unset;
+        font-size: 1em;
+        padding: 5px
+    }
+}
