@@ -216,7 +216,7 @@
     if (str === '0') return (copy.textContent = '');
     const el = d.createElement('textarea'); // Create a <textarea> element
     el.value = str; // Set its value to the string that you want copied
-    el.setAttribute('readonly', ''); // Make it readonly to be tamper-proof
+    el.readOnly = true; // Make it readonly to be tamper-proof
     el.style.position = 'absolute';
     el.style.left = '-9999px'; // Move outside the screen to make it invisible
     d.body.appendChild(el); // Append the <textarea> element to the HTML document
