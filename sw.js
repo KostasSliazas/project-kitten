@@ -2,16 +2,16 @@ const CACHE_VERSION = "v7";
 const CACHE_NAME = "project-k-v" + CACHE_VERSION;
 
 const urlsToCache = [
-  "/project-k/index.html",               // Index page
-  "/project-k/css/main.min.v7.css",      // Main CSS
-  "/project-k/js/gall7.min.v7.js",       // JavaScript
-  "/project-k/js/main.min.v7.js",        // Main JavaScript
-  "/project-k/js/sw.js",                 // Service Worker script itself
-  "/project-k/favicon.ico",              // Favicon
-  "/project-k/img/RJ-45.svg",            // SVG image
-  "/project-k/img/usb.svg",              // Another SVG image
-  "/project-k/img/QR%20Code.png",        // PNG image
-  "/project-k/font/kitten-corner.woff2"  // Font file (woff2)
+  "/project-kitten/index.html",               // Index page
+  "/project-kitten/css/main.min.v7.css",      // Main CSS
+  "/project-kitten/js/gall7.min.v7.js",       // JavaScript
+  "/project-kitten/js/main.min.v7.js",        // Main JavaScript
+  "/project-kitten/js/sw.js",                 // Service Worker script itself
+  "/project-kitten/favicon.ico",              // Favicon
+  "/project-kitten/img/RJ-45.svg",            // SVG image
+  "/project-kitten/img/usb.svg",              // Another SVG image
+  "/project-kitten/img/QR%20Code.png",        // PNG image
+  "/project-kitten/font/kitten-corner.woff2"  // Font file (woff2)
 ];
 
 // Install event: Cache static assets
