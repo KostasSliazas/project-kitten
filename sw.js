@@ -2,7 +2,6 @@ const CACHE_VERSION = "v7";
 const CACHE_NAME = "project-k-v" + CACHE_VERSION;
 
 const urlsToCache = [
-  "/project-k/",                        // Home page
   "/project-k/index.html",               // Index page
   "/project-k/css/main.min.v7.css",      // Main CSS
   "/project-k/js/gall7.min.v7.js",       // JavaScript
