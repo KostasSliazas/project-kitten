@@ -1286,7 +1286,7 @@
     reader.addEventListener(
       'load',
       () => {
-        const fileString = `--bg:url(${reader.result})`;
+        const fileString = `--bg:url(${reader.result || 'none'})`;
         StorageNamespace.setItem('bg-image', fileString);
         styleRoot();
       },
