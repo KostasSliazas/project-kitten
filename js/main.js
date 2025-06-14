@@ -1637,7 +1637,7 @@ function btn(e) {
   textarea.addEventListener('wheel', function(e) {
     e.preventDefault();
     e.target.scrollTop += Math.sign(e.deltaY) * 24;
-  });
+  },{passive: true});
 
   d.addEventListener('DOMContentLoaded', init /*, { once: true }*/);
   w.addEventListener('keyup', classToggle);
