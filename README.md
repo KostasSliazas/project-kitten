@@ -29,7 +29,7 @@ git clone https://github.com/KostasSliazas/project-kitten.git
 | **code-to-html**         | A utility for converting code snippets into HTML format.  | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/code-to-html)         |
 | **colorzebra**           | A color scheme generator for web design.                  | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/colorzebra)           |
 | **cvmaker**              | A simple tool for creating resumes (CVs).                 | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/cvmaker)              |
-| **dancing-text**         | A fun application that animates text with various effects.| [Live Demo](https://kostassliazas.github.io/project-kitten/tools/dancing-text)         |
+| **dancing-text**         | A fun application that animates text with rotations. | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/dancing-text)         |
 | **gradient-generator**   | A tool for generating beautiful gradients.                | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/gradient-generator)   |
 | **gradients-two-colors** | A simple gradient generator for two colors.               | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/gradients-two-colors) |
 | **grids-creator**        | A utility for creating CSS grid layouts.                  | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/grids-creator)        |
