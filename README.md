@@ -11,7 +11,6 @@ web-based tools and links for Developers and Creators.
 
 ## Screenshots
 ![Project K Screenshot](screenshots.png)
-![Project K Screenshot](screenshots1.png)
 
 ## Getting Started
 
