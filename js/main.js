@@ -1635,7 +1635,6 @@ function btn(e) {
   console.log('%c🐾Welcome to the Cuddle Zone of Coding!🐾\n%cKeep your coding paws steady and have fun!', 'font-size: 20px; background-color: #f7f7f7; color: #000000; padding: 0 4px; border-radius: 5px;', 'font-size: 16px; background-color: #e0e6ed; color: #000000; padding: 0 4px; border-radius: 5px;');
 
   textarea.addEventListener('wheel', function(e) {
-    e.preventDefault();
     e.target.scrollTop += Math.sign(e.deltaY) * 24;
   },{passive: true});
 
