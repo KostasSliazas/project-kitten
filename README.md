@@ -7,7 +7,11 @@
 
 web-based tools and links for Developers and Creators.
 
-[Screenshots](#screenshots) | [Getting Started](#getting-started) | [License](#license)
+## Table of Contents
+
+* [Screenshots](#screenshots)
+* [Getting Started](#getting-started)
+* [License](#license)
 
 ## Screenshots
 ![Project K Screenshot](screenshots.png)
