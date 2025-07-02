@@ -917,16 +917,16 @@
       root.removeAttribute('class');
       root.removeAttribute('style');
       textarea.removeAttribute('style');
-      setColors();
-      changerClass(0);
-      applyStyles(true, widthMatch);
-      loopElem(widthMatch);
-      centerElements();
+      await setColors();
+      await changerClass(0);
+      await applyStyles(true, widthMatch);
+      await loopElem(widthMatch);
+      await centerElements();
       //reload versions
       // w.location.reload(); // This reloads the page after your actions
     } else {
-      applyStyles(false, widthMatch);
-      loopElem(widthMatch);
+      await applyStyles(false, widthMatch);
+      await loopElem(widthMatch);
     }
 
     hide(codeDiv);
@@ -955,7 +955,7 @@
     changerClass(NUM);
     styleRoot();
     setColors();
-    resizeElementToFullSize();
+    await resizeElementToFullSize();
 
     // renew clock if only displayed
     if (isDisplayed(d.getElementById('clock').parentElement)) {
@@ -1609,7 +1609,7 @@ function btn(e) {
     // Get the full size of the viewport and document
     const fullHeight = Math.max(w.innerHeight, root.scrollHeight);
     // Set the element's height
-    main.style.height = `${fullHeight}px`;
+    main.style.height = `${fullHeight+48}px`;
   }
 
   if ('serviceWorker' in navigator) {

@@ -1067,7 +1067,6 @@ textarea {
   min-width: 120px;
   outline: 0;
   position: relative;
-  top: -1px;
 }
 
 .dark {
@@ -1295,7 +1294,6 @@ fieldset {
   height: auto !important;
 }
 
-.bottom,
 .sleepy {
   position: absolute;
 }
@@ -1308,7 +1306,7 @@ fieldset {
 
 .bottom {
   padding: 0;
-  top: 100%;
+  bottom: 4px;
   right: 0;
   font-size: 12px;
   display: block;
@@ -1316,7 +1314,9 @@ fieldset {
   width: 100%;
   text-align: center;
 }
-
+.fixed{
+  position: fixed;
+}
 .in {
   margin: 0 auto;
   background: var(--color1);
