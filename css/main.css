@@ -1317,13 +1317,13 @@ fieldset {
 .fixed{
   position: fixed;
 }
-.in {
+.calculator__input-container {
   margin: 0 auto;
   background: var(--color1);
   height: auto;
 }
 
-#calculator {
+.calculator__wrapper {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: min-content;
@@ -1335,29 +1335,29 @@ fieldset {
   width: 100%;
 }
 
-#calculator > [data-fun='p'] {
+.calculator__button--add {
   grid-row: 5 / span 2;
   grid-column: 4;
 }
 
-#calculator div:empty {
+.calculator__wrapper div:empty {
   background: var(--color4);
 }
 
-#calculator #src {
+.calculator__screen {
   font-size: 1.25em;
 }
 
-#calculator input + input {
+.calculator__wrapper input + input {
   aspect-ratio: 1;
   line-height: 1;
 }
 
-#calculator input + input:last-child {
+.calculator__wrapper input + input:last-child {
   aspect-ratio: 0;
 }
 
-#calculator input {
+.calculator__wrapper input,.calculator__screen {
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
@@ -1378,14 +1378,14 @@ fieldset {
   transition: 0.1s;
 }
 
-#calculator input[type='button']:active {
+.calculator__wrapper input[type='button']:active {
   background: var(--color3);
   border: 1px solid var(--color4);
 }
 
-#calculator input::-moz-focus-inner,
-#calculator input:focus,
-#calculator:focus {
+.calculator__wrapper input::-moz-focus-inner,
+.calculator__wrapper input:focus,
+.calculator__wrapper:focus {
   color: var(--color4);
   outline: 0;
 }
@@ -1398,7 +1398,7 @@ input::-moz-selection {
   background: 0 0;
 }
 
-#calculator #c-sound {
+.calculator__button--sound {
   font-size: 10px;
   text-align: right;
   padding: 0 0.1em;
@@ -1410,17 +1410,17 @@ input::-moz-selection {
   white-space: break-spaces;
 }
 
-#calculator input:checked::after {
+.calculator__wrapper input:checked::after {
   content: 'sound\aon!';
 }
 
-#calculator input::after {
+.calculator__wrapper input::after {
   content: 'sound\aoff';
   line-height: 1;
   margin: 0 10px;
 }
 
-#calculator #src {
+.calculator__screen {
   grid-column-start: 1;
   grid-column-end: 5;
   margin: 0;
@@ -1430,7 +1430,7 @@ input::-moz-selection {
   background: var(--color0);
 }
 
-#calculator #src.blink {
+.calculator__screen.blink {
   color: var(--color3);
 }
 
@@ -1485,7 +1485,7 @@ input::-moz-selection {
   display: none;
 }
 
-#calculator #src,
+.calculator__screen,
 .checkbox label::before {
   box-sizing: border-box;
 }

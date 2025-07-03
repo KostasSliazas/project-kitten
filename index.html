@@ -81,11 +81,32 @@
                 </div>
                 <div class="movable w15">
                     <h1>calculator</h1>
-                    <div id="calcwrap">
-                        <div class="in">
-                            <div id="calculator"><label for="c-sound" class="visually-hidden">sound</label> <label for="src" class="visually-hidden">src</label> <input data-ekr="ekr" type="text" id="src" value="0" title="screen"> <input data-fun="x" type="button" value="C"> <input data-fun="b" type="button" value="⌫"> <input data-fun="s" type="checkbox" id="c-sound" value="sound" title="sound"> <input data-fun="d" type="button" value="÷"> <input data-num="7" type="button" value="7"> <input data-num="8" type="button" value="8"> <input data-num="9" type="button" value="9"> <input data-fun="m" type="button" value="×"> <input data-num="4" type="button" value="4"> <input data-num="5" type="button" value="5"> <input data-num="6" type="button" value="6"> <input data-fun="a" type="button" value="-"> <input data-num="1" type="button" value="1"> <input data-num="2" type="button" value="2"> <input data-num="3" type="button" value="3"> <input data-num="0" type="button" value="0"> <input data-fun="c" type="button" value=","> <input data-fun="e" type="button" value="="> <input data-fun="p" type="button" value="+"></div>
-                        </div>
-                    </div>
+                    <div class="calculator">
+            <div class="calculator__input-container">
+                <div class="calculator__wrapper">
+                    <output class="calculator__screen" aria-label="calculator Screen">0</output>
+                    <input type="button" class="calculator__button calculator__button--clear" value="C" aria-label="clear">
+                    <input type="button" class="calculator__button calculator__button--backspace" value="⌫" aria-label="backspace">
+                    <input type="checkbox" class="calculator__button calculator__button--sound" id="esound" title="sound" value="sound" aria-label="sound toggle">
+                    <input type="button" class="calculator__button calculator__button--divide" value="÷" aria-label="divide">
+                    <input type="button" class="calculator__button calculator__button--number" value="7" aria-label="number 7">
+                    <input type="button" class="calculator__button calculator__button--number" value="8" aria-label="number 8">
+                    <input type="button" class="calculator__button calculator__button--number" value="9" aria-label="number 9">
+                    <input type="button" class="calculator__button calculator__button--multiply" value="×" aria-label="multiply">
+                    <input type="button" class="calculator__button calculator__button--number" value="4" aria-label="number 4">
+                    <input type="button" class="calculator__button calculator__button--number" value="5" aria-label="number 5">
+                    <input type="button" class="calculator__button calculator__button--number" value="6" aria-label="number 6">
+                    <input type="button" class="calculator__button calculator__button--subtract" value="-" aria-label="subtract">
+                    <input type="button" class="calculator__button calculator__button--number" value="1" aria-label="number 1">
+                    <input type="button" class="calculator__button calculator__button--number" value="2" aria-label="number 2">
+                    <input type="button" class="calculator__button calculator__button--number" value="3" aria-label="number 3">
+                    <input type="button" class="calculator__button calculator__button--number" value="0" aria-label="number 0">
+                    <input type="button" class="calculator__button calculator__button--decimal" value="," aria-label="decimal">
+                    <input type="button" class="calculator__button calculator__button--equals" value="=" aria-label="equals">
+                    <input type="button" class="calculator__button calculator__button--add" value="+" aria-label="add">
+                </div>
+            </div>
+        </div>
                 </div>
                 <div class="movable mw16 w16 links local mode-numbering">
                     <h1>Games</h1><a href="games/questionnaire/index.html" target="_blank" rel="noopener noreferrer">Questionnaire</a> <a href="games/memory-game/index.html" target="_blank" rel="noopener noreferrer">Memory Game</a> <a href="games/roulette/index.html" target="_blank" rel="noopener noreferrer">Random name</a>
