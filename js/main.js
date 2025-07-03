@@ -887,7 +887,7 @@
       onlineElement.textContent = 'disconnected';
     }
   }
-  async function init() {
+  function init() {
     // lines background
     toggleClassFromStorage('bg-lines', main);
     toggleClassFromStorage('bg-image', root);
@@ -917,16 +917,16 @@
       root.removeAttribute('class');
       root.removeAttribute('style');
       textarea.removeAttribute('style');
-      await setColors();
-      await changerClass(0);
-      await applyStyles(true, widthMatch);
-      await loopElem(widthMatch);
-      await centerElements();
+      setColors();
+      changerClass(0);
+      applyStyles(true, widthMatch);
+      loopElem(widthMatch);
+      centerElements();
       //reload versions
       // w.location.reload(); // This reloads the page after your actions
     } else {
-      await applyStyles(false, widthMatch);
-      await loopElem(widthMatch);
+      applyStyles(false, widthMatch);
+      loopElem(widthMatch);
     }
 
     hide(codeDiv);
@@ -955,7 +955,6 @@
     changerClass(NUM);
     styleRoot();
     setColors();
-    await resizeElementToFullSize();
 
     // renew clock if only displayed
     if (isDisplayed(d.getElementById('clock').parentElement)) {
@@ -966,8 +965,15 @@
     d.getElementById('today').innerHTML = showDate();
     d.getElementById('loader').style.display = 'none'; // Hide the loader
     d.getElementById('content').style.visibility = 'visible'; // Show the content
+    resizeElementToFullSize();
 
-    // events listeners
+    //is time 43m passed and we are online?
+    if (setTimeStamp(77) && online) {
+      getAll(api_url);
+    }
+    // show the data to user
+    stats(StorageNamespace.getItem('temperature'));
+        // events listeners
     bg.addEventListener('change', bgChange);
     root.addEventListener('click', rootClick);
     root.addEventListener('contextmenu', contextMenuFun);
@@ -975,12 +981,6 @@
     d.addEventListener('mousemove', throttle(mouseMoveEvents, 70));
     d.addEventListener('mousedown', mouseDownEvents);
     d.addEventListener('mouseup', mouseUpEvents);
-    //is time 43m passed and we are online?
-    if (setTimeStamp(77) && online) {
-      await getAll(api_url);
-    }
-    // show the data to user
-    stats(StorageNamespace.getItem('temperature'));
   }
 
   // const concat = (...arrays) => [].concat(...arrays.filter(Array.isArray));
@@ -1429,11 +1429,13 @@
 
    // Constants for audio and theme management
     const BEEP_AUDIO_DATA = "data:audio/mp3;base64,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";
-    const BEEP_AUDIO = new w.Audio(BEEP_AUDIO_DATA);
+  const BEEP_AUDIO = new w.Audio(BEEP_AUDIO_DATA);
 
-  const CALC = d.querySelector('.calculator__wrapper');
-  const CALC_SCREEN = d.querySelector('.calculator__screen');
-  CALC_SCREEN.value = 0;
+  const soundToggle = d.querySelector('.calculator__button--sound');
+  const calculator = d.querySelector('.calculator__wrapper');
+  const calcScreen = d.querySelector('.calculator__screen');
+  calcScreen.value = 0;
+
   let n1 = [];
   let n2 = 0;
   let op = null;
@@ -1478,31 +1480,44 @@ function btn(e) {
   const target = e.target;
 
   // Ignore clicks on non-button elements or excluded inputs
-  if (!target.matches('input') || target.className === 'calculator__button--sound' || target.className === 'calculator__screen') {
+  const isIgnoredElement =
+  !target.matches('input') ||
+  target.classList.contains('calculator__button--sound') ||
+  target.classList.contains('calculator__screen');
+
+  if (isIgnoredElement) {
     e.preventDefault();
     e.stopPropagation();
     return;
   }
 
-  // Blink the screen to indicate input activity
-  CALC_SCREEN.classList.add('blink');
+  if (soundToggle?.checked) {
+    sound();
+  }
 
-  // Play sound if sound checkbox is enabled
-  if (d.querySelector('.calculator__button--sound').checked) sound();
+  // Blink the screen to indicate input activity
+  calcScreen.classList.add('blink');
 
   const targetValue = target.value;
 
-  // Store operator if an operator button is pressed (+, -, ×, ÷, etc.)
-  if (isNaN(parseFloat(targetValue))) {
-    op = targetValue;
-    if (last === op) return; // Prevent repeating the same operator
-  }
+  const isOperator = isNaN(parseFloat(targetValue));
 
-  // Handle number input
-  if (!isNaN(parseFloat(targetValue))) {
-    op = null;  // Reset operator when number is pressed (indicates new input)
-    if (n1[0] === '0' && n1[1] !== '.') n1.length = 0;  // Remove leading zero unless part of a decimal
-    n1.push(targetValue);  // Append digit to current number
+  if (isOperator) {
+    if (targetValue !== op) {
+      op = targetValue;
+    } else {
+      return; // Ignore repeated operator
+    }
+  } else {
+    op = null;
+
+    if (targetValue === '.' && n1.includes('.')) return;
+
+    if (n1[0] === '0' && n1[1] !== '.') {
+      n1.length = 0;
+    }
+
+    n1.push(targetValue);
   }
 
   // Handle backspace (⌫)
@@ -1552,17 +1567,20 @@ function btn(e) {
   if (result.toString().length > 10) result = result.toString(10).substring(0, 10);
 
   // Display the result in the screen, or show 'ERROR' if invalid
-  CALC_SCREEN.value = isFinite(result) ? result : 'ERROR';
+  calcScreen.value = isFinite(result) ? result : 'ERROR';
 }
 
 
-  CALC.addEventListener('mousedown', e => btn(e));
-  CALC.addEventListener('mouseup', () => {
-    const screenTimeout = w.setTimeout(() => {
-      w.clearTimeout(screenTimeout);
-      CALC_SCREEN.classList.remove('blink');
+  calculator.addEventListener('mousedown', e => btn(e));
+
+  let screenTimeout;
+  calculator.addEventListener('mouseup', () => {
+    if (screenTimeout) w.clearTimeout(screenTimeout);
+    screenTimeout = w.setTimeout(() => {
+      calcScreen.classList.remove('blink');
     }, 7);
-  }); // blink screen number
+  });
+
 
   // ////////////////////////////
 
@@ -1666,7 +1684,7 @@ function btn(e) {
       } else {
         movable.forEach(e => e.removeAttribute('style'));
       }
-      main.removeAttribute('style');
+      resizeElementToFullSize();
     }, 200);
   });
 })(window, document);

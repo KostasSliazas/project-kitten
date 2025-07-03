@@ -1383,7 +1383,6 @@ fieldset {
   border: 1px solid var(--color4);
 }
 
-.calculator__wrapper input::-moz-focus-inner,
 .calculator__wrapper input:focus,
 .calculator__wrapper:focus {
   color: var(--color4);
