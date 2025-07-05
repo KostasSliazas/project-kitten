@@ -887,7 +887,7 @@
       onlineElement.textContent = 'disconnected';
     }
   }
-  function init() {
+  async function init() {
     // lines background
     toggleClassFromStorage('bg-lines', main);
     toggleClassFromStorage('bg-image', root);
@@ -969,7 +969,7 @@
 
     //is time 43m passed and we are online?
     if (setTimeStamp(77) && online) {
-      getAll(api_url);
+      await getAll(api_url);
     }
     // show the data to user
     stats(StorageNamespace.getItem('temperature'));
