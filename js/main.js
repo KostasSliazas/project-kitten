@@ -117,6 +117,7 @@
   }
 
   const root = d.documentElement;
+  const bodyElement = d.body;
   const version = 7;
   const negativeOrPositive = number => (number > 0 ? `+${number}` : `${number}`);
   const main = d.getElementById('main');
@@ -219,14 +220,14 @@
     el.readOnly = true; // Make it readonly to be tamper-proof
     el.style.position = 'absolute';
     el.style.left = '-9999px'; // Move outside the screen to make it invisible
-    d.body.appendChild(el); // Append the <textarea> element to the HTML document
+    bodyElement.appendChild(el); // Append the <textarea> element to the HTML document
     const selected = d.getSelection().rangeCount > 0 ? d.getSelection().getRangeAt(0) : false; // Check if there is any content selected previously
     // Store selection if found
     // Mark as false to know no selection existed before
     el.select(); // Select the <textarea> content
     d.execCommand('copy'); // Copy - only works as a result of a user action (e.g. click events)
     copy.textContent = str;
-    d.body.removeChild(el); // Remove the <textarea> element
+    bodyElement.removeChild(el); // Remove the <textarea> element
     if (selected) {
       // If a selection existed before copying
       d.getSelection().removeAllRanges(); // Unselect everything on the HTML document
@@ -296,12 +297,13 @@
         }
         if (e.firstElementChild) e.firstElementChild.title = ' (block index' + movable.indexOf(e) + ')';
         if (e.id === 'text-area') textarea.style.height = e.style.height;
-        e.addEventListener('dblclick', e => {
+        e.addEventListener('dblclick', async e => {
+          await delay(150);
+
           if (clickTimeout) {
             w.clearTimeout(clickTimeout);
             clickTimeout = null;
           }
-
           if (e.target.classList.contains('movable')) {
             const widthMatch = w.matchMedia('(min-width: 960px)').matches;
             const index = movable.indexOf(e.target);
@@ -892,10 +894,10 @@
     toggleClassFromStorage('bg-lines', main);
     toggleClassFromStorage('bg-image', root);
     toggleClassFromStorage('bg-repeat', main);
-    toggleClassFromStorage('mode-cute', d.body);
-    toggleClassFromStorage('mode-popup', d.body);
-    toggleClassFromStorage('mode-numbering', d.body);
-    if (toggleClassFromStorage('mode-night', d.body)) doAfter19h(performNightThemeChange);
+    toggleClassFromStorage('mode-cute', bodyElement);
+    toggleClassFromStorage('mode-popup', bodyElement);
+    toggleClassFromStorage('mode-numbering', bodyElement);
+    if (toggleClassFromStorage('mode-night', bodyElement)) doAfter19h(performNightThemeChange);
 
     // set remembered last counter seconds
     timers.counterTime.textContent = addLeadingZero(timers.totalSeconds());
@@ -1053,7 +1055,7 @@
     const clickedElement = e.target;
     const target = clickedElement.id;
 
-    if (clickedElement.tagName == 'H1' && d.body.classList.contains('mode-popup')) {
+    if (clickedElement.tagName == 'H1' && bodyElement.classList.contains('mode-popup')) {
       overlay.classList.toggle('hide', !overlay.classList.contains('hide'));
     }
 
@@ -1139,10 +1141,10 @@
     if (target === cuteMode) {
       if (!main.classList.contains(cuteMode) && e.target.checked) {
         StorageNamespace.setItem(cuteMode, true);
-        d.body.classList.add(cuteMode);
+        bodyElement.classList.add(cuteMode);
       } else {
         StorageNamespace.setItem(cuteMode, false);
-        d.body.classList.remove(cuteMode);
+        bodyElement.classList.remove(cuteMode);
       }
     }
 
@@ -1151,10 +1153,10 @@
     if (target === popupMode) {
       if (!main.classList.contains(popupMode) && e.target.checked) {
         StorageNamespace.setItem(popupMode, true);
-        d.body.classList.add(popupMode);
+        bodyElement.classList.add(popupMode);
       } else {
         StorageNamespace.setItem(popupMode, false);
-        d.body.classList.remove(popupMode);
+        bodyElement.classList.remove(popupMode);
       }
     }
 
@@ -1163,10 +1165,10 @@
     if (target === numberingMode) {
       if (!main.classList.contains(numberingMode) && e.target.checked) {
         StorageNamespace.setItem(numberingMode, true);
-        d.body.classList.add(numberingMode);
+        bodyElement.classList.add(numberingMode);
       } else {
         StorageNamespace.setItem(numberingMode, false);
-        d.body.classList.remove(numberingMode);
+        bodyElement.classList.remove(numberingMode);
       }
     }
 
@@ -1175,11 +1177,11 @@
     if (target === dayNight) {
       if (!main.classList.contains(dayNight) && e.target.checked) {
         StorageNamespace.setItem(dayNight, true);
-        // d.body.classList.add(dayNight);
+        // bodyElement.classList.add(dayNight);
         doAfter19h(performNightThemeChange);
       } else {
         StorageNamespace.setItem(dayNight, false);
-        // d.body.classList.remove(dayNight);
+        // bodyElement.classList.remove(dayNight);
       }
     }
 
@@ -1318,8 +1320,8 @@
     root.scrollTo(cursorPositions.x, cursorPositions.y);
 
     // Trigger the actions related to moving the target and resizing
-    mouseMoves(target);
     resizeElementToFullSize();
+    mouseMoves(target);
   }
 
   function mouseUpEvents(e) {
@@ -1610,9 +1612,9 @@ function btn(e) {
     w.setTimeout(scheduleMidnightRefresh, 60000);
   }
 
-  w.onload = function () {
+  w.addEventListener('load', function () {
     scheduleMidnightRefresh();
-  };
+  }, { once: true });
 
   function doAfter19h(action) {
     const now = new Date();
@@ -1663,7 +1665,9 @@ function btn(e) {
     e.target.scrollTop += Math.sign(e.deltaY) * 24;
   },{passive: true});
 
-  d.addEventListener('DOMContentLoaded', init /*, { once: true }*/);
+  d.addEventListener('DOMContentLoaded', () => {
+    setTimeout(init, 70);
+  }, { once: true });
   w.addEventListener('keyup', classToggle);
   w.addEventListener('focus', () => monitorOnlineStatus(updateOnlineStatusUI));
   let resizeTimeout;
