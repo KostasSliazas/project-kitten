@@ -190,7 +190,7 @@
   const textarea = d.getElementsByTagName('TEXTAREA')[0];
   const bg = d.querySelector('#bg-file');
   const styles = ['width', 'height', 'left', 'top'];
-  const blockDefaults = "width:960px;height:48px;left:192px;top:0px;,width:384px;height:48px;left:360px;top:48px;,width:108px;height:48px;left:684px;top:48px;,width:132px;height:48px;left:900px;top:48px;,width:108px;height:48px;left:684px;top:72px;,width:324px;height:156px;left:192px;top:96px;,width:168px;height:72px;left:516px;top:96px;,width:168px;height:168px;left:516px;top:168px;,width:168px;height:144px;left:516px;top:336px;,width:168px;height:96px;left:516px;top:480px;,width:168px;height:144px;left:516px;top:576px;,width:36px;height:144px;left:1128px;top:432px;,width:156px;height:252px;left:360px;top:252px;,width:168px;height:96px;left:516px;top:720px;,width:168px;height:564px;left:192px;top:252px;,width:120px;height:48px;left:1032px;top:48px;,width:108px;height:48px;left:792px;top:48px;,width:156px;height:48px;left:360px;top:72px;,width:168px;height:48px;left:516px;top:72px;,width:156px;height:312px;left:360px;top:504px;,width:960px;height:1128px;left:192px;top:24px;,width:168px;height:48px;left:192px;top:48px;,width:168px;height:48px;left:192px;top:72px;,width:144px;height:96px;left:684px;top:96px;,width:144px;height:264px;left:684px;top:240px;,width:144px;height:48px;left:684px;top:192px;,width:156px;height:360px;left:828px;top:456px;,width:156px;height:168px;left:828px;top:288px;,width:168px;height:72px;left:984px;top:744px;,width:168px;height:480px;left:984px;top:96px;,width:156px;height:192px;left:828px;top:96px;,width:168px;height:96px;left:984px;top:648px;,width:144px;height:312px;left:684px;top:504px;,width:168px;height:72px;left:984px;top:576px;"
+  const blockDefaults = "width:960px;height:48px;left:192px;top:0px;,width:384px;height:48px;left:360px;top:48px;,width:108px;height:48px;left:684px;top:48px;,width:132px;height:48px;left:900px;top:48px;,width:108px;height:48px;left:684px;top:72px;,width:324px;height:156px;left:192px;top:96px;,width:168px;height:72px;left:516px;top:96px;,width:168px;height:168px;left:516px;top:168px;,width:168px;height:144px;left:516px;top:336px;,width:168px;height:96px;left:516px;top:480px;,width:168px;height:144px;left:516px;top:576px;,width:36px;height:144px;left:1128px;top:672px;,width:156px;height:252px;left:360px;top:252px;,width:168px;height:96px;left:516px;top:720px;,width:168px;height:564px;left:192px;top:252px;,width:120px;height:48px;left:1032px;top:48px;,width:108px;height:48px;left:792px;top:48px;,width:156px;height:48px;left:360px;top:72px;,width:168px;height:48px;left:516px;top:72px;,width:156px;height:312px;left:360px;top:504px;,width:960px;height:48px;left:192px;top:24px;,width:168px;height:48px;left:192px;top:48px;,width:168px;height:48px;left:192px;top:72px;,width:144px;height:96px;left:684px;top:96px;,width:144px;height:264px;left:684px;top:240px;,width:144px;height:48px;left:684px;top:192px;,width:156px;height:360px;left:828px;top:456px;,width:156px;height:168px;left:828px;top:288px;,width:168px;height:72px;left:984px;top:264px;,width:168px;height:480px;left:984px;top:336px;,width:156px;height:192px;left:828px;top:96px;,width:168px;height:96px;left:984px;top:168px;,width:144px;height:312px;left:684px;top:504px;,width:168px;height:72px;left:984px;top:96px;"
   const textAreaDefaults = ' Good day. You have the ability to reposition these blocks by clicking (□ or ▭) and holding (the left) corner or by pressing the ` key on your keyboard. ([ctrl]+[`]=Reset to Defaults) Alternatively, double-click (▭) to maximize them or minimize (□). You can also change the theme by right-clicking (context menu) and customize the colors and background image through the user interface. If locked, you can unlock it by clicking a few times on the background and then entering the default PIN: 520. Alternatively, you can clear the localStorage (since this project stores data such as PIN(password) and other settings in localStorage). Now you can type your text here.';
   const counts = {
     allMouseClicks: 0,
@@ -889,7 +889,7 @@
       onlineElement.textContent = 'disconnected';
     }
   }
-  function init() {
+  async function init() {
     // lines background
     toggleClassFromStorage('bg-lines', main);
     toggleClassFromStorage('bg-image', root);
@@ -971,7 +971,7 @@
 
     //is time 43m passed and we are online?
     if (setTimeStamp(77) && online) {
-      getAll(api_url);
+      await getAll(api_url);
     }
     // show the data to user
     stats(StorageNamespace.getItem('temperature'));
@@ -979,10 +979,10 @@
     bg.addEventListener('change', bgChange);
     root.addEventListener('click', rootClick);
     root.addEventListener('contextmenu', contextMenuFun);
-    d.addEventListener('dblclick', dblclickFun);
-    d.addEventListener('mousemove', throttle(mouseMoveEvents, 70));
-    d.addEventListener('mousedown', mouseDownEvents);
-    d.addEventListener('mouseup', mouseUpEvents);
+    root.addEventListener('dblclick', dblclickFun);
+    root.addEventListener('mousemove', throttle(mouseMoveEvents, 250));
+    root.addEventListener('mousedown', mouseDownEvents);
+    root.addEventListener('mouseup', mouseUpEvents);
   }
 
   // const concat = (...arrays) => [].concat(...arrays.filter(Array.isArray));
@@ -1315,7 +1315,6 @@
     // Calculate the cursor position with an offset
     cursorPositions.x = event.clientX - 12;
     cursorPositions.y = event.clientY - 12;
-
     // Update scroll position to keep the target element visible while moving
     root.scrollTo(cursorPositions.x, cursorPositions.y);
 
