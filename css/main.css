@@ -1,26 +1,104 @@
+.center,
+.checkbox,
+.colors label,
+.counter,
+.counter label,
+.esr i,
+.movable,
+.table i {
+  text-overflow: ellipsis
+}
+
+#overlay,
+.main::before,
+p::after {
+  position: absolute;
+  top: 0
+}
+
+.e .movable:first-child,
+.e .movable:nth-child(16),
+.e .movable:nth-child(17),
+.e .movable:nth-child(18),
+.e .movable:nth-child(19),
+.e .movable:nth-child(2),
+.e .movable:nth-child(21),
+.e .movable:nth-child(22),
+.e .movable:nth-child(23),
+.e .movable:nth-child(3),
+.e .movable:nth-child(4),
+.e .movable:nth-child(5),
+.hide,
+.mode-cute .cute img,
+p::after {
+  visibility: hidden
+}
+
+.calculator__screen,
+.calculator__wrapper input,
+.center,
+.movable {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -khtml-user-select: none
+}
+
+.movable,
+p {
+  position: relative
+}
+
+.memo img,
+.movable>div,
+a {
+  overflow: hidden
+}
+
+#clock div,
+p::after {
+  display: inline-block
+}
+
+.forms,
+button {
+  min-inline-size: 48px
+}
+
+#clock div,
+#loader,
+#vr h1,
+.bottom,
+.cnt,
+.counter input,
+.movable::before {
+  text-align: center
+}
+
 @keyframes spin {
   0% {
-    transform: translate(-50%, -50%) rotate(0);
+    transform: translate(-50%, -50%) rotate(0)
   }
 
   to {
-    transform: translate(-50%, -50%) rotate(360deg);
+    transform: translate(-50%, -50%) rotate(360deg)
   }
 }
 
 @font-face {
-  font-family: 'kitten-corner';
+  font-family: kitten-corner;
   src: url('../font/kitten-corner.woff2') format('woff2'), url('../font/kitten-corner.woff') format('woff');
-  font-weight: normal;
+  font-weight: 400;
   font-style: normal;
-  font-display: swap;
+  font-display: swap
 }
 
 *,
-*::before,
-*::after {
+::after,
+::before {
   box-sizing: border-box;
-  font-family: inherit;
+  font-family: inherit
 }
 
 body,
@@ -30,22 +108,22 @@ h3,
 h4,
 h5,
 h6,
-p,
 ol,
-ul,
-textarea {
+p,
+textarea,
+ul {
   margin: 0;
-  padding: 0;
+  padding: 0
 }
 
 ol,
 ul {
-  list-style: none;
+  list-style: none
 }
 
 table {
   border-collapse: collapse;
-  border-spacing: 0;
+  border-spacing: 0
 }
 
 :root {
@@ -57,20 +135,19 @@ table {
   --bg: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQIW2NgAAIAAAUAAR4f7BQAAAAASUVORK5CYII=);
   --repeat: no-repeat;
   --size: center/cover;
-  --blend: normal;
+  --blend: normal
 }
 
 html {
   font: 16px/1.5 kitten-corner, Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif;
   color: var(--color4);
-  background: repeating-linear-gradient(-45deg, var(--color0) 0, var(--color0) 9px, var(--color1) 9px, var(--color1) 18px) fixed;
+  background: repeating-linear-gradient(-45deg, var(--color0) 0, var(--color0) 9px, var(--color1) 9px, var(--color1) 18px) fixed
 }
 
 #loader {
-  text-align: center;
   line-height: 100dvh;
-  background: url(../safari-pinned-tab.svg) no-repeat center/contain;
-  font-size: 12px;
+  background: url(../safari-pinned-tab.svg) center/contain no-repeat;
+  font-size: 12px
 }
 
 #loader:after {
@@ -84,60 +161,56 @@ html {
   position: absolute;
   top: 50%;
   left: 50%;
-  animation: spin 0.34s linear infinite;
+  animation: .34s linear infinite spin
 }
 
 #overlay {
-  position: absolute;
-  top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background: var(--color2);
-  z-index: 1;
+  z-index: 1
 }
 
-.bg-lines ~ #overlay,
-.bg-lines.main::before {
-  background: var(--bg) var(--size) var(--repeat), repeating-linear-gradient(transparent 0, transparent 11px, transparent 11px, var(--color3) 12px) 0 0 scroll, repeating-linear-gradient(90deg, transparent 0, transparent 11px, transparent 11px, var(--color3) 12px) 0 0 fixed, var(--color2);
+.bg-lines.main::before,
+.bg-lines~#overlay {
+  background: var(--bg) var(--size) var(--repeat), repeating-linear-gradient(transparent 0, transparent 11px, transparent 11px, var(--color3) 12px) 0 0 scroll, repeating-linear-gradient(90deg, transparent 0, transparent 11px, transparent 11px, var(--color3) 12px) 0 0 fixed, var(--color2)
 }
 
 .bg-image {
-  --bg: url(../img/k.svg?v=1);
+  --bg: url(../img/k.svg?v=1)
 }
 
-.bg-repeat ~ #overlay,
-.bg-repeat {
+.bg-repeat,
+.bg-repeat~#overlay {
   --size: center/100px;
-  --repeat: repeat;
+  --repeat: repeat
 }
 
 [class*='a bg-image'] #main::before,
+[class*='a bg-image'] #overlay,
 [class*='default bg-image'] #main::before,
-[class*='default bg-image'] #overlay,
-[class*='a bg-image'] #overlay {
-  background-size: 144px;
+[class*='default bg-image'] #overlay {
+  background-size: 144px
 }
 
 .main::before {
   content: '';
-  top: 0;
   left: 0;
   min-height: 100%;
   height: inherit;
   width: 100%;
-  position: absolute;
   display: block;
   background: var(--bg) var(--size) var(--repeat), var(--color2);
-  background-blend-mode: var(--blend);
+  background-blend-mode: var(--blend)
 }
 
+.e,
+.j,
 .m,
 .n,
-.u,
-.j,
-.e {
-  --color4: #000000;
+.u {
+  --color4: #000000
 }
 
 .a {
@@ -147,11 +220,11 @@ html {
   --color3: #aaaab1;
   --color4: #333333;
   --size: center/43px;
-  --blend: soft-light;
+  --blend: soft-light
 }
 
 .a.bg-image {
-  --bg: url(../img/a.svg?v=1);
+  --bg: url(../img/a.svg?v=1)
 }
 
 .b {
@@ -159,11 +232,11 @@ html {
   --color1: #343d4d;
   --color2: #222222;
   --color3: #111111;
-  --color4: #a4adbd;
+  --color4: #a4adbd
 }
 
 .b.bg-image {
-  --bg: url(../img/b.webp?v=1);
+  --bg: url(../img/b.webp?v=1)
 }
 
 .c {
@@ -172,11 +245,16 @@ html {
   --color2: #a0bacb;
   --color3: #6b8ea4;
   --color4: #032337;
-  --blend: luminosity;
+  --blend: luminosity
+}
+
+.d,
+.f {
+  --blend: multiply
 }
 
 .c.bg-image {
-  --bg: url(../img/c.webp?v=1);
+  --bg: url(../img/c.webp?v=1)
 }
 
 .d {
@@ -184,23 +262,22 @@ html {
   --color1: #2a2e32;
   --color2: #1b1e20;
   --color3: #111111;
-  --color4: #cccccc;
-  --blend: multiply;
+  --color4: #cccccc
 }
 
 .d.bg-image {
-  --bg: url(../img/d.webp?v=1);
+  --bg: url(../img/d.webp?v=1)
 }
 
 .e {
   --color0: #cfc6c8;
   --color1: #b1abac;
   --color2: #777777;
-  --color3: #636363;
+  --color3: #636363
 }
 
 .e.bg-image {
-  --bg: url(../img/e.webp?v=1);
+  --bg: url(../img/e.webp?v=1)
 }
 
 .f {
@@ -208,12 +285,11 @@ html {
   --color1: #2b3d4f;
   --color2: #495d71;
   --color3: #70808f;
-  --color4: #eeeeee;
-  --blend: multiply;
+  --color4: #eeeeee
 }
 
 .f.bg-image {
-  --bg: url(../img/f.webp?v=1);
+  --bg: url(../img/f.webp?v=1)
 }
 
 .g {
@@ -222,11 +298,11 @@ html {
   --color2: #222222;
   --color3: #111111;
   --color4: #9ec91b;
-  --size: right bottom/70px;
+  --size: right bottom/70px
 }
 
 .g.bg-image {
-  --bg: url(../img/h.svg?v=1);
+  --bg: url(../img/h.svg?v=1)
 }
 
 .h {
@@ -235,11 +311,11 @@ html {
   --color2: #bfb1bc;
   --color3: #a28eb5;
   --color4: #3d3846;
-  --blend: luminosity;
+  --blend: luminosity
 }
 
 .h.bg-image {
-  --bg: repeating-radial-gradient(circle, rgba(21, 21, 21, 0.3) 0px, rgba(21, 21, 21, 0.3) 24px, rgba(28, 28, 28, 0.3) 25px, rgba(28, 28, 28, 0.3) 48px, rgba(35, 35, 35, 0.3) 49px, rgba(35, 35, 35, 0.3) 72px, rgba(42, 42, 42, 0.3) 73px, rgba(42, 42, 42, 0.3) 96px, rgba(49, 49, 49, 0.3) 97px, rgba(49, 49, 49, 0.3) 120px, rgba(42, 42, 42, 0.3) 121px, rgba(42, 42, 42, 0.3) 144px, rgba(35, 35, 35, 0.3) 145px, rgba(35, 35, 35, 0.3) 168px, rgba(28, 28, 28, 0.3) 169px, rgba(28, 28, 28, 0.3) 192px) fixed;
+  --bg: repeating-radial-gradient(circle, rgba(21, 21, 21, 0.3) 0px, rgba(21, 21, 21, 0.3) 24px, rgba(28, 28, 28, 0.3) 25px, rgba(28, 28, 28, 0.3) 48px, rgba(35, 35, 35, 0.3) 49px, rgba(35, 35, 35, 0.3) 72px, rgba(42, 42, 42, 0.3) 73px, rgba(42, 42, 42, 0.3) 96px, rgba(49, 49, 49, 0.3) 97px, rgba(49, 49, 49, 0.3) 120px, rgba(42, 42, 42, 0.3) 121px, rgba(42, 42, 42, 0.3) 144px, rgba(35, 35, 35, 0.3) 145px, rgba(35, 35, 35, 0.3) 168px, rgba(28, 28, 28, 0.3) 169px, rgba(28, 28, 28, 0.3) 192px) fixed
 }
 
 .j {
@@ -247,11 +323,11 @@ html {
   --color1: #747c84;
   --color2: #96938d;
   --color3: #333333;
-  --size: center/403px;
+  --size: center/403px
 }
 
 .j.bg-image {
-  --bg: url(../img/j.svg?v=1);
+  --bg: url(../img/j.svg?v=1)
 }
 
 .k {
@@ -260,11 +336,11 @@ html {
   --color2: #91897d;
   --color3: #665a47;
   --color4: #3c3020;
-  --blend: soft-light;
+  --blend: soft-light
 }
 
 .k.bg-image {
-  --bg: url(../img/ka.svg?v=1);
+  --bg: url(../img/ka.svg?v=1)
 }
 
 .l {
@@ -272,11 +348,11 @@ html {
   --color1: #e3ecf5;
   --color2: #d5dee7;
   --color3: #c7d0d9;
-  --color4: #343d46;
+  --color4: #343d46
 }
 
 .l.bg-image {
-  --bg: url(../img/l.svg?v=1);
+  --bg: url(../img/l.svg?v=1)
 }
 
 .m {
@@ -284,22 +360,22 @@ html {
   --color1: #d7cad5;
   --color2: #b5a8b3;
   --color3: #938691;
-  --blend: saturation;
+  --blend: saturation
 }
 
 .m.bg-image {
-  --bg: url(../img/m.svg?v=1);
+  --bg: url(../img/m.svg?v=1)
 }
 
 .n {
   --color0: #fcebd5;
   --color1: #dac9b3;
   --color2: #b8a791;
-  --color3: #96856f;
+  --color3: #96856f
 }
 
 .n.bg-image {
-  --bg: url(../img/n.svg?v=1);
+  --bg: url(../img/n.svg?v=1)
 }
 
 .o {
@@ -308,7 +384,12 @@ html {
   --color2: #1a1d1e;
   --color3: #414c4f;
   --color4: #bbbbbb;
-  --blend: multiply;
+  --blend: multiply
+}
+
+.t,
+.u {
+  --blend: saturation
 }
 
 .p {
@@ -316,11 +397,11 @@ html {
   --color1: #d2e1e1;
   --color2: #b4c5c5;
   --color3: #a2b4b4;
-  --color4: #2b3535;
+  --color4: #2b3535
 }
 
 .p.bg-image {
-  --bg: url(../img/p.svg?v=1);
+  --bg: url(../img/p.svg?v=1)
 }
 
 .r {
@@ -328,11 +409,11 @@ html {
   --color1: #585b65;
   --color2: #2c2f38;
   --color3: #0a0c15;
-  --color4: #f4f4f4;
+  --color4: #f4f4f4
 }
 
 .r.bg-image {
-  --bg: url(../img/r.svg?v=1);
+  --bg: url(../img/r.svg?v=1)
 }
 
 .s {
@@ -340,11 +421,11 @@ html {
   --color1: #e0e0e0;
   --color2: #c1c1c1;
   --color3: #999999;
-  --color4: #111111;
+  --color4: #111111
 }
 
 .s.bg-image {
-  --bg: url(../img/s.svg?v=1);
+  --bg: url(../img/s.svg?v=1)
 }
 
 .t {
@@ -352,16 +433,14 @@ html {
   --color1: #38383c;
   --color2: #4f4f54;
   --color3: #6a6a6e;
-  --color4: #e0e0e5;
-  --blend: saturation;
+  --color4: #e0e0e5
 }
 
 .u {
   --color0: #e0e0ce;
   --color1: #b5b5a3;
   --color2: #8a8a78;
-  --color3: #5f5f4d;
-  --blend: saturation;
+  --color3: #5f5f4d
 }
 
 .v {
@@ -370,37 +449,37 @@ html {
   --color2: #223434;
   --color3: #a3b5b5;
   --color4: #cee0e0;
-  --blend: multiply;
+  --blend: multiply
 }
 
 .q {
-  --color0: #7a676c;
-  --color1: #5a464e;
-  --color2: #5b3d47;
-  --color3: #9f8da1;
-  --color4: #e6d2d9;
+  --color0: #6b726b;
+  --color1: #4a594a;
+  --color2: #5d6a57;
+  --color3: #aab8a1;
+  --color4: #e1eade
 }
 
 .q.bg-image {
-  --bg: url(../img/q.svg?v=1);
+  --bg: url(../img/q.svg?v=1)
 }
 
 .w {
-  --color0: #fff2c4;
-  --color1: #fffdf6;
-  --color2: #fff7d9;
-  --color3: #e9e4d3;
-  --color4: #333333;
-  --blend: overlay;
+  --color0: #eaf1f5;
+  --color1: #d2d7dd;
+  --color2: #b8bfc6;
+  --color3: #9098a0;
+  --color4: #2e3338;
+  --blend: overlay
 }
 
 .x {
-  --color0: #f9ecd5;
-  --color1: #d3cec6;
-  --color2: #c3bbae;
-  --color3: #a0937d;
-  --color4: #333344;
-  --blend: luminosity;
+  --color0: #f7f7f6;
+  --color1: #d9d8d5;
+  --color2: #bebdb9;
+  --color3: #9d9c99;
+  --color4: #777;
+  --blend: luminosity
 }
 
 .y {
@@ -409,120 +488,124 @@ html {
   --color2: #222222;
   --color3: #8a8a8a;
   --color4: #f2f2f2;
-  --blend: color-burn;
+  --blend: color-burn
 }
 
+.b,
 .f,
-.y,
-.b {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+.y {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif
 }
 
 .s,
 .v {
-  font-family: Andale Mono, AndaleMono, monospace;
+  font-family: Andale Mono, AndaleMono, monospace
 }
 
 .c,
 .d {
-  font-family: system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Roboto, 'Helvetica Neue', 'Liberation Sans', Arial, sans-serif;
-}
-
-.mode-cute .cute img,
-.e .movable:nth-child(1),
-.e .movable:nth-child(2),
-.e .movable:nth-child(3),
-.e .movable:nth-child(4),
-.e .movable:nth-child(5),
-.e .movable:nth-child(16),
-.e .movable:nth-child(17),
-.e .movable:nth-child(18),
-.e .movable:nth-child(19),
-.e .movable:nth-child(21),
-.e .movable:nth-child(22),
-.e .movable:nth-child(23) {
-  visibility: hidden;
+  font-family: system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Roboto, 'Helvetica Neue', 'Liberation Sans', Arial, sans-serif
 }
 
 .e .movable:nth-child(23) {
-  clip-path: none;
+  clip-path: none
 }
 
 .mode-cute {
-  cursor: url(d-cursor.cur?v=1), auto;
+  cursor: url(d-cursor.cur?v=1), auto
 }
 
-.mode-cute h1,
+.move,
+.move .movable::before {
+  cursor: grabbing
+}
+
+.mode-cute #c-sound,
 .mode-cute #content button,
-.mode-cute input[type='button'],
-.mode-cute input[type='reset'],
-.mode-cute input[type='file']::file-selector-button,
-.mode-cute #c-sound {
+.mode-cute h1,
+.mode-cute input[type=button],
+.mode-cute input[type=file]::file-selector-button,
+.mode-cute input[type=reset] {
   background-image: linear-gradient(45deg, #7771 0, #7771 50%, #fff1 50%) !important;
-  box-shadow: 0 0 1px 1px var(--color2) inset;
+  box-shadow: 0 0 1px 1px var(--color2) inset
+}
+
+.memo img:hover,
+p::after {
+  background: var(--color3)
 }
 
 .mode-cute #content button,
 .mode-cute input,
-.mode-cute input[type='file']::file-selector-button,
-.mode-cute label::before,
-.mode-cute input[type='checkbox'] {
-  border-radius: 7px !important;
+.mode-cute input[type=checkbox],
+.mode-cute input[type=file]::file-selector-button,
+.mode-cute label::before {
+  border-radius: 7px !important
 }
 
-.mode-cute h1,
-.mode-cute label,
-.mode-cute img,
-.mode-cute ::before,
+.memo img,
+.movable h1 {
+  border: 1px solid var(--color3)
+}
+
 .mode-cute .svg-holder,
+.mode-cute ::before,
 .mode-cute a,
 .mode-cute button,
+.mode-cute h1,
+.mode-cute img,
 .mode-cute input,
-.mode-cute input[type='file']::file-selector-button {
-  cursor: url(cursor.cur?v=1), pointer !important;
+.mode-cute input[type=file]::file-selector-button,
+.mode-cute label {
+  cursor: url(cursor.cur?v=1), pointer !important
 }
 
 .cute {
-  background: url(../img/k.svg?v=1) no-repeat bottom center;
+  background: url(../img/k.svg?v=1) bottom center no-repeat
 }
 
 .move {
-  cursor: grabbing;
-  --color3: #000 !important;
+  --color3: #000 !important
 }
 
-.move .movable::before {
-  cursor: grabbing;
+.container div,
+.mode-popup h1 {
+  cursor: pointer
 }
 
 .super {
-  vertical-align: super;
+  vertical-align: super
 }
 
 .memo {
   font-size: 0;
   place-content: center;
-  display: flex;
+  display: flex
+}
+
+#vr,
+.space {
+  place-content: space-between
 }
 
 .memo img {
   max-height: 45px;
   max-width: 45px;
-  overflow: hidden;
   box-sizing: content-box;
-  transition: 0.1s 0.1s;
+  transition: .1s .1s;
   min-width: 45px;
   aspect-ratio: 1;
-  margin: 4px;
-  border: 1px solid var(--color3);
+  margin: 4px
 }
 
-.memo img:hover {
-  background: var(--color3);
+.calculator__screen,
+.checkbox label::before,
+.counter input {
+  box-sizing: border-box
 }
 
-.memo img:nth-child(even) {
-  margin: 4px 0;
+.memo img:nth-child(2n) {
+  margin: 4px 0
 }
 
 a,
@@ -532,7 +615,7 @@ h3,
 p {
   font-size: 1em;
   font-family: inherit;
-  line-height: inherit;
+  line-height: inherit
 }
 
 p {
@@ -541,152 +624,169 @@ p {
   position: relative;
 }
 
-p::after {
-  content: attr(title);
+p>span {
   position: absolute;
-  top: 0;
-  right: 0;
-  background: var(--color3);
-  display: inline-block;
-  color: var(--color0);
-  visibility: hidden;
-  transition: 0.2s 0.2s;
+  left: 0;
+  opacity: 0;
+  padding: 0 4px;
+  pointer-events: none;
+  user-select: none;
+}
+
+p>span {
+  bottom: 0;
+  background: var(--color0);
+  text-align: center;
   white-space: nowrap;
+  min-width: 140px;
+  pointer-events: none;
+  transition: opacity .3s 0.3s ease-in-out;
+  box-shadow: 0 0 7px;
+  z-index: 10;
 }
-p:hover::after {
-  visibility: visible;
+
+p:has(span):active span {
+  opacity: 1;
 }
+
+.c0,
+.center h1,
+.movable h1,
 p:hover {
-  background: var(--color2);
+  background: var(--color2)
 }
+
 h1,
 h2,
 h3 {
-  padding: 1.25em 0;
+  padding: 1.25em 0
 }
 
 .small {
-  font-size: 0.75em;
-  line-height: 2;
+  font-size: .75em;
+  line-height: 2
 }
 
 .xxl {
   font-size: 2em;
   line-height: 1;
-  min-block-size: 1em;
+  min-block-size: 1em
 }
 
-.pe {
-  padding: 0 4px;
+.mode-numbering .links a,
+.pe,
+button,
+input[type=button],
+input[type=reset] {
+  padding: 0 4px
 }
 
 .pa {
-  padding: 4px;
+  padding: 4px
 }
 
 form {
   padding: 0 1px 0 0;
   width: min-content;
   min-width: 100%;
-  margin: 0 1px 1px 0;
+  margin: 0 1px 1px 0
+}
+
+.center h1,
+.movable h1,
+a {
+  min-height: 24px;
+  width: 100%;
+  text-overflow: ellipsis
 }
 
 .mode-numbering {
-  counter-reset: section;
+  counter-reset: section
 }
+
+.mode-numbering .links a::before,
 .mode-numbering .links i:nth-child(odd)::before,
-.mode-numbering .links p::before,
-.mode-numbering .links a::before {
+.mode-numbering .links p::before {
   counter-increment: section;
   content: counter(section, decimal-leading-zero) '.';
   color: var(--color3);
-  display: inline-block;
+  display: inline-block
 }
+
+.local.links a::before,
 .mode-numbering .links i:nth-child(odd)::before,
 .mode-numbering .links p::before,
-.local.links a::before,
 .movable::before,
 a {
-  color: var(--color4);
-}
-
-.mode-numbering .links a {
-  padding: 0 4px;
-}
-
-.mode-popup h1 {
-  cursor: pointer;
+  color: var(--color4)
 }
 
 a {
   text-transform: lowercase;
   padding: 0 12px;
-  width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
   text-decoration: none;
-  font-size: 0.875em;
-  line-height: 1.71428571;
-  min-height: 24px;
+  font-size: .875em;
+  line-height: 1.71428571
 }
 
 a:hover {
   text-decoration: underline;
-  color: var(--color3);
+  color: var(--color3)
 }
-.movable h1 a {
-  padding: 0;
+
+#vr a,
+#vr p,
+.movable h1 a,
+input[type=color],
+input[type=file],
+input[type=number],
+input[type=radio] {
+  padding: 0
 }
 
 div.moves button {
-  height: 3em;
+  height: 3em
 }
 
 div.moves {
   box-shadow: 0 0 77px;
-  z-index: 2 !important;
+  z-index: 2 !important
 }
 
 .hide {
   z-index: -7;
-  pointer-events: none;
-  visibility: hidden;
+  pointer-events: none
 }
 
+.checkbox input,
 .none {
-  display: none;
+  display: none
 }
 
 .center,
 .movable {
   background: var(--color1);
   box-shadow: -1px -1px 0 var(--color3) inset, -1px -1px 0 var(--color3);
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
   display: flex;
   flex-direction: column;
   place-items: center;
   overflow: hidden;
   white-space: nowrap;
-  text-overflow: ellipsis;
-  transition: 0.1s;
+  transition: .1s;
   margin: 0 auto;
-  z-index: 1;
+  z-index: 1
 }
 
 .movable {
   min-width: 36px;
-  max-width: 960px;
-  position: relative;
+  max-width: 960px
 }
 
 .movable a,
 .movable h1 span,
 a {
-  display: block;
+  display: block
 }
 
 .movable::before {
@@ -697,21 +797,21 @@ a {
   position: absolute;
   top: -1px;
   left: 0;
-  text-align: center;
-  line-height: 24px;
+  line-height: 24px
 }
 
-.movable > div {
-  overflow: hidden;
-  margin: auto 1px auto 0;
+.movable>div {
+  margin: auto 1px auto 0
 }
 
 .pad {
-  padding-top: 24px;
+  padding-top: 24px
 }
 
-:not(.minimized).scroll:hover {
-  overflow: auto;
+.oxs:hover,
+:not(.minimized).scroll:hover,
+textarea:hover {
+  overflow: auto
 }
 
 .minimized {
@@ -719,19 +819,25 @@ a {
   padding: 0;
   min-height: 0;
   box-shadow: -1px -1px 0 0 var(--color3), -1px 1px 0 0 var(--color3);
-  pointer-events: all;
+  pointer-events: all
 }
 
 .movable:not(.minimized) {
-  min-height: 3em;
+  min-height: 3em
 }
 
 .minimized::before {
-  content: '▭';
+  content: '▭'
 }
 
 #clipboard {
-  white-space: normal;
+  white-space: normal
+}
+
+#clock,
+.esr i,
+.table i {
+  white-space: nowrap
 }
 
 .visually-hidden {
@@ -742,74 +848,66 @@ a {
   padding: 0;
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
-  border: 0;
+  border: 0
 }
 
 .main {
   padding: 0 0 24px;
   display: flex;
   place-items: baseline;
-  flex-wrap: wrap;
+  flex-wrap: wrap
 }
 
 .tetris {
-  clip-path: polygon(107% -7%,107% 335px,143px 335px,143px 107%,-7% 107%,-7% -7%);
+  clip-path: polygon(107% -7%, 107% 335px, 143px 335px, 143px 107%, -7% 107%, -7% -7%)
 }
 
 .center h1,
 .movable h1 {
   line-height: 24px;
   color: var(--color4);
-  background: var(--color2);
-  min-height: 24px;
-  width: 100%;
   padding: 0 0 0 4px;
   white-space: nowrap;
-  text-overflow: ellipsis;
   text-transform: uppercase;
   font-weight: 100;
   overflow: hidden;
-  font-size: 16px;
+  font-size: 16px
 }
 
 .movable h1:first-child {
-  padding: 0 0 0 24px;
+  padding: 0 0 0 24px
 }
 
 .movable h1 {
-  border: 1px solid var(--color3);
-  border-width: 0 1px 0 0;
+  border-width: 0 1px 0 0
 }
+
 .down {
   transition: none;
   z-index: 2;
-  box-shadow: -1px -1px 0 var(--color3) inset, -1px -1px 0 var(--color3), 0 0 7px #000;
+  box-shadow: -1px -1px 0 var(--color3) inset, -1px -1px 0 var(--color3), 0 0 7px #000
 }
 
 .r1,
 .r2,
 .r3 {
-  height: 100vw;
+  height: 100vw
 }
 
 .r1 {
-  transform: rotateZ(180deg);
+  transform: rotateZ(180deg)
 }
 
 .r2 {
-  transform: rotateZ(90deg);
+  transform: rotateZ(90deg)
 }
 
 .r3 {
-  transform: rotateZ(-90deg);
-}
-
-.space {
-  place-content: space-between;
+  transform: rotateZ(-90deg)
 }
 
 .start {
-  place-items: start;
+  place-items: start
 }
 
 .center {
@@ -818,226 +916,219 @@ a {
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%)
 }
 
 #clock,
 #today {
   letter-spacing: 2px;
-  font-weight: 400;
-}
-
-#clock div {
-  display: inline-block;
-  text-align: center;
+  font-weight: 400
 }
 
 .digit {
-  font-family: kitten-corner, monospace;
+  font-family: kitten-corner, monospace
 }
 
 .svg-holder {
   margin: 4px 0;
   position: relative;
-  font-size: 0;
+  font-size: 0
 }
 
 .svg-holder path {
-  stroke: var(--color3);
+  stroke: var(--color3)
 }
 
 .svg-holder path:hover {
-  stroke: var(--color2);
+  stroke: var(--color2)
 }
 
 #sunshine {
   background: repeating-linear-gradient(90deg, var(--color2) 0, transparent 2px 3px);
   shape-rendering: optimizespeed;
   height: 16px;
-  max-width: 140px;
+  max-width: 140px
 }
 
 #battery {
-  height: 77px;
+  height: 77px
 }
 
 .tr {
-  opacity: 0.5;
+  opacity: .5
 }
 
-.movable.minimized > div {
+.movable.minimized>div {
   display: none;
-  position: relative;
-}
-
-#clock {
-  white-space: nowrap;
+  position: relative
 }
 
 .w11 {
-  width: 120px;
+  width: 120px
 }
 
 .w14 {
-  max-width: 144px;
+  max-width: 144px
 }
 
 .w15 {
-  max-width: 156px;
+  max-width: 156px
 }
 
 .w16 {
-  max-width: 168px;
+  max-width: 168px
 }
 
 .w17 {
-  max-width: 180px;
+  max-width: 180px
 }
 
 .w18 {
-  max-width: 192px;
+  max-width: 192px
 }
 
 .w23 {
-  max-width: 240px;
+  max-width: 240px
 }
 
 .mw10 {
-  min-width: 108px;
+  min-width: 108px
 }
 
-.mw11 {
-  min-width: 120px;
+.mw11,
+textarea {
+  min-width: 120px
 }
 
 .mw14 {
-  min-width: 144px;
+  min-width: 144px
 }
 
 .mw15 {
-  min-width: 156px;
+  min-width: 156px
 }
 
 .mw16 {
-  min-width: 168px;
+  min-width: 168px
 }
 
 .mw17 {
-  min-width: 180px;
+  min-width: 180px
 }
 
 .mw18 {
-  min-width: 192px;
+  min-width: 192px
 }
 
 .mw36 {
-  min-width: 348px;
+  min-width: 348px
 }
 
 .mw96 {
-  min-width: 960px;
-}
-.w100 {
-  min-width: 100%;
-}
-.oxs {
-  width: 100%;
-  max-width: 960px;
-}
-.oxs i:nth-child(even),
-.oxs p {
-  user-select: all !important;
+  min-width: 960px
 }
 
-.oxs:hover,
-textarea:hover {
-  overflow: auto;
+.table,
+.w100 {
+  min-width: 100%
+}
+
+.oxs {
+  width: 100%;
+  max-width: 960px
+}
+
+.oxs i:nth-child(2n),
+.oxs p {
+  user-select: all !important
 }
 
 ::-webkit-scrollbar {
   width: 5px;
-  height: 5px;
+  height: 5px
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color2);
+  background: var(--color2)
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color3);
+  background: var(--color3)
 }
 
 .flex {
   place-items: center;
   flex-direction: column;
-  flex-wrap: wrap;
+  flex-wrap: wrap
 }
 
+#vr,
+.forms {
+  place-items: stretch
+}
+
+.container div,
 .flex,
-.flex div {
+.flex div,
+.wrp-container {
   display: flex;
-  place-content: center;
+  place-content: center
+}
+
+.esr,
+.table {
+  display: grid;
+  max-width: max-content
 }
 
 .fon {
-  flex: 1;
+  flex: 1
 }
 
 .esr {
-  display: grid;
-  max-width: max-content;
   grid-template-columns: repeat(8, minmax(1em, auto));
-  grid-template-rows: repeat(12, minmax(1em, auto));
+  grid-template-rows: repeat(12, minmax(1em, auto))
 }
 
 .esr i {
-  box-shadow: 1px 1px 0 0 var(--color2);
-}
-
-.c0 {
-  background: var(--color2);
-}
-
-.table {
-  display: grid;
-  max-width: max-content;
-  min-width: 100%;
+  box-shadow: 1px 1px 0 0 var(--color2)
 }
 
 .t30 {
   grid-template-columns: repeat(2, minmax(1em, auto));
-  grid-template-rows: repeat(30, minmax(1em, auto));
+  grid-template-rows: repeat(30, minmax(1em, auto))
+}
+
+.t16,
+.t7 {
+  grid-template-columns: repeat(2, auto)
 }
 
 .t16 {
-  grid-template-columns: repeat(2, auto);
-  grid-template-rows: repeat(16, auto);
+  grid-template-rows: repeat(16, auto)
 }
 
 .t7 {
-  grid-template-columns: repeat(2, auto);
-  grid-template-rows: repeat(7, auto);
+  grid-template-rows: repeat(7, auto)
 }
 
 .esr i,
 .table i {
   font-style: inherit;
   line-height: inherit;
-  white-space: nowrap;
   overflow: hidden;
-  padding: 0 4px;
-  text-overflow: ellipsis;
+  padding: 0 4px
 }
 
 .table i {
-  box-shadow: 0 1px 0 0 var(--color2);
+  box-shadow: 0 1px 0 0 var(--color2)
 }
 
 ::placeholder {
-  color: var(--color4);
+  color: var(--color4)
 }
 
-input[type='text'],
+input[type=text],
 textarea {
   background: var(--color0);
   color: inherit;
@@ -1046,12 +1137,18 @@ textarea {
   overflow: hidden;
   width: 100%;
   font-family: inherit;
-  font-size: inherit;
+  font-size: inherit
 }
 
-input[type='text'] {
+input[type=text] {
   display: block;
-  height: 23px;
+  height: 23px
+}
+
+#vr,
+.forms,
+.forms div {
+  display: flex
 }
 
 textarea {
@@ -1062,44 +1159,37 @@ textarea {
   line-height: inherit;
   max-width: 100%;
   min-height: 1em;
-  min-width: 120px;
   outline: 0;
-  position: relative;
+  position: relative
 }
 
 .dark {
-  background: var(--color1);
+  background: var(--color1)
 }
 
-input[type='color'],
-input[type='number'],
-input[type='radio'] {
-  padding: 0;
-}
-
+#c-sound,
 .checkbox label,
 .memo img,
 .movable::before,
 .svg-holder,
-#c-sound,
 a,
 button,
-input[type='button'],
-input[type='color'],
-input[type='file']::file-selector-button,
-input[type='number'],
-input[type='radio'],
-input[type='reset'] {
-  cursor: pointer;
+input[type=button],
+input[type=color],
+input[type=file]::file-selector-button,
+input[type=number],
+input[type=radio],
+input[type=reset] {
+  cursor: pointer
 }
 
 button,
-input[type='button'],
-input[type='color'],
-input[type='file']::file-selector-button,
-input[type='number'],
-input[type='radio'],
-input[type='reset'] {
+input[type=button],
+input[type=color],
+input[type=file]::file-selector-button,
+input[type=number],
+input[type=radio],
+input[type=reset] {
   margin: 0;
   overflow: hidden;
   color: var(--color4);
@@ -1111,47 +1201,41 @@ input[type='reset'] {
   line-height: inherit;
   box-sizing: border-box;
   font-family: inherit;
-  transition: 0.1s 0.1s;
+  transition: .1s .1s
 }
 
-input[type='number'] {
-  background: var(--color0);
+input[type=number] {
+  background: var(--color0)
 }
 
 button,
-input[type='button'],
-input[type='file'],
-input[type='reset'] {
+input[type=button],
+input[type=file],
+input[type=reset] {
   flex: 1 1 auto;
   margin: 0 4px;
-  min-block-size: 24px;
-}
-
-button,
-input[type='button'],
-input[type='reset'] {
-  padding: 0 4px;
+  min-block-size: 24px
 }
 
 button:first-child,
 button:last-child,
-input[type='button']:first-child,
-input[type='button']:last-child,
-input[type='file']:first-child,
-input[type='file']:last-child,
-input[type='reset']:first-child,
-input[type='reset']:last-child {
-  margin: 0;
+input[type=button]:first-child,
+input[type=button]:last-child,
+input[type=file]:first-child,
+input[type=file]:last-child,
+input[type=reset]:first-child,
+input[type=reset]:last-child {
+  margin: 0
 }
 
 button:hover,
-input[type='button']:hover,
-input[type='file']::file-selector-button:hover,
-input[type='reset']:hover {
-  background: var(--color0);
+input[type=button]:hover,
+input[type=file]::file-selector-button:hover,
+input[type=reset]:hover {
+  background: var(--color0)
 }
 
-input[type='color'] {
+input[type=color] {
   max-height: 36px;
   line-height: 0;
   min-block-size: 36px;
@@ -1159,147 +1243,126 @@ input[type='color'] {
   background-color: var(--color2) !important;
   padding: 2px;
   border-block: 0 !important;
-  border-inline: 0 !important;
+  border-inline: 0 !important
 }
 
-.forms input[type='color']:nth-child(n + 2) {
-  margin: 0 2px;
+.forms label,
+.forms legend {
+  margin: 0;
+  min-block-size: 24px
+}
+
+.forms input[type=color]:nth-child(n+2) {
+  margin: 0 2px
 }
 
 button:active,
-input[type='file']::file-selector-button:active {
+input[type=file]::file-selector-button:active {
   background: var(--color0);
-  color: var(--color2);
+  color: var(--color2)
 }
 
 .em4 {
   min-height: 32px;
-  max-block-size: 32px;
+  max-block-size: 32px
 }
 
 .em4.ma4 {
-  margin: 0 4px;
+  margin: 0 4px
 }
 
 .em4.ma {
-  margin: 4px;
-}
-
-button {
-  min-inline-size: 48px;
+  margin: 4px
 }
 
 button#top {
-  margin-top: 0;
+  margin-top: 0
 }
 
 button#bottom {
-  margin-bottom: 0;
+  margin-bottom: 0
 }
 
 .colors label {
   max-inline-size: 42px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  overflow: hidden
 }
 
 .colors input {
-  min-inline-size: 42px;
+  min-inline-size: 42px
 }
 
-input[type='file']::file-selector-button {
+input[type=file]::file-selector-button {
   display: flex;
   flex-direction: column;
   inline-size: 100%;
-  padding: 0 4px;
+  padding: 0 4px
 }
 
-#vr p,
-input[type='file'] {
-  padding: 0;
-}
-
-input[type='file' i] {
+input[type=file i] {
   padding: 0 0 0 4px;
   line-height: 24px;
   font-family: inherit;
   min-width: 48px;
-  max-block-size: 48px;
+  max-block-size: 48px
 }
 
 fieldset {
-  border-width: 0;
+  border-width: 0
 }
 
 .forms label {
-  min-block-size: 24px;
   padding: 0;
-  margin: 0;
-  flex: 1 1 auto;
+  flex: 1 1 auto
 }
 
 .forms {
   border-top: 1px solid var(--color3);
-  display: flex;
   flex-direction: column;
-  place-items: stretch;
   place-content: center;
   padding: 4px 4px 0;
-  margin: 0 auto;
-  min-inline-size: 48px;
+  margin: 0 auto
 }
 
-#vr,
-.forms div {
-  display: flex;
-}
-
-.forms > div > div {
-  flex-direction: column;
+.forms>div>div {
+  flex-direction: column
 }
 
 .forms legend {
-  margin: 0;
   padding: 0;
-  min-block-size: 24px;
-  line-height: 24px;
+  line-height: 24px
 }
 
 .gap {
-  gap: 4px;
+  gap: 4px
 }
+
 .cnt {
-  text-align: center;
-  place-self: center;
+  place-self: center
 }
+
 #vr h1 {
-  text-align: center;
   height: 100%;
   margin: -1px 0;
   padding: 23px 0 2px;
-  width: 24px;
+  width: 24px
 }
 
 #vr {
-  flex-direction: row;
-  place-content: space-between;
-  place-items: stretch;
+  flex-direction: row
 }
 
 #vr.minimized {
   width: 24px !important;
   min-width: 0;
-  height: auto !important;
+  height: auto !important
 }
 
 .sleepy {
   position: absolute;
-}
-
-.sleepy {
   transform: translate(-50%, -50%) rotate3D(0, 0, 1, -90deg);
   bottom: 0;
-  left: 0;
+  left: 0
 }
 
 .bottom {
@@ -1309,16 +1372,17 @@ fieldset {
   font-size: 12px;
   display: block;
   margin: 0 auto;
-  width: 100%;
-  text-align: center;
+  width: 100%
 }
-.fixed{
-  position: fixed;
+
+.fixed {
+  position: fixed
 }
+
 .calculator__input-container {
   margin: 0 auto;
   background: var(--color1);
-  height: auto;
+  height: auto
 }
 
 .calculator__wrapper {
@@ -1330,36 +1394,35 @@ fieldset {
   gap: 2px;
   padding: 2px;
   height: 100%;
-  width: 100%;
+  width: 100%
 }
 
 .calculator__button--add {
-  grid-row: 5 / span 2;
-  grid-column: 4;
+  grid-row: 5/span 2;
+  grid-column: 4
 }
 
-.calculator__wrapper div:empty {
-  background: var(--color4);
+.calculator__wrapper div:empty,
+.counter .max,
+.counter .max~input {
+  background: var(--color4)
 }
 
 .calculator__screen {
-  font-size: 1.25em;
+  font-size: 1.25em
 }
 
-.calculator__wrapper input + input {
+.calculator__wrapper input+input {
   aspect-ratio: 1;
-  line-height: 1;
+  line-height: 1
 }
 
-.calculator__wrapper input + input:last-child {
-  aspect-ratio: 0;
+.calculator__wrapper input+input:last-child {
+  aspect-ratio: 0
 }
 
-.calculator__wrapper input,.calculator__screen {
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
+.calculator__screen,
+.calculator__wrapper input {
   user-select: none;
   width: 100%;
   height: 100%;
@@ -1373,48 +1436,48 @@ fieldset {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  transition: 0.1s;
+  transition: .1s
 }
 
-.calculator__wrapper input[type='button']:active {
+.calculator__wrapper input[type=button]:active {
   background: var(--color3);
-  border: 1px solid var(--color4);
+  border: 1px solid var(--color4)
 }
 
 .calculator__wrapper input:focus,
 .calculator__wrapper:focus {
   color: var(--color4);
-  outline: 0;
+  outline: 0
 }
 
 input::selection {
-  background: 0 0;
+  background: 0 0
 }
 
 input::-moz-selection {
-  background: 0 0;
+  background: 0 0
 }
 
 .calculator__button--sound {
   font-size: 10px;
   text-align: right;
-  padding: 0 0.1em;
+  padding: 0 .1em;
   overflow: hidden;
   position: relative;
   place-items: center;
   place-content: center;
   display: flex;
-  white-space: break-spaces;
+  white-space: break-spaces
 }
 
 .calculator__wrapper input:checked::after {
-  content: 'sound\aon!';
+  content: 'sound\aon!'
 }
 
 .calculator__wrapper input::after {
   content: 'sound\aoff';
   line-height: 1;
-  margin: 0 10px;
+  margin: 0 10px
 }
 
 .calculator__screen {
@@ -1424,17 +1487,11 @@ input::-moz-selection {
   text-align: right;
   padding: 0 2px;
   line-height: 1;
-  background: var(--color0);
+  background: var(--color0)
 }
 
 .calculator__screen.blink {
-  color: var(--color3);
-}
-
-.container div,
-.wrp-container {
-  display: flex;
-  place-content: center;
+  color: var(--color3)
 }
 
 .wrp-container {
@@ -1450,7 +1507,7 @@ input::-moz-selection {
   top: 0;
   left: 0;
   z-index: 2;
-  place-items: end;
+  place-items: end
 }
 
 .container {
@@ -1463,7 +1520,7 @@ input::-moz-selection {
   top: 50%;
   position: absolute;
   transform: translate(-50%, -50%);
-  left: 50%;
+  left: 50%
 }
 
 .container div {
@@ -1474,22 +1531,12 @@ input::-moz-selection {
   place-items: center;
   text-transform: uppercase;
   font-size: 1.2rem;
-  cursor: pointer;
-  font-weight: 700;
-}
-
-.checkbox input {
-  display: none;
-}
-
-.calculator__screen,
-.checkbox label::before {
-  box-sizing: border-box;
+  font-weight: 700
 }
 
 .checkbox label {
   position: relative;
-  padding-right: 28px;
+  padding-right: 28px
 }
 
 .checkbox label::after,
@@ -1498,33 +1545,31 @@ input::-moz-selection {
   display: block;
   position: absolute;
   right: 0;
-  top: 0;
+  top: 0
 }
 
 .checkbox label::after {
   border-right: 1px solid transparent;
-  border-right-color: transparent;
   border-top: 1px solid transparent;
-  border-top-color: transparent;
-  transform: rotate(135deg);
+  transform: rotate(135deg)
 }
 
-.checkbox input:checked ~ label::after {
+.checkbox input:checked~label::after {
   border-color: var(--color4);
   width: 10px;
   height: 10px;
-  transition: border-top-color 0.1s 0.1s linear;
+  transition: border-top-color .1s linear .1s;
   top: 5px;
   right: 7px;
   box-sizing: border-box;
-  pointer-events: none;
+  pointer-events: none
 }
 
 .checkbox label::before {
   background: var(--color0);
   border: 1px solid var(--color3);
   height: 24px;
-  width: 24px;
+  width: 24px
 }
 
 .counter button {
@@ -1534,25 +1579,20 @@ input::-moz-selection {
   max-width: 24px;
   padding: 0;
   font-size: 0;
-  position: relative;
+  position: relative
 }
 
 button:active {
   color: var(--color4);
-  border-color: currentColor;
+  border-color: currentColor
 }
 
 .counter.saved input {
-  color: var(--color0);
-}
-
-.counter .max,
-.counter .max ~ input {
-  background: var(--color4);
+  color: var(--color0)
 }
 
 .counter button:last-of-type {
-  order: 1;
+  order: 1
 }
 
 .counter button:first-of-type::after,
@@ -1567,24 +1607,22 @@ button:active {
   height: 1px;
   z-index: 1;
   width: 14px;
-  pointer-events: none;
+  pointer-events: none
 }
 
 .counter button:last-of-type::after {
   transform: rotate(90deg);
-  transform-origin: center top;
+  transform-origin: center top
 }
 
 .counter input {
   appearance: textfield;
-  text-align: center;
   border: 1px solid var(--color3);
   border-left: 0;
   border-right: 0;
   min-width: 3ch;
   height: 24px;
-  box-sizing: border-box;
-  margin: 0;
+  margin: 0
 }
 
 .checkbox,
@@ -1598,93 +1636,104 @@ button:active {
   position: relative;
   line-height: 1.5;
   overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 16px;
+  font-size: 16px
 }
 
 .counter label {
   overflow: hidden;
-  text-overflow: ellipsis;
-  margin-right: 4px;
+  margin-right: 4px
 }
 
 input::-webkit-inner-spin-button,
 input::-webkit-outer-spin-button {
   -webkit-appearance: none;
-  margin: 0;
+  margin: 0
 }
 
-input[type='number'] {
+input[type=number] {
   -moz-appearance: textfield;
-  appearance: textfield;
+  appearance: textfield
 }
 
-input[type='number']:focus,
-input[type='text']:focus {
+input[type=number]:focus,
+input[type=text]:focus {
   outline: 0;
-  box-shadow: 0 0 7px var(--color3) inset;
+  box-shadow: 0 0 7px var(--color3) inset
 }
 
-@media screen and (max-width: 960px) {
+@media screen and (max-width:960px) {
   .links a {
     line-height: 3;
-    font-size:16px;
+    font-size: 16px
   }
+
+  .movable h1,
+  .movable h1 a,
+  .movable::before {
+    line-height: 48px
+  }
+
   .mw50,
   .mw96 {
-    min-width: 0;
+    min-width: 0
   }
+
   .bottom {
-    position: relative;
+    position: relative
   }
+
   .movable {
     position: relative !important;
     top: 0 !important;
     left: 0 !important;
     width: 100% !important;
-    max-width: initial;
+    max-width: initial
   }
+
   .tetris {
-    clip-path: none;
+    clip-path: none
   }
+
   #timer,
   #vr {
-    display: none !important;
+    display: none !important
   }
+
   .main {
-    overflow-x: hidden;
+    overflow-x: hidden
   }
+
   .main,
   .movable.minimized div {
-    display: block !important;
+    display: block !important
   }
+
   .minimized {
-    height: 47px !important;
+    height: 47px !important
   }
+
   .movable::before {
-    line-height: 48px;
     width: 48px;
-    height: 48px;
+    height: 48px
   }
+
   .movable h1 {
-    min-height: 48px;
+    min-height: 48px
   }
-  .movable h1,
-  .movable h1 a {
-    line-height: 48px;
-  }
+
   .movable h1:first-child {
-    padding: 0 0 0 48px;
+    padding: 0 0 0 48px
   }
+
   #sunshine {
-    background: none;
+    background: 0 0;
     max-width: initial;
-    height: 48px;
+    height: 48px
   }
 }
 
-@media screen and (min-width: 960px) {
+@media screen and (min-width:960px) {
   .in {
-    max-width: 300px;
+    max-width: 300px
   }
 }

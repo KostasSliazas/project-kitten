@@ -211,29 +211,54 @@
     StorageNamespace.setItem('textarea', e.target.value.trim());
   });
 
-  // https://stackoverflow.com/questions/45071353/copy-text-string-on-click/53977796#53977796
-  const copy = d.getElementById('clipboard');
-  const copyToClipboard = str => {
-    if (str === '0') return (copy.textContent = '');
-    const el = d.createElement('textarea'); // Create a <textarea> element
-    el.value = str; // Set its value to the string that you want copied
-    el.readOnly = true; // Make it readonly to be tamper-proof
-    el.style.position = 'absolute';
-    el.style.left = '-9999px'; // Move outside the screen to make it invisible
-    bodyElement.appendChild(el); // Append the <textarea> element to the HTML document
-    const selected = d.getSelection().rangeCount > 0 ? d.getSelection().getRangeAt(0) : false; // Check if there is any content selected previously
-    // Store selection if found
-    // Mark as false to know no selection existed before
-    el.select(); // Select the <textarea> content
-    d.execCommand('copy'); // Copy - only works as a result of a user action (e.g. click events)
-    copy.textContent = str;
-    bodyElement.removeChild(el); // Remove the <textarea> element
-    if (selected) {
-      // If a selection existed before copying
-      d.getSelection().removeAllRanges(); // Unselect everything on the HTML document
-      d.getSelection().addRange(selected); // Restore the original selection
+  const copy = document.getElementById('clipboard');
+
+  const copyToClipboard = (el) => {
+    let text = '';
+
+    if (
+      el instanceof HTMLInputElement ||
+      el instanceof HTMLTextAreaElement ||
+      el instanceof HTMLOutputElement
+    ) {
+      text = el.value.trim();
+    } else {
+      // Only get direct text nodes (exclude text from child elements)
+      for (let node of el.childNodes) {
+        if (node.nodeType === Node.TEXT_NODE) {
+          text += node.textContent;
+        }
+      }
+      text = text.trim();
+    }
+
+    if (text === '0') {
+      copy.textContent = '';
+      return;
+    }
+
+    const textarea = d.createElement('textarea');
+    textarea.value = text;
+    textarea.readOnly = true;
+    textarea.style.position = 'absolute';
+    textarea.style.left = '-9999px';
+    d.body.appendChild(textarea);
+
+    const selection = d.getSelection();
+    const originalRange = selection.rangeCount > 0 ? selection.getRangeAt(0) : null;
+
+    textarea.select();
+    d.execCommand('copy');
+    copy.textContent = text;
+    d.body.removeChild(textarea);
+
+    if (originalRange) {
+      selection.removeAllRanges();
+      selection.addRange(originalRange);
     }
   };
+
+
 
   function ClickHandler(time) {
     let clicked = false;
@@ -964,9 +989,6 @@
       clock.startTime();
     }
 
-    d.getElementById('today').innerHTML = showDate();
-    d.getElementById('loader').style.display = 'none'; // Hide the loader
-    d.getElementById('content').style.visibility = 'visible'; // Show the content
     resizeElementToFullSize();
 
     //is time 43m passed and we are online?
@@ -983,6 +1005,9 @@
     root.addEventListener('mousemove', throttle(mouseMoveEvents, 250));
     root.addEventListener('mousedown', mouseDownEvents);
     root.addEventListener('mouseup', mouseUpEvents);
+    d.getElementById('today').innerHTML = showDate();
+    d.getElementById('loader').style.display = 'none'; // Hide the loader
+    d.getElementById('content').style.visibility = 'visible'; // Show the content
   }
 
   // const concat = (...arrays) => [].concat(...arrays.filter(Array.isArray));
@@ -1044,8 +1069,8 @@
       setColors();
     }
 
-    if (((e.target.textContent || e.target.value) && e.target.tagName !== 'BUTTON' && e.target.getAttribute('type') && e.target.getAttribute('type').toUpperCase() !== 'BUTTON' && e.target.getAttribute('type').toUpperCase() !== 'SUBMIT' && e.target.getAttribute('type').toUpperCase() !== 'RESET') || e.target.tagName.toLowerCase() === 'p' || e.target.tagName.toLowerCase() === 'i' || e.target.tagName.toLowerCase() === 'textarea' || e.target.id === 'clipboard') {
-      copyToClipboard(e.target.textContent || e.target.value);
+    if (((e.target.textContent || e.target.value) && e.target.tagName !== 'BUTTON' && e.target.getAttribute('type') && e.target.getAttribute('type').toUpperCase() !== 'BUTTON' && e.target.getAttribute('type').toUpperCase() !== 'SUBMIT' && e.target.getAttribute('type').toUpperCase() !== 'RESET') || e.target.tagName.toUpperCase() === 'P' || e.target.tagName.toUpperCase() === 'I' || e.target.tagName.toUpperCase() === 'TEXTAREA' || e.target.id === 'clipboard') {
+      copyToClipboard(e.target || e.currentTarget);
     }
   }
   const classNamesForRotations = [0, 'r1', 'r2', 'r3'];
