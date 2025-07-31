@@ -118,7 +118,7 @@
 
   const root = d.documentElement;
   const bodyElement = d.body;
-  const version = 7;
+  const version = 2.5;
   const negativeOrPositive = number => (number > 0 ? `+${number}` : `${number}`);
   const main = d.getElementById('main');
   const overlay = d.getElementById('overlay');
