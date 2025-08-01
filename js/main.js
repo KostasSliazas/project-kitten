@@ -1652,18 +1652,24 @@ function btn(e) {
     }
   }
 
-  // Function to resize the element
   function resizeElementToFullSize() {
-    const padding = 24;
-    // reset main style remove all styles
-    main.removeAttribute('style');
+    const padding = 48;
     if (w.matchMedia('(max-width: 960px)').matches) return;
-    // Get the full size of the viewport and document
+
+    // Reset height to natural before measuring
+    main.style.height = '';
+    overlay.style.height = '';
+
+    // Measure clean scroll height
     const fullHeight = Math.max(w.innerHeight, root.scrollHeight);
-    // Set the element's height
-    main.style.height = `${fullHeight+padding}px`;
-    overlay.style.height = `${fullHeight+padding}px`
+
+    const adjusted = fullHeight + padding;
+
+    // Set final height
+    main.style.height = `${adjusted}px`;
+    overlay.style.height = `${adjusted}px`;
   }
+
 
   if ('serviceWorker' in navigator) {
     try {
