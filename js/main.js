@@ -1069,8 +1069,8 @@
       setColors();
     }
 
-    if (((e.target.textContent || e.target.value) && e.target.tagName !== 'BUTTON' && e.target.getAttribute('type') && e.target.getAttribute('type').toUpperCase() !== 'BUTTON' && e.target.getAttribute('type').toUpperCase() !== 'SUBMIT' && e.target.getAttribute('type').toUpperCase() !== 'RESET') || e.target.tagName.toUpperCase() === 'P' || e.target.tagName.toUpperCase() === 'I' || e.target.tagName.toUpperCase() === 'TEXTAREA' || e.target.id === 'clipboard') {
-      copyToClipboard(e.target || e.currentTarget);
+    if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'P' || e.target.tagName === 'OUTPUT' || e.target.id === 'clipboard') {
+      copyToClipboard(e.target);
     }
   }
   const classNamesForRotations = [0, 'r1', 'r2', 'r3'];
@@ -1654,13 +1654,15 @@ function btn(e) {
 
   // Function to resize the element
   function resizeElementToFullSize() {
+    const padding = 24;
     // reset main style remove all styles
     main.removeAttribute('style');
     if (w.matchMedia('(max-width: 960px)').matches) return;
     // Get the full size of the viewport and document
     const fullHeight = Math.max(w.innerHeight, root.scrollHeight);
     // Set the element's height
-    main.style.height = `${fullHeight+48}px`;
+    main.style.height = `${fullHeight+padding}px`;
+    overlay.style.height = `${fullHeight+padding}px`
   }
 
   if ('serviceWorker' in navigator) {
@@ -1683,7 +1685,7 @@ function btn(e) {
     console.log('Service Workers are not supported in this browser.');
   }
 
-  console.log('%c🐾Welcome to the Cuddle Zone of Coding!🐾\n%cKeep your coding paws steady and have fun!', 'font-size: 20px; background-color: #f7f7f7; color: #000000; padding: 0 4px; border-radius: 5px;', 'font-size: 16px; background-color: #e0e6ed; color: #000000; padding: 0 4px; border-radius: 5px;');
+  // console.log('%c🐾Welcome to the Cuddle Zone of Coding!🐾\n%cKeep your coding paws steady and have fun!', 'font-size: 20px; background-color: #f7f7f7; color: #000000; padding: 0 4px; border-radius: 5px;', 'font-size: 16px; background-color: #e0e6ed; color: #000000; padding: 0 4px; border-radius: 5px;');
 
   textarea.addEventListener('wheel', function(e) {
     e.target.scrollTop += Math.sign(e.deltaY) * 24;

@@ -127,11 +127,11 @@ table {
 }
 
 :root {
-  --color0: #ffffff;
-  --color1: #f9fbfd;
-  --color2: #dce5ed;
-  --color3: #6a8fa3;
-  --color4: #2b3338;
+  --color0: #FFFFF7;
+  --color1: #FFFEF7;
+  --color2: #F6FAF7;
+  --color3: #AEC0C6;
+  --color4: #555557;
   --bg: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQIW2NgAAIAAAUAAR4f7BQAAAAASUVORK5CYII=);
   --repeat: no-repeat;
   --size: center/cover;
@@ -852,7 +852,6 @@ textarea:hover {
 }
 
 .main {
-  padding: 0 0 24px;
   display: flex;
   place-items: baseline;
   flex-wrap: wrap
