@@ -130,8 +130,8 @@ table {
   --color0: #FFFFF7;
   --color1: #FFFEF7;
   --color2: #F6FAF7;
-  --color3: #AEC0C6;
-  --color4: #555557;
+  --color3: #AEC0C7;
+  --color4: #333337;
   --bg: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQIW2NgAAIAAAUAAR4f7BQAAAAASUVORK5CYII=);
   --repeat: no-repeat;
   --size: center/cover;
@@ -882,8 +882,8 @@ textarea:hover {
 }
 
 .down {
-  transition: none;
   z-index: 2;
+  will-change: left, top;
   box-shadow: -1px -1px 0 var(--color3) inset, -1px -1px 0 var(--color3), 0 0 7px #000
 }
 

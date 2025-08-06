@@ -118,7 +118,7 @@
 
   const root = d.documentElement;
   const bodyElement = d.body;
-  const version = 2.5;
+  const version = 3.4;
   const negativeOrPositive = number => (number > 0 ? `+${number}` : `${number}`);
   const main = d.getElementById('main');
   const overlay = d.getElementById('overlay');
@@ -160,7 +160,7 @@
       }, 7);
       hide(main);
     } else {
-      d.title = 'Project-K'; // change title (document)
+      d.title = 'Project-Kitten'; // change title (document)
       link.href = icon;
       show(main);
     }
@@ -360,7 +360,7 @@
           }
 
           if (state.target !== null) {
-            state.target.style.zIndex = 1;
+            state.target.style.removeProperty("z-index");
           }
 
           state.target = this;
@@ -1002,7 +1002,7 @@
     root.addEventListener('click', rootClick);
     root.addEventListener('contextmenu', contextMenuFun);
     root.addEventListener('dblclick', dblclickFun);
-    root.addEventListener('mousemove', throttle(mouseMoveEvents, 250));
+    root.addEventListener('mousemove', throttle(mouseMoveEvents, 70));
     root.addEventListener('mousedown', mouseDownEvents);
     root.addEventListener('mouseup', mouseUpEvents);
     d.getElementById('today').innerHTML = showDate();
