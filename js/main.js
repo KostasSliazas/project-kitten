@@ -1002,7 +1002,7 @@
     root.addEventListener('click', rootClick);
     root.addEventListener('contextmenu', contextMenuFun);
     root.addEventListener('dblclick', dblclickFun);
-    root.addEventListener('mousemove', throttle(mouseMoveEvents, 70));
+    root.addEventListener('mousemove', throttle(mouseMoveEvents, 16));
     root.addEventListener('mousedown', mouseDownEvents);
     root.addEventListener('mouseup', mouseUpEvents);
     d.getElementById('today').innerHTML = showDate();
@@ -1340,12 +1340,11 @@
     // Calculate the cursor position with an offset
     cursorPositions.x = event.clientX - 12;
     cursorPositions.y = event.clientY - 12;
+    mouseMoves(target);
     // Update scroll position to keep the target element visible while moving
     root.scrollTo(cursorPositions.x, cursorPositions.y);
-
     // Trigger the actions related to moving the target and resizing
     resizeElementToFullSize();
-    mouseMoves(target);
   }
 
   function mouseUpEvents(e) {

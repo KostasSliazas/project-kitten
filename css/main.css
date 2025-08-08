@@ -490,7 +490,10 @@ html {
   --color4: #f2f2f2;
   --blend: color-burn
 }
-
+.a{
+  font-style: italic;
+  font-variant-caps: all-small-caps;
+}
 .b,
 .f,
 .y {
