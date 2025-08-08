@@ -474,11 +474,11 @@ html {
 }
 
 .x {
-  --color0: #f7f7f6;
-  --color1: #d9d8d5;
-  --color2: #bebdb9;
-  --color3: #9d9c99;
-  --color4: #777;
+  --color0: #FFFFFF;
+  --color1: #FCFFFC;
+  --color2: #F8FEFF;
+  --color3: #DEDDDA;
+  --color4: #3D3846;
   --blend: luminosity
 }
 
