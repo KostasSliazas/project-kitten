@@ -5,7 +5,7 @@
 [![Issues](https://img.shields.io/github/issues/KostasSliazas/project-kitten)](https://github.com/KostasSliazas/project-kitten/issues)
 [![Last Commit](https://img.shields.io/github/last-commit/KostasSliazas/project-kitten)](https://github.com/KostasSliazas/project-kitten/commits)
 
-web-based tools and links for Developers and Creators. to reset to defaults use ctrl + ` (clears localStorage)
+web-based tools and links for Developers and Creators. to reset to defaults use [ctrl + `] (clears localStorage)
 
 ## Table of Contents
 
