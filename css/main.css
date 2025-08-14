@@ -131,7 +131,7 @@ table {
   --color1: #FFFEF7;
   --color2: #F6FAF7;
   --color3: #AEC0C7;
-  --color4: #333337;
+  --color4: #4D526C;
   --bg: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQIW2NgAAIAAAUAAR4f7BQAAAAASUVORK5CYII=);
   --repeat: no-repeat;
   --size: center/cover;
@@ -205,7 +205,6 @@ html {
   background-blend-mode: var(--blend)
 }
 
-.e,
 .j,
 .m,
 .n,
@@ -214,10 +213,10 @@ html {
 }
 
 .a {
-  --color0: #f7f7fe;
-  --color1: #e7e7ee;
-  --color2: #d9d9e0;
-  --color3: #aaaab1;
+  --color0: #F7F7FE;
+  --color1: #F1FDFF;
+  --color2: #D6DEF8;
+  --color3: #AAAAB1;
   --color4: #333333;
   --size: center/43px;
   --blend: soft-light
@@ -270,10 +269,11 @@ html {
 }
 
 .e {
-  --color0: #cfc6c8;
-  --color1: #b1abac;
-  --color2: #777777;
-  --color3: #636363
+  --color0: #b3f7e8;
+  --color1: #edf4fa;
+  --color2: #d1eac3;
+  --color3: #4c657d;
+  --color4: #283026;
 }
 
 .e.bg-image {
@@ -344,11 +344,11 @@ html {
 }
 
 .l {
-  --color0: #eaf3fc;
-  --color1: #e3ecf5;
-  --color2: #d5dee7;
-  --color3: #c7d0d9;
-  --color4: #343d46
+  --color0: #eafffa;
+  --color1: #fafffa;
+  --color2: #eceeeb;
+  --color3: #c2cbd5;
+  --color4: #262830;
 }
 
 .l.bg-image {
@@ -490,8 +490,7 @@ html {
   --color4: #f2f2f2;
   --blend: color-burn
 }
-.a{
-  font-style: italic;
+.default,.a{
   font-variant-caps: all-small-caps;
 }
 .b,
@@ -643,7 +642,7 @@ p>span {
   white-space: nowrap;
   min-width: 140px;
   pointer-events: none;
-  transition: opacity .3s 0.3s ease-in-out;
+  transition: opacity .1s 0.1s ease-in-out;
   box-shadow: 0 0 7px;
   z-index: 10;
 }
