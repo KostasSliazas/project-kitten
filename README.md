@@ -7,8 +7,6 @@
 
 My last project, web-based tools and links for Developers and Creators. (To reset to defaults use [ctrl + `] (clears localStorage)). 
 
-Please note: by downloading or using this project, you agree to take care and responsibility for your own use.
-
 ## Table of Contents
 
 * [Screenshots](#screenshots)
@@ -63,3 +61,5 @@ git clone https://github.com/KostasSliazas/project-kitten.git
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+
+Please remember: this project is shared openly with the community. By downloading or using it, you agree to take responsibility for your own use. The maintainers and contributors are not liable for any issues that may arise — use it with care and enjoy building with it!
