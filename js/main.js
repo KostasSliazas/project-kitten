@@ -190,14 +190,14 @@
   const textarea = d.getElementsByTagName('TEXTAREA')[0];
   const bg = d.querySelector('#bg-file');
   const styles = ['width', 'height', 'left', 'top'];
-  const blockDefaults = "width:960px;height:48px;left:0px;top:0px;,width:384px;height:48px;left:168px;top:48px;,width:108px;height:48px;left:492px;top:48px;,width:132px;height:48px;left:708px;top:48px;,width:108px;height:48px;left:492px;top:72px;,width:324px;height:156px;left:0px;top:96px;,width:168px;height:72px;left:324px;top:96px;,width:168px;height:168px;left:324px;top:168px;,width:168px;height:144px;left:324px;top:336px;,width:168px;height:96px;left:324px;top:480px;,width:168px;height:144px;left:324px;top:576px;,width:180px;height:144px;left:792px;top:672px;,width:156px;height:252px;left:168px;top:252px;,width:168px;height:96px;left:324px;top:720px;,width:168px;height:564px;left:0px;top:252px;,width:120px;height:48px;left:840px;top:48px;,width:108px;height:48px;left:600px;top:48px;,width:156px;height:48px;left:168px;top:72px;,width:168px;height:48px;left:324px;top:72px;,width:156px;height:312px;left:168px;top:504px;,width:960px;height:48px;left:0px;top:24px;,width:168px;height:48px;left:0px;top:48px;,width:168px;height:48px;left:0px;top:72px;,width:144px;height:96px;left:816px;top:96px;,width:144px;height:264px;left:816px;top:240px;,width:144px;height:48px;left:816px;top:192px;,width:156px;height:360px;left:492px;top:456px;,width:156px;height:168px;left:492px;top:288px;,width:168px;height:72px;left:648px;top:264px;,width:168px;height:480px;left:648px;top:336px;,width:156px;height:192px;left:492px;top:96px;,width:168px;height:96px;left:648px;top:168px;,width:144px;height:312px;left:816px;top:504px;,width:168px;height:72px;left:648px;top:96px;"
+  const blockDefaults = "width:960px;height:48px;left:0px;top:0px;,width:492px;height:48px;left:0px;top:48px;,width:108px;height:48px;left:768px;top:48px;,width:132px;height:48px;left:192px;top:156px;,width:132px;height:60px;left:192px;top:96px;,width:192px;height:156px;left:0px;top:96px;,width:168px;height:72px;left:324px;top:96px;,width:168px;height:168px;left:324px;top:168px;,width:168px;height:144px;left:324px;top:336px;,width:168px;height:96px;left:324px;top:480px;,width:168px;height:144px;left:324px;top:576px;,width:36px;height:144px;left:792px;top:672px;,width:156px;height:252px;left:168px;top:252px;,width:168px;height:96px;left:324px;top:720px;,width:168px;height:564px;left:0px;top:252px;,width:120px;height:48px;left:492px;top:48px;,width:132px;height:48px;left:192px;top:204px;,width:156px;height:48px;left:612px;top:48px;,width:156px;height:48px;left:0px;top:72px;,width:156px;height:312px;left:168px;top:504px;,width:960px;height:48px;left:0px;top:24px;,width:168px;height:48px;left:156px;top:72px;,width:168px;height:48px;left:324px;top:72px;,width:144px;height:96px;left:816px;top:96px;,width:144px;height:264px;left:816px;top:240px;,width:144px;height:48px;left:816px;top:192px;,width:156px;height:360px;left:492px;top:456px;,width:156px;height:168px;left:492px;top:288px;,width:168px;height:72px;left:648px;top:264px;,width:168px;height:480px;left:648px;top:336px;,width:156px;height:192px;left:492px;top:96px;,width:168px;height:96px;left:648px;top:168px;,width:144px;height:312px;left:816px;top:504px;,width:168px;height:72px;left:648px;top:96px;,width:84px;height:48px;left:876px;top:48px;"
   const textAreaDefaults = ' Good day. You have the ability to reposition these blocks by clicking (□ or ▭) and holding (the left) corner or by pressing the ` key on your keyboard. ([ctrl]+[`]=Reset to Defaults) Alternatively, double-click (▭) to maximize them or minimize (□). You can also change the theme by right-clicking (context menu) and customize the colors and background image through the user interface. If locked, you can unlock it by clicking a few times on the background and then entering the default PIN: 520. Alternatively, you can clear the localStorage (since this project stores data such as PIN(password) and other settings in localStorage). Now you can type your text here.';
   const counts = {
     allMouseClicks: 0,
     clicks: 0,
   };
   let saved = StorageNamespace.getItem('carbine') || [5, 2, 0];
-  let minimized = [17,1,21,22,20,0,2,11,18,4];
+  let minimized = [1,21,22,20,0,11,18];
   let mousedown = false;
   let scalingTarget = null;
   let isEnterPass = false;
@@ -483,75 +483,71 @@
 
   //stats for TEMPERATURE api
   function stats(data) {
-    // no data? return
     if (!data) return;
     const stats = d.querySelector('#stats');
 
-    // Create a new Date object
     const now = new Date();
-    // Get the current hour between 0 and 23, representing the hours in a day
     const currentHour = now.getHours();
 
     const main = d.querySelector('.svg-holder');
-    // make length shorter
-    data.length = 34;
+    data.length = 28;
+
     const arrayConverted = reduceValuesDynamically(
       data.map(e => e.toFixed(2) * 10),
-      8
+                                                   8
     );
+
     const svg = d.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('version', '1.1');
-    svg.setAttribute('viewBox', '0 0 100 16');
     svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
     svg.setAttribute('id', 'sunshine');
+
+    // 🔹 dynamic viewBox
+    const width = arrayConverted.length * 3 + 2; // 3 units per bar + margin
+    const height = 16; // fits the 0–8 range + top/bottom margin
+    svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+
     let space = 2;
     for (let i = 0; i < arrayConverted.length; i++) {
-      const result = arrayConverted[i] > 0 ? 8 - arrayConverted[i] : 8 - arrayConverted[i];
+      const result = 8 - arrayConverted[i];
       const fixed = result.toFixed(2);
+
       const path = d.createElementNS('http://www.w3.org/2000/svg', 'path');
-      path.setAttribute('d', 'M' + space + ',' + fixed + ' V 8');
-      path.setAttribute('stroke-width', '2');
+      path.setAttribute('d', `M${space},${fixed} V 8`);
+      path.setAttribute('stroke-width', '1');
       path.setAttribute('data-value', data[i]);
-      // add hour numbers
+
       if (i < 24) path.setAttribute('data-hour', i);
-      // set other color of selected hour
-      if (currentHour === i) path.setAttribute('style', 'stroke:var(--color4)');
-      //show 24hrs only solid color other transparent
-      if (i > 23) path.setAttribute('class', 'tr');
+      if (currentHour === i) path.style.stroke = 'var(--color4)';
+      if (i > 23) path.classList.add('tr');
+
       svg.appendChild(path);
       space += 3;
     }
+
+    main.innerHTML = ''; // clear old chart
     main.appendChild(svg);
 
     const output = negativeOrPositive(data[currentHour]) + '°C';
 
     main.addEventListener('mouseover', function (e) {
-      // Extracting the target element from the event object
       const targetElement = e.target;
-
-      // Checking if the target element is a 'path'
       if (targetElement.tagName === 'path') {
-        // Retrieving temperature and hour data attributes from the target element
         const temperature = negativeOrPositive(targetElement.getAttribute('data-value'));
-
         const hour = targetElement.getAttribute('data-hour');
-
-        // Setting the text content of the 'stats' element with temperature
         let statsText = temperature + '°C';
-
-        // If hour data is available, formatting it with leading zero and appending it to statsText
         if (hour !== null) {
-          const hourText = '|' + addLeadingZero(parseInt(hour)) + 'h';
+          const hourText = ' | ' + addLeadingZero(parseInt(hour)) + 'h';
           statsText += hourText;
         }
-
-        // Setting the text content of the 'stats' element
         stats.innerText = statsText;
       }
     });
     main.addEventListener('mouseout', () => (stats.innerText = output));
     stats.innerText = output;
   }
+
 
   function applyStyles(defaults, widthMatch) {
     const styles = StorageNamespace.getItem('element-styles') || blockDefaults;
@@ -950,7 +946,7 @@
 
     const loacalStorageText = StorageNamespace.getItem('textarea');
 
-    textarea.value = loacalStorageText ? loacalStorageText : typeof typeText(textarea, textAreaDefaults) === 'string'? typeText(textarea, textAreaDefaults) : '';
+    textarea.value = loacalStorageText ? loacalStorageText : /*typeof typeText(textarea, textAreaDefaults) === 'string'? typeText(textarea, textAreaDefaults) :*/ textAreaDefaults;
     const widthMatch = w.matchMedia('(min-width: 960px)').matches;
     const storageVersion = StorageNamespace.getItem('version');
     if (version !== storageVersion) {
@@ -1029,13 +1025,13 @@
 
   // const concat = (...arrays) => [].concat(...arrays.filter(Array.isArray));
 
-  async function typeText(textarea, text, delayMs = 70) {
-    for (let i = 0; i < text.length; i++) {
-      await delay(delayMs);            // wait before next char, don't append delay!
-      textarea.value += text[i];       // append single character
-      textarea.scrollTop = textarea.scrollHeight;
-    }
-  }
+  // async function typeText(textarea, text, delayMs = 70) {
+  //   for (let i = 0; i < text.length; i++) {
+  //     await delay(delayMs);            // wait before next char, don't append delay!
+  //     textarea.value += text[i];       // append single character
+  //     textarea.scrollTop = textarea.scrollHeight;
+  //   }
+  // }
 
 
   function setColors() {
@@ -1086,7 +1082,7 @@
       setColors();
     }
 
-    if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'P' || e.target.tagName === 'OUTPUT' || e.target.id === 'clipboard') {
+    if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'P' || e.target.tagName === 'I' || e.target.tagName === 'OUTPUT' || e.target.id === 'clipboard') {
       copyToClipboard(e.target);
     }
   }
@@ -1139,7 +1135,10 @@
     if (target === 'center-elements') {
       centerElements();
     }
-
+    if (target === 'settings') {
+      e.preventDefault();
+      moves.classList.toggle('hide');
+    }
     if (target === 'rotate90') {
       main.classList.remove('r' + rotations.value);
       rotations.increment();
