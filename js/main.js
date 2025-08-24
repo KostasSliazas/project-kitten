@@ -519,7 +519,7 @@
       path.setAttribute('data-value', data[i]);
 
       if (i < 24) path.setAttribute('data-hour', i);
-      if (currentHour === i) path.style.stroke = 'var(--color4)';
+      // if (currentHour === i) path.style.stroke = 'var(--color4)';
       if (i > 23) path.classList.add('tr');
 
       svg.appendChild(path);
@@ -538,7 +538,7 @@
         const hour = targetElement.getAttribute('data-hour');
         let statsText = temperature + '°C';
         if (hour !== null) {
-          const hourText = ' | ' + addLeadingZero(parseInt(hour)) + 'h';
+          const hourText = ' - ' + addLeadingZero(parseInt(hour)) + 'h';
           statsText += hourText;
         }
         stats.innerText = statsText;
