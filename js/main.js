@@ -541,6 +541,7 @@
           const hourText = ' - ' + addLeadingZero(parseInt(hour)) + 'h';
           statsText += hourText;
         }
+        // stats.parentElement.textContent = "Temp";
         stats.innerText = statsText;
       }
     });
@@ -1357,10 +1358,12 @@
     cursorPositions.x = event.clientX - 12;
     cursorPositions.y = event.clientY - 12;
     mouseMoves(target);
-    // Update scroll position to keep the target element visible while moving
-    root.scrollTo(cursorPositions.x, cursorPositions.y);
-    // Trigger the actions related to moving the target and resizing
     resizeElementToFullSize();
+    const rect = target.getBoundingClientRect();
+    const bottomPage = rect.bottom + w.scrollY;
+    // Update scroll position to keep the target element visible while moving
+    root.scrollTo(cursorPositions.x, bottomPage);
+    // Trigger the actions related to moving the target and resizing
   }
 
   function mouseUpEvents(e) {
