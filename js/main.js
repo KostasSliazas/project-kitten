@@ -1352,19 +1352,41 @@
 
   function mouseMoveEvents(event) {
     const { moving, target } = state;
-    // Exit early if not moving or target is invalid or not 'movable'
     if (!moving || !target || !target.classList.contains('movable')) return;
-    // Calculate the cursor position with an offset
+
     cursorPositions.x = event.clientX - 12;
     cursorPositions.y = event.clientY - 12;
+
+    // Move & resize first
     mouseMoves(target);
     resizeElementToFullSize();
+
+    // Updated size
     const rect = target.getBoundingClientRect();
-    const bottomPage = rect.bottom + w.scrollY;
-    // Update scroll position to keep the target element visible while moving
-    root.scrollTo(cursorPositions.x, bottomPage);
-    // Trigger the actions related to moving the target and resizing
+    const height = rect.height;
+
+    const rootHeight = w.innerHeight;
+    const docHeight = root.scrollHeight;
+    const maxScroll = docHeight - rootHeight;
+
+    let scrollY;
+
+    if (cursorPositions.y + height > rootHeight) {
+      // Case: element bottom goes beyond viewport → push to bottom
+      scrollY = maxScroll;
+    } else {
+      // Otherwise: follow cursor Y
+      scrollY = cursorPositions.y;
+    }
+
+    w.scrollTo({
+      top: scrollY,
+      left: cursorPositions.x,
+      behavior: "auto"
+    });
   }
+
+
 
   function mouseUpEvents(e) {
     const eventTarget = e.target;
