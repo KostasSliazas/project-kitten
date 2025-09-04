@@ -570,7 +570,7 @@ p::after {
 .move {
   --color3: #000 !important
 }
-
+.mode-cute .movable{clip-path: polygon( 0 var(--c), var(--c) 0, calc(100% - var(--c)) 0, 100% var(--c), 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, var(--c) 100%, 0 calc(100% - var(--c)) );}
 .container div,
 .mode-popup h1 {
   cursor: pointer
@@ -877,7 +877,7 @@ textarea:hover {
 }
 
 .movable h1:first-child {
-  padding: 0 0 0 24px
+  padding: 0 0 0 24px;
 }
 
 .movable h1 {
