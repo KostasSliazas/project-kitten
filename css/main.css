@@ -304,11 +304,11 @@ html {
 }
 
 .h {
-  --color0: #fffff6;
-  --color1: #eef7d2;
-  --color2: #bfb1bc;
-  --color3: #a28eb5;
-  --color4: #3d3846;
+  --color0: #d2e6e4;
+  --color1: #9fbfc0;
+  --color2: #6b9da4;
+  --color3: #40646f;
+  --color4: #1f2f34;
   --blend: luminosity
 }
 
