@@ -267,11 +267,11 @@ html {
 }
 
 .e {
-  --color0: #b3f7e8;
-  --color1: #edf4fa;
-  --color2: #d1eac3;
-  --color3: #4c657d;
-  --color4: #283026;
+  --color0: #f7b3b3; /* light red / pink */
+  --color1: #faeded; /* very soft red-tinted background */
+  --color2: #f2c3c3; /* pastel red */
+  --color3: #7d4c4c; /* muted dark red */
+  --color4: #302828; /* deep red-tinted dark */
 }
 
 .e.bg-image {
