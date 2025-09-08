@@ -702,7 +702,10 @@ a {
   width: 100%;
   text-overflow: ellipsis
 }
-
+a[style="opacity: 0.5;"]::after {
+  content: ">";
+  margin: 0 4px;
+}
 .mode-numbering {
   counter-reset: section
 }
