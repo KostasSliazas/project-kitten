@@ -702,9 +702,15 @@ a {
   width: 100%;
   text-overflow: ellipsis
 }
-a[style="opacity: 0.5;"]::after {
-  content: ">";
-  margin: 0 4px;
+.links a[style="opacity: 0.5;"]::after {
+  content: "";
+  position: absolute;
+  border-left: 4px solid var(--color3);
+  border-right: 0 solid var(--color3);
+  border-top: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  left: 0;
+  top: calc(50% - 2px);
 }
 .mode-numbering {
   counter-reset: section
@@ -732,6 +738,7 @@ a {
   padding: 0 12px;
   text-decoration: none;
   font-size: .875em;
+  position: relative;
   line-height: 1.71428571
 }
 
