@@ -490,6 +490,7 @@ html {
 }
 
 .default,
+.h,
 .a {
   font-variant-caps: all-small-caps;
 }
