@@ -133,7 +133,8 @@ table {
   --bg: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQIW2NgAAIAAAUAAR4f7BQAAAAASUVORK5CYII=);
   --repeat: no-repeat;
   --size: center/cover;
-  --blend: normal
+  --blend: normal;
+  --c: 2px;
 }
 
 html {
@@ -491,6 +492,7 @@ html {
 
 .default,
 .h,
+.g,
 .a {
   font-variant-caps: all-small-caps;
 }
