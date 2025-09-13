@@ -532,6 +532,7 @@ html {
 .mode-cute input[type=button],
 .mode-cute input[type=file]::file-selector-button,
 .mode-cute input[type=reset] {
+  text-shadow: rgba(0, 0, 0, 0.3) -1px 1px 0px, rgba(0, 0, 0, 0.2) -2px 2px 0px, rgba(0, 0, 0, 0.1) -3px 3px 0px;
   background-image: linear-gradient(45deg, #7771 0, #7771 50%, #fff1 50%) !important;
   box-shadow: 0 0 1px 1px var(--color2) inset
 }
@@ -573,7 +574,9 @@ p::after {
 .move {
   --color3: #000 !important
 }
-.mode-cute .movable{clip-path: polygon( 0 var(--c), var(--c) 0, calc(100% - var(--c)) 0, 100% var(--c), 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, var(--c) 100%, 0 calc(100% - var(--c)) );}
+.mode-cute .movable{
+  clip-path: polygon( 0 var(--c), var(--c) 0, calc(100% - var(--c)) 0, 100% var(--c), 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, var(--c) 100%, 0 calc(100% - var(--c)) );
+}
 .container div,
 .mode-popup h1 {
   cursor: pointer
