@@ -1405,7 +1405,7 @@ fieldset {
 .calculator__wrapper {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: min-content;
+  grid-auto-rows: minmax(2em, min-content);
   justify-items: center;
   align-items: stretch;
   gap: 2px;
@@ -1710,7 +1710,7 @@ input[type=text]:focus {
   .tetris {
     clip-path: none
   }
-
+  #controls,
   #timer,
   #vr {
     display: none !important
