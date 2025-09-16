@@ -118,7 +118,7 @@
 
   const root = d.documentElement;
   const bodyElement = d.body;
-  const version = 3.4;
+  const version = 7;
   const negativeOrPositive = number => (number > 0 ? `+${number}` : `${number}`);
   const main = d.getElementById('main');
   const overlay = d.getElementById('overlay');
@@ -1630,7 +1630,9 @@ function btn(e) {
   }
 
   // Truncate result to max 10 characters
-  if (result.toString().length > 10) result = result.toString(10).substring(0, 10);
+  if (result.toString().length > 12) {
+    result = result.toString().substring(0, 12);
+  }
 
   // Display the result in the screen, or show 'ERROR' if invalid
   calcScreen.value = isFinite(result) ? result : 'ERROR';
