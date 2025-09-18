@@ -307,6 +307,49 @@
   let clickTimeout = null;
   const clickDelay = 520; // Time in milliseconds
 
+  async function elemDblclic(e){
+    const target = e.target;
+    await delay(150);
+
+    if (clickTimeout) {
+      w.clearTimeout(clickTimeout);
+      clickTimeout = null;
+    }
+
+    if (target.classList.contains('movable')) {
+      const widthMatch = w.matchMedia('(min-width: 960px)').matches;
+      const index = movable.indexOf(target);
+      let arrayOfMinimized = [...(StorageNamespace.getItem('element-class') || minimized)];
+
+      if (target.classList.contains('minimized')) {
+        arrayOfMinimized = arrayOfMinimized.filter(c => c !== index);
+        target.classList.remove('minimized');
+        target.style.width = 'auto';
+        target.style.height = 'auto';
+
+        let height = roundToTen(target.offsetHeight);
+        let width = roundToTen(target.offsetWidth);
+        if (target.id === 'text-area') height -= 24;
+
+        target.style.width = width + 'px';
+        target.style.height = height + 'px';
+        // add popup overlay
+      } else {
+        target.classList.add('minimized');
+        arrayOfMinimized.push(index);
+      }
+
+      if (widthMatch) {
+        StorageNamespace.setItem('element-styles', getStyles());
+      }
+      StorageNamespace.setItem('element-class', arrayOfMinimized);
+    }
+
+    if (isBigger(target, main)) {
+      resizeElementToFullSize();
+    }
+  }
+
   const loopElem = widthMatch => {
     // console.time()
     // movable.forEach(async (e) => {
@@ -327,48 +370,7 @@
         if (e.firstElementChild) e.firstElementChild.title = ' (block index' + movable.indexOf(e) + ')';
         if (e.id === 'text-area') textarea.style.height = e.style.height;
 
-        e.addEventListener('dblclick', async e => {
-          const target = e.target;
-          await delay(150);
-
-          if (clickTimeout) {
-            w.clearTimeout(clickTimeout);
-            clickTimeout = null;
-          }
-
-          if (target.classList.contains('movable')) {
-            const widthMatch = w.matchMedia('(min-width: 960px)').matches;
-            const index = movable.indexOf(target);
-            let arrayOfMinimized = [...(StorageNamespace.getItem('element-class') || minimized)];
-
-            if (target.classList.contains('minimized')) {
-              arrayOfMinimized = arrayOfMinimized.filter(c => c !== index);
-              target.classList.remove('minimized');
-              target.style.width = 'auto';
-              target.style.height = 'auto';
-
-              let height = roundToTen(target.offsetHeight);
-              let width = roundToTen(target.offsetWidth);
-              if (target.id === 'text-area') height -= 24;
-
-              target.style.width = width + 'px';
-              target.style.height = height + 'px';
-              // add popup overlay
-            } else {
-              target.classList.add('minimized');
-              arrayOfMinimized.push(index);
-            }
-
-            if (widthMatch) {
-              StorageNamespace.setItem('element-styles', getStyles());
-            }
-            StorageNamespace.setItem('element-class', arrayOfMinimized);
-          }
-
-          if (isBigger(target, main)) {
-            resizeElementToFullSize();
-          }
-        });
+        e.addEventListener('dblclick', elemDblclic);
 
         e.addEventListener('mousedown', function (e) {
           if (e.target === this) {
@@ -1759,10 +1761,21 @@ function btn(e) {
           if (widthMatch) {
             movable[i].style = getStyle[i];
             movable[i].style.position = 'absolute';
+            movable[i].removeEventListener('click', elemDblclic);
+
+            // Bind the new dblclick listener
+            movable[i].addEventListener('dblclick', elemDblclic);
+            applyStyles(true, widthMatch);
           }
         }
       } else {
-        movable.forEach(e => e.removeAttribute('style'));
+        movable.forEach(e => {
+          e.removeAttribute('style');
+          e.classList.add('minimized');
+          e.removeEventListener('dblclick', elemDblclic);
+          e.addEventListener('click', elemDblclic);
+          }
+        );
       }
       resizeElementToFullSize();
     }, 200);
