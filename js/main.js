@@ -1350,16 +1350,13 @@
     x: 0,
   };
 
-  function mouseMoveEvents(event) {
+  async function mouseMoveEvents(event) {
     const { moving, target } = state;
     if (!moving || !target || !target.classList.contains('movable')) return;
 
     cursorPositions.x = event.clientX - 12;
     cursorPositions.y = event.clientY - 12;
 
-    // Move & resize first
-    mouseMoves(target);
-    resizeElementToFullSize();
 
     // Updated size
     const rect = target.getBoundingClientRect();
@@ -1371,19 +1368,24 @@
 
     let scrollY;
 
-    if (cursorPositions.y + height > rootHeight) {
-      // Case: element bottom goes beyond viewport → push to bottom
-      scrollY = maxScroll;
-    } else {
-      // Otherwise: follow cursor Y
-      scrollY = cursorPositions.y;
-    }
+    mouseMoves(target);
+    await delay(200);
 
-    w.scrollTo({
-      top: scrollY,
-      left: cursorPositions.x,
-      behavior: "auto"
-    });
+    resizeElementToFullSize();
+
+    // if (cursorPositions.y + height > rootHeight) {
+    //   // Case: element bottom goes beyond viewport → push to bottom
+    //   scrollY = maxScroll;
+    // } else {
+    //   // Otherwise: follow cursor Y
+    //   scrollY = cursorPositions.y;
+    // }
+    // await delay(200);
+    // await w.scrollTo({
+    //   top: scrollY,
+    //   left: cursorPositions.x,
+    //   behavior: "auto"
+    // });
   }
 
 
