@@ -1766,6 +1766,7 @@ function btn(e) {
             // Bind the new dblclick listener
             movable[i].addEventListener('dblclick', elemDblclic);
             applyStyles(true, widthMatch);
+            resizeElementToFullSize();
           }
         }
       } else {
