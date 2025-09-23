@@ -967,7 +967,9 @@ textarea:hover {
 #battery {
   height: 77px
 }
-
+#text-area {
+  min-height: 144px;
+}
 .tr {
   opacity: .5
 }
@@ -1385,11 +1387,12 @@ fieldset {
 
 .bottom {
   padding: 0;
-  bottom: 8px;
+  bottom: 0;
   right: 0;
   font-size: 12px;
   display: block;
   margin: 0 auto;
+  min-height: 36px;
   width: 100%
 }
 
