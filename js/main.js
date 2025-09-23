@@ -309,6 +309,7 @@
 
   async function elemDblclic(e){
     const target = e.target;
+
     await delay(150);
 
     if (clickTimeout) {
@@ -540,7 +541,7 @@
         const hour = targetElement.getAttribute('data-hour');
         let statsText = temperature + '°C';
         if (hour !== null) {
-          const hourText = ' - ' + addLeadingZero(parseInt(hour)) + 'h';
+          const hourText = '-' + addLeadingZero(parseInt(hour)) + 'h';
           statsText += hourText;
         }
         // stats.parentElement.textContent = "Temp";
@@ -1095,7 +1096,6 @@
   function rootClick(e) {
     const clickedElement = e.target;
     const target = clickedElement.id;
-
     if (clickedElement.tagName == 'H1' && bodyElement.classList.contains('mode-popup')) {
       overlay.classList.toggle('hide', !overlay.classList.contains('hide'));
     }
@@ -1737,19 +1737,9 @@ function btn(e) {
     console.log('Service Workers are not supported in this browser.');
   }
 
-  // console.log('%c🐾Welcome to the Cuddle Zone of Coding!🐾\n%cKeep your coding paws steady and have fun!', 'font-size: 20px; background-color: #f7f7f7; color: #000000; padding: 0 4px; border-radius: 5px;', 'font-size: 16px; background-color: #e0e6ed; color: #000000; padding: 0 4px; border-radius: 5px;');
-
-  textarea.addEventListener('wheel', function(e) {
-    e.target.scrollTop += Math.sign(e.deltaY) * 24;
-  },{passive: true});
-
-  d.addEventListener('DOMContentLoaded', () => {
-    setTimeout(init, 70);
-  }, { once: true });
-  w.addEventListener('keyup', classToggle);
-  w.addEventListener('focus', () => monitorOnlineStatus(updateOnlineStatusUI));
   let resizeTimeout;
-  w.addEventListener('resize', function () {
+
+  function onResize() {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
       const widthMatch = w.matchMedia('(min-width: 960px)').matches;
@@ -1765,6 +1755,7 @@ function btn(e) {
 
             // Bind the new dblclick listener
             movable[i].addEventListener('dblclick', elemDblclic);
+
             applyStyles(true, widthMatch);
             resizeElementToFullSize();
           }
@@ -1775,10 +1766,23 @@ function btn(e) {
           e.classList.add('minimized');
           e.removeEventListener('dblclick', elemDblclic);
           e.addEventListener('click', elemDblclic);
-          }
+        }
         );
       }
       resizeElementToFullSize();
-    }, 200);
-  });
+    }, 70);
+  }
+
+  function onScroll(e) {
+    e.preventDefault(); // block browser’s default scrolling
+    e.currentTarget.scrollTop += Math.sign(e.deltaY) * 24;
+  }
+
+  textarea.addEventListener('wheel', onScroll);
+  d.addEventListener('DOMContentLoaded', init, { once: true });
+  w.addEventListener('keyup', classToggle);
+  w.addEventListener('focus', () => monitorOnlineStatus(updateOnlineStatusUI));
+  w.addEventListener('resize', onResize);
+
+  // console.log('%c🐾Welcome to the Cuddle Zone of Coding!🐾\n%cKeep your coding paws steady and have fun!', 'font-size: 20px; background-color: #f7f7f7; color: #000000; padding: 0 4px; border-radius: 5px;', 'font-size: 16px; background-color: #e0e6ed; color: #000000; padding: 0 4px; border-radius: 5px;');
 })(window, document);
