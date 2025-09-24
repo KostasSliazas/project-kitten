@@ -967,9 +967,7 @@ textarea:hover {
 #battery {
   height: 77px
 }
-#text-area {
-  min-height: 144px;
-}
+
 .tr {
   opacity: .5
 }
