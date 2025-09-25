@@ -1016,6 +1016,28 @@
     d.getElementById('loader').style.display = 'none'; // Hide the loader
     d.getElementById('content').style.visibility = 'visible'; // Show the content
     d.getElementById('today').innerHTML = showDate();
+  
+  if ('serviceWorker' in navigator) {
+    try {
+      navigator.serviceWorker
+        .register('/project-kitten/sw.js?v=7')
+        .then(registration => {
+          console.log('Service Worker registered with scope:', registration.scope);
+        })
+        .catch(error => {
+          if (error.message.includes("ServiceWorkerContainer.register: Script URL's scheme is not 'http' or 'https'")) {
+            return console.warn('Service Worker registration error: Insecure context. Please use HTTPS or localhost.', error);
+          }
+          console.error('Service Worker registration failed:', error);
+        });
+    } catch (error) {
+      console.error('Unexpected error during Service Worker registration:', error);
+    }
+  } else {
+    console.log('Service Workers are not supported in this browser.');
+  }
+
+    scheduleMidnightRefresh();
 
     // events listeners
     bg.addEventListener('change', bgChange);
@@ -1025,6 +1047,12 @@
     root.addEventListener('mousemove', throttle(mouseMoveEvents, 16));
     root.addEventListener('mousedown', mouseDownEvents);
     root.addEventListener('mouseup', mouseUpEvents);
+    w.addEventListener('resize', onResize);
+    w.dispatchEvent(new Event('resize'));
+    w.addEventListener('keyup', classToggle);
+    w.addEventListener('focus', () => monitorOnlineStatus(updateOnlineStatusUI));
+    textarea.addEventListener('wheel', onScroll);
+    // console.log('%c🐾Welcome to the Cuddle Zone of Coding!🐾\n%cKeep your coding paws steady and have fun!', 'font-size: 20px; background-color: #f7f7f7; color: #000000; padding: 0 4px; border-radius: 5px;', 'font-size: 16px; background-color: #e0e6ed; color: #000000; padding: 0 4px; border-radius: 5px;');
   }
 
   // const concat = (...arrays) => [].concat(...arrays.filter(Array.isArray));
@@ -1682,10 +1710,6 @@ function btn(e) {
     w.setTimeout(scheduleMidnightRefresh, 60000);
   }
 
-  w.addEventListener('load', function () {
-    scheduleMidnightRefresh();
-  }, { once: true });
-
   function doAfter19h(action) {
     const now = new Date();
     const currentHour = now.getHours();
@@ -1699,7 +1723,7 @@ function btn(e) {
   }
 
   function resizeElementToFullSize() {
-    const padding = 48;
+    const padding = 36;
     if (w.matchMedia('(max-width: 960px)').matches) return;
 
     // Reset height to natural before measuring
@@ -1714,27 +1738,6 @@ function btn(e) {
     // Set final height
     main.style.height = `${adjusted}px`;
     overlay.style.height = `${adjusted}px`;
-  }
-
-
-  if ('serviceWorker' in navigator) {
-    try {
-      navigator.serviceWorker
-        .register('/project-kitten/sw.js?v=7')
-        .then(registration => {
-          console.log('Service Worker registered with scope:', registration.scope);
-        })
-        .catch(error => {
-          if (error.message.includes("ServiceWorkerContainer.register: Script URL's scheme is not 'http' or 'https'")) {
-            return console.warn('Service Worker registration error: Insecure context. Please use HTTPS or localhost.', error);
-          }
-          console.error('Service Worker registration failed:', error);
-        });
-    } catch (error) {
-      console.error('Unexpected error during Service Worker registration:', error);
-    }
-  } else {
-    console.log('Service Workers are not supported in this browser.');
   }
 
   let resizeTimeout;
@@ -1778,11 +1781,6 @@ function btn(e) {
     e.currentTarget.scrollTop += Math.sign(e.deltaY) * 24;
   }
 
-  textarea.addEventListener('wheel', onScroll);
   d.addEventListener('DOMContentLoaded', init, { once: true });
-  w.addEventListener('keyup', classToggle);
-  w.addEventListener('focus', () => monitorOnlineStatus(updateOnlineStatusUI));
-  w.addEventListener('resize', onResize);
 
-  // console.log('%c🐾Welcome to the Cuddle Zone of Coding!🐾\n%cKeep your coding paws steady and have fun!', 'font-size: 20px; background-color: #f7f7f7; color: #000000; padding: 0 4px; border-radius: 5px;', 'font-size: 16px; background-color: #e0e6ed; color: #000000; padding: 0 4px; border-radius: 5px;');
 })(window, document);
