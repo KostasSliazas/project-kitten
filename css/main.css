@@ -142,6 +142,7 @@ html {
   color: var(--color4);
   background: repeating-linear-gradient(-45deg, var(--color0) 0, var(--color0) 9px, var(--color1) 9px, var(--color1) 18px) fixed
 }
+
 #loader {
   line-height: 100dvh;
   background: url(../safari-pinned-tab.svg) center/contain no-repeat;
@@ -267,11 +268,16 @@ html {
 }
 
 .e {
-  --color0: #f7b3b3; /* light red / pink */
-  --color1: #faeded; /* very soft red-tinted background */
-  --color2: #f2c3c3; /* pastel red */
-  --color3: #7d4c4c; /* muted dark red */
-  --color4: #302828; /* deep red-tinted dark */
+  --color0: #f7b3b3;
+  /* light red / pink */
+  --color1: #faeded;
+  /* very soft red-tinted background */
+  --color2: #f2c3c3;
+  /* pastel red */
+  --color3: #7d4c4c;
+  /* muted dark red */
+  --color4: #302828;
+  /* deep red-tinted dark */
 }
 
 .e.bg-image {
@@ -573,9 +579,11 @@ p::after {
 .move {
   --color3: #000 !important
 }
-.mode-cute .movable{
-  clip-path: polygon( 0 var(--c), var(--c) 0, calc(100% - var(--c)) 0, 100% var(--c), 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, var(--c) 100%, 0 calc(100% - var(--c)) );
+
+.mode-cute .movable {
+  clip-path: polygon(0 var(--c), var(--c) 0, calc(100% - var(--c)) 0, 100% var(--c), 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, var(--c) 100%, 0 calc(100% - var(--c)));
 }
+
 .container div,
 .mode-popup h1 {
   cursor: pointer
@@ -702,6 +710,7 @@ a {
   width: 100%;
   text-overflow: ellipsis
 }
+
 .links a[style="opacity: 0.5;"]::after {
   content: "";
   position: absolute;
@@ -712,6 +721,7 @@ a {
   left: 0;
   top: calc(50% - 2px);
 }
+
 .mode-numbering {
   counter-reset: section
 }
@@ -1701,7 +1711,7 @@ input[type=text]:focus {
   .tetris {
     clip-path: none
   }
-  #controls,
+
   #timer,
   #vr {
     display: none !important
