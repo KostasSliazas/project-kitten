@@ -1397,10 +1397,9 @@ fieldset {
   padding: 0;
   bottom: 0;
   right: 0;
-  font-size: 12px;
+  color: var(--color3);
   display: block;
   margin: 0 auto;
-  min-height: 36px;
   width: 100%
 }
 
