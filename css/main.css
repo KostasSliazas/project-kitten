@@ -734,7 +734,6 @@ a {
   color: var(--color3);
   font-size: 12px;
   white-space: preserve nowrap;
-  display: inline-block
 }
 
 .local.links a::before,
