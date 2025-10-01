@@ -368,10 +368,12 @@ const loopElem = widthMatch => {
         e.style.width = roundToTen(e.offsetWidth) + 'px';
         e.style.height = roundToTen(e.offsetHeight) + 'px';
       }
-      if (e.firstElementChild) e.firstElementChild.title = ' (block index' + movable.indexOf(e) + ')';
+      if (e.firstElementChild) {
+        e.firstElementChild.title = ' (block index' + movable.indexOf(e) + ')';
+        e.addEventListener('dblclick', elemDblclic);
+      }
       if (e.id === 'text-area') textarea.style.height = e.style.height;
 
-      e.addEventListener('dblclick', elemDblclic);
 
       e.addEventListener('mousedown', function (e) {
         if (e.target === this) {
