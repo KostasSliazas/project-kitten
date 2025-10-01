@@ -1194,7 +1194,7 @@ textarea {
   background: var(--color1)
 }
 
-#c-sound,
+#esound,
 .checkbox label,
 .memo img,
 .movable::before,
@@ -1740,7 +1740,13 @@ input[type=text]:focus {
   .movable h1:first-child {
     padding: 0 0 0 48px
   }
+  .movable {
+    pointer-events: none; /* disable on the main div */
+  }
 
+  .movable > * {
+    pointer-events: auto; /* re-enable for children */
+  }
   #sunshine {
     background: 0 0;
     max-width: initial;
