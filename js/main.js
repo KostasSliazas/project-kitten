@@ -126,6 +126,9 @@ const onlineElement = d.getElementById('is-online');
 const hide = elem => elem.classList.add('hide');
 const show = elem => elem.classList.remove('hide');
 const online = () => w.navigator.onLine;
+const delay = ms => new Promise(resolve => w.setTimeout(resolve, ms));
+const widthMatch = () => w.matchMedia('(min-width: 960px)').matches;
+
 //icon images encoded base64
 const icon = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAB9VBMVEUAAABIcoqFtMv////BztXD0Nc1UmY3VWgULD8WL0IBCxcCDBknRVpvi5uMo7CPpbF5k6I6WW20w8vR2+DS2+DV3uLc4+fm6+7q7/Hr7/Hn7O/d5ejS2+C1w8tPcYXU3eLW3+NUdYiDmqjM1tzP2d6EnKlviZnY4OXa4uZxjJudsLvt8fPt8fOfsr24xs719/j1+Pm7yNDCztX3+vr4+vvDz9XDz9b4+vvEz9a9ytH2+Pm+ytKjtcDu8vTu8vSltsAMOFLY4OTY4OQYQluqu8TS2+Dn7e+oucKwwMjj6ez7/P35+/zj6eyxwMmWqrXJ1Nrh5+re5enX4OTl6+7r7/Hg5+rJ1NqWqrZad4iTqLSitL6br7qMo69ad4nZ4ubV3+Tz9/j+///////y9ffV3uPa4+fW4OXV3uT09/jc5Ojq7/Hp7vHq7e/v8fHw8fLu8PHw9PXe5OZUWVtMT1DQ1dfT19lBQ0VlaWva4OP9///U2t0gJikJDA6hq7Cvt7wLDhAdIiTJ0NT1+PmhrrWPnKPf5eni5+rm6+6ToKedqbDj6u34+vvw8/XX3+PR2+HGzM+cpKiosbagp6vT2t2+zNTN2N3z9vf9/v7b4ubx9favtblJVFpPWV9SXWPU2dvb4ufe5ej5+/vv8/TO2d/P2uDR2+D5+vofzWmlAAAAXnRSTlMAAAAAAAAAAAAAAAAEEBscEwU2lZyPpsjX2M2rljcJs7UJEMjKEQ7Exg8n3+ApTfX2UmL7+2Rl/GZX+Fku4+QvBZyeBivT1Cw4xf39xjkYbbbX3d3Xt24ZCRsiIhsJ/hk8XwAAALBJREFUGNM9jrsOwjAMRX1rK6QNqAMMTAgJFj6AGRYmRhb+D7Exs4D4HKRuMNCqIBryaDmDZZ/cJAY5YOB5Nr7nHB1vq3HHBCs/hCBwQSKitYZ1EDFEnGCurQ/YRjiIuqKWsg7CX6a2RNHLjOv7g5xsFKlSQ4zc22NiTpgpdYRSRDF9uMO5F4v4bTYzHUsRyBq7//JH3KC+G2Dvp2sBnAWkP9t/4qQqv01WhgQO5kX0AyBgJBBTng0fAAAAAElFTkSuQmCC';
 const emptyIcon = 'data:image/x-icon;base64,AAABAAEAEBACAAEAAQCwAAAAFgAAACgAAAAQAAAAIAAAAAEAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
@@ -145,28 +148,31 @@ function performNightThemeChange() {
 // Use getRandomInRange to select a random item from an array
 const getRandomFromArray = arr => arr[getRandomInRange(0, arr.length)];
 
-function isLocking() {
-  // create a new HTML link element
-  const link = d.createElement('link');
-  link.rel = 'icon';
-  link.type = 'image/x-icon';
+async function isLocking() {
   const rootLocked = StorageNamespace.getItem('is-locked');
-  if (rootLocked) {
-    setTimeout(() => {
-      d.title = 'New Tab'; // change title (document)
-    d.getElementById('loader').style.display = 'none'; // Hide the loader
-    link.href = emptyIcon;
-    root.style.background = 'none';
-    }, 7);
-    hide(main);
-  } else {
-    d.title = 'Project-Kitten'; // change title (document)
-link.href = icon;
-show(main);
-  }
-  d.head.appendChild(link);
-}
+  const loader = d.getElementById('loader');
 
+  if (rootLocked) {
+      hide(main);
+      d.title = 'New Tab';
+      root.style.background = 'none';
+      if (loader) loader.classList.add('none');
+
+      await delay(1);
+      // Remove existing favicon if present
+      const exist = d.querySelector('link[rel*="icon"]');
+      if (exist) exist.remove();
+      // Create new favicon
+      const link = d.createElement('link');
+      link.rel = 'icon';
+      link.type = 'image/x-icon';
+      link.href = emptyIcon;
+      d.head.appendChild(link);
+  } else {
+    d.title = 'Project-Kitten';
+    show(main);
+  }
+}
 isLocking();
 // create new sound for timers with base64 encoding
 const soundCalculator = new w.Audio('data:audio/mpeg;base64,SUQzBAAAAAAAIlRTU0UAAAAOAAADTGF2ZjYxLjEuMTAwAAAAAAAAAAAAAAD/4zjAAAAAAAAAAAAASW5mbwAAAA8AAAADAAABsACqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dX///////////////////////////////////////////8AAAAATGF2YzYxLjMuAAAAAAAAAAAAAAAAJAKgAAAAAAAAAbBUn6+GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/4xjEAA0BSphRQcAB0DAP/////+MYxj/gADPPPPPPPPPDCkhh2GcOJBJf8zGMwi4jBKrts7cuL2AAAABH/4ekAMMWP6BwAAP/4xjEBw7JnvR5gKAC0v6KqKTfGfAwoE386CAYFSgOL/OjlEkAkEQE1JlJ6KLAFFCct+INIibGiJoy7/6DRkMARKr/////////4xjEBgzBamABwcAA8Quf+8eayrUstqPs5U+pSBBmQa1l4oqqawLEnKd6XalT/S7uPMqYBA1UeEWWTEFNRTMuMTAwqqqqqqo=');
@@ -178,7 +184,6 @@ const clicked = d.getElementById('clicked');
 const movable = Array.from(d.getElementsByClassName('movable'));
 const movableLength = movable.length;
 const roundToTen = num => Math.ceil(num / 12) * 12;
-const delay = ms => new Promise(resolve => w.setTimeout(resolve, ms));
 const addLeadingZero = time => (time.toString().length < 2 ? '0' + time : time);
 const getPE = elem => elem.parentElement;
 const typed = [];
@@ -318,7 +323,6 @@ async function elemDblclic(e){
   }
 
   if (target.classList.contains('movable')) {
-    const widthMatch = w.matchMedia('(min-width: 960px)').matches;
     const index = movable.indexOf(target);
     let arrayOfMinimized = [...(StorageNamespace.getItem('element-class') || minimized)];
 
@@ -340,7 +344,7 @@ async function elemDblclic(e){
       arrayOfMinimized.push(index);
     }
 
-    if (widthMatch) {
+    if (widthMatch()) {
       StorageNamespace.setItem('element-styles', getStyles());
     }
     StorageNamespace.setItem('element-class', arrayOfMinimized);
@@ -953,7 +957,6 @@ async function init() {
   const loacalStorageText = StorageNamespace.getItem('textarea');
 
   textarea.value = loacalStorageText ? loacalStorageText : /*typeof typeText(textarea, textAreaDefaults) === 'string'? typeText(textarea, textAreaDefaults) :*/ textAreaDefaults;
-  const widthMatch = w.matchMedia('(min-width: 960px)').matches;
   const storageVersion = StorageNamespace.getItem('version');
   if (version !== storageVersion) {
     StorageNamespace.clear();
@@ -964,14 +967,14 @@ async function init() {
     textarea.removeAttribute('style');
     setColors();
     changerClass(0);
-    applyStyles(true, widthMatch);
+    applyStyles(true, widthMatch());
     loopElem(widthMatch);
     centerElements();
     //reload versions
     // w.location.reload(); // This reloads the page after your actions
   } else {
-    applyStyles(false, widthMatch);
-    loopElem(widthMatch);
+    applyStyles(false, widthMatch());
+    loopElem(widthMatch());
   }
 
   hide(codeDiv);
@@ -1440,9 +1443,8 @@ function mouseUpEvents(e) {
   if (!state.target) return;
   const peTarget = getPE(state.target);
   const targetClass = peTarget ? peTarget.className : null;
-  const widthMatch = w.matchMedia('(min-width: 960px)').matches;
 
-  if (targetClass && widthMatch) {
+  if (targetClass && widthMatch()) {
     state.target.classList.remove('down');
     root.classList.remove('move');
     if (!d.getElementById('bg-lines').checked) main.classList.remove('bg-lines');
@@ -1745,15 +1747,16 @@ function resizeElementToFullSize() {
 let resizeTimeout;
 
 function onResize() {
+  // const widthMatch = w.matchMedia('(min-width: 960px)').matches;
+
   clearTimeout(resizeTimeout);
   resizeTimeout = setTimeout(() => {
-    const widthMatch = w.matchMedia('(min-width: 960px)').matches;
 
-    if (widthMatch) {
+    if (widthMatch()) {
       const styles = StorageNamespace.getItem('element-styles') || blockDefaults;
       const getStyle = styles.split(',');
       for (let i = 0; i < movableLength; i++) {
-        if (widthMatch) {
+        if (widthMatch()) {
           movable[i].style = getStyle[i];
           movable[i].style.position = 'absolute';
           movable[i].removeEventListener('click', elemDblclic);
@@ -1761,14 +1764,12 @@ function onResize() {
           // Bind the new dblclick listener
           movable[i].addEventListener('dblclick', elemDblclic);
 
-          applyStyles(true, widthMatch);
           resizeElementToFullSize();
         }
       }
     } else {
       movable.forEach(e => {
         e.removeAttribute('style');
-        e.classList.add('minimized');
         e.removeEventListener('dblclick', elemDblclic);
         e.addEventListener('click', elemDblclic);
       }
