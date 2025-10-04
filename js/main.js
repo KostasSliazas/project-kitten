@@ -148,31 +148,37 @@ function performNightThemeChange() {
 // Use getRandomInRange to select a random item from an array
 const getRandomFromArray = arr => arr[getRandomInRange(0, arr.length)];
 
-async function isLocking() {
+function isLocking() {
   const rootLocked = StorageNamespace.getItem('is-locked');
   const loader = d.getElementById('loader');
+  const oldLink = d.querySelector('link[rel*="icon"]');
+
+
+  // Always create a fresh link
+  const link = d.createElement('link');
+  link.rel = 'icon';
+  link.type = 'image/x-icon';
 
   if (rootLocked) {
-      hide(main);
-      d.title = 'New Tab';
-      root.style.background = 'none';
-      if (loader) loader.classList.add('none');
-
-      await delay(1);
-      // Remove existing favicon if present
-      const exist = d.querySelector('link[rel*="icon"]');
-      if (exist) exist.remove();
-      // Create new favicon
-      const link = d.createElement('link');
-      link.rel = 'icon';
-      link.type = 'image/x-icon';
-      link.href = emptyIcon;
-      d.head.appendChild(link);
+    hide(main);
+    d.title = 'New Tab';
+    root.style.background = 'none';
+    if (loader) loader.classList.add('none');
+    link.href = emptyIcon;
   } else {
-    d.title = 'Project-Kitten';
     show(main);
+    d.title = 'Project-Kitten';
+    link.href = icon;
+  }
+
+  // Replace old favicon if exists, otherwise append
+  if (oldLink && oldLink.parentNode) {
+    oldLink.parentNode.replaceChild(link, oldLink);
+  } else {
+    d.head.appendChild(link);
   }
 }
+
 isLocking();
 // create new sound for timers with base64 encoding
 const soundCalculator = new w.Audio('data:audio/mpeg;base64,SUQzBAAAAAAAIlRTU0UAAAAOAAADTGF2ZjYxLjEuMTAwAAAAAAAAAAAAAAD/4zjAAAAAAAAAAAAASW5mbwAAAA8AAAADAAABsACqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dX///////////////////////////////////////////8AAAAATGF2YzYxLjMuAAAAAAAAAAAAAAAAJAKgAAAAAAAAAbBUn6+GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/4xjEAA0BSphRQcAB0DAP/////+MYxj/gADPPPPPPPPPDCkhh2GcOJBJf8zGMwi4jBKrts7cuL2AAAABH/4ekAMMWP6BwAAP/4xjEBw7JnvR5gKAC0v6KqKTfGfAwoE386CAYFSgOL/OjlEkAkEQE1JlJ6KLAFFCct+INIibGiJoy7/6DRkMARKr/////////4xjEBgzBamABwcAA8Quf+8eayrUstqPs5U+pSBBmQa1l4oqqawLEnKd6XalT/S7uPMqYBA1UeEWWTEFNRTMuMTAwqqqqqqo=');
@@ -195,7 +201,7 @@ const codeDivElms = Array.from(codeDiv.children[0].children);
 const textarea = d.getElementsByTagName('TEXTAREA')[0];
 const bg = d.querySelector('#bg-file');
 const styles = ['width', 'height', 'left', 'top'];
-const blockDefaults = "width:960px;height:48px;left:0px;top:0px;,width:492px;height:48px;left:0px;top:48px;,width:108px;height:48px;left:768px;top:48px;,width:132px;height:48px;left:192px;top:156px;,width:132px;height:60px;left:192px;top:96px;,width:192px;height:156px;left:0px;top:96px;,width:168px;height:72px;left:324px;top:96px;,width:168px;height:168px;left:324px;top:168px;,width:168px;height:144px;left:324px;top:336px;,width:168px;height:96px;left:324px;top:480px;,width:168px;height:144px;left:324px;top:576px;,width:36px;height:144px;left:792px;top:672px;,width:156px;height:252px;left:168px;top:252px;,width:168px;height:96px;left:324px;top:720px;,width:168px;height:564px;left:0px;top:252px;,width:120px;height:48px;left:492px;top:48px;,width:132px;height:48px;left:192px;top:204px;,width:156px;height:48px;left:612px;top:48px;,width:156px;height:48px;left:0px;top:72px;,width:156px;height:312px;left:168px;top:504px;,width:960px;height:48px;left:0px;top:24px;,width:168px;height:48px;left:156px;top:72px;,width:168px;height:48px;left:324px;top:72px;,width:144px;height:96px;left:816px;top:96px;,width:144px;height:264px;left:816px;top:240px;,width:144px;height:48px;left:816px;top:192px;,width:156px;height:384px;left:492px;top:432px;,width:156px;height:168px;left:492px;top:264px;,width:168px;height:72px;left:648px;top:264px;,width:168px;height:480px;left:648px;top:336px;,width:156px;height:168px;left:492px;top:96px;,width:168px;height:96px;left:648px;top:168px;,width:144px;height:312px;left:816px;top:504px;,width:168px;height:72px;left:648px;top:96px;,width:84px;height:48px;left:876px;top:48px;"
+const blockDefaults = "width:960px;height:48px;left:0px;top:0px;,width:492px;height:48px;left:0px;top:48px;,width:108px;height:48px;left:768px;top:48px;,width:132px;height:48px;left:192px;top:156px;,width:132px;height:60px;left:192px;top:96px;,width:192px;height:156px;left:0px;top:96px;,width:168px;height:72px;left:324px;top:96px;,width:168px;height:168px;left:324px;top:168px;,width:168px;height:144px;left:324px;top:336px;,width:168px;height:96px;left:324px;top:480px;,width:168px;height:144px;left:324px;top:576px;,width:36px;height:144px;left:792px;top:672px;,width:156px;height:252px;left:168px;top:252px;,width:168px;height:96px;left:324px;top:720px;,width:168px;height:564px;left:0px;top:252px;,width:120px;height:48px;left:492px;top:48px;,width:132px;height:48px;left:192px;top:204px;,width:156px;height:48px;left:612px;top:48px;,width:156px;height:48px;left:0px;top:72px;,width:156px;height:312px;left:168px;top:504px;,width:960px;height:48px;left:0px;top:24px;,width:168px;height:48px;left:156px;top:72px;,width:168px;height:48px;left:324px;top:72px;,width:144px;height:96px;left:816px;top:96px;,width:144px;height:264px;left:816px;top:240px;,width:144px;height:48px;left:816px;top:192px;,width:156px;height:384px;left:492px;top:432px;,width:156px;height:168px;left:492px;top:264px;,width:168px;height:72px;left:648px;top:264px;,width:168px;height:480px;left:648px;top:336px;,width:156px;height:168px;left:492px;top:96px;,width:168px;height:96px;left:648px;top:168px;,width:144px;height:312px;left:816px;top:504px;,width:168px;height:72px;left:648px;top:96px;,width:84px;height:48px;left:876px;top:48px;";
 const textAreaDefaults = ' Good day. You have the ability to reposition these blocks by clicking (□ or ▭) and holding (the left) corner or by pressing the ` key on your keyboard. ([ctrl]+[`]=Reset to Defaults) Alternatively, double-click (▭) to maximize them or minimize (□). You can also change the theme by right-clicking (context menu) and customize the colors and background image through the user interface. If locked, you can unlock it by clicking a few times on the background and then entering the default PIN: 520. Alternatively, you can clear the localStorage (since this project stores data such as PIN(password) and other settings in localStorage). Now you can type your text here.';
 const counts = {
   allMouseClicks: 0,
@@ -221,11 +227,7 @@ const copy = d.getElementById('clipboard');
 const copyToClipboard = (el) => {
   let text = '';
 
-  if (
-    el instanceof HTMLInputElement ||
-    el instanceof HTMLTextAreaElement ||
-    el instanceof HTMLOutputElement
-  ) {
+  if (el && /^(INPUT|TEXTAREA|OUTPUT)$/.test(el.tagName)) {
     text = el.value.trim();
   } else {
     // Only get direct text nodes (exclude text from child elements)
@@ -360,7 +362,7 @@ const loopElem = widthMatch => {
   // movable.forEach(async (e) => {
   // using for loops for performance
   for (let i = 0; i < movableLength; i++) {
-    (function (w, i, widthMatch, clickTimeout, minimized, getOffset, getStyles) {
+    (function (w, i, widthMatch, clickTimeout, minimized, getOffset, getStyles, elemDblclic) {
       const e = movable[i];
       // await delay(30);
       if (widthMatch) {
@@ -405,7 +407,7 @@ const loopElem = widthMatch => {
           }, clickDelay);
         }
       });
-    })(w, i, widthMatch, clickTimeout, minimized, getOffset, getStyles);
+    })(w, i, widthMatch, clickTimeout, minimized, getOffset, getStyles, elemDblclic);
     // console.timeEnd()
   }
 };
@@ -1394,14 +1396,14 @@ async function mouseMoveEvents(event) {
 
 
   // Updated size
-  const rect = target.getBoundingClientRect();
-  const height = rect.height;
-
-  const rootHeight = w.innerHeight;
-  const docHeight = root.scrollHeight;
-  const maxScroll = docHeight - rootHeight;
-
-  let scrollY;
+  // const rect = target.getBoundingClientRect();
+  // const height = rect.height;
+  //
+  // const rootHeight = w.innerHeight;
+  // const docHeight = root.scrollHeight;
+  // const maxScroll = docHeight - rootHeight;
+  //
+  // let scrollY;
 
   mouseMoves(target);
   await delay(200);
