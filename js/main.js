@@ -1,5 +1,5 @@
 /**
- * Main off "moving blocks" script created by K.S.
+ * Main off "project-kitten" script created by Kostas Šliažas
  * @date 07/07/2023 - 07:07:07 AM
  */
 /* eslint-disable no-undef */
@@ -202,7 +202,7 @@ const textarea = d.getElementsByTagName('TEXTAREA')[0];
 const bg = d.querySelector('#bg-file');
 const styles = ['width', 'height', 'left', 'top'];
 const blockDefaults = "width:960px;height:48px;left:0px;top:0px;,width:492px;height:48px;left:0px;top:48px;,width:108px;height:48px;left:768px;top:48px;,width:132px;height:48px;left:192px;top:156px;,width:132px;height:60px;left:192px;top:96px;,width:192px;height:156px;left:0px;top:96px;,width:168px;height:72px;left:324px;top:96px;,width:168px;height:168px;left:324px;top:168px;,width:168px;height:144px;left:324px;top:336px;,width:168px;height:96px;left:324px;top:480px;,width:168px;height:144px;left:324px;top:576px;,width:36px;height:144px;left:792px;top:672px;,width:156px;height:252px;left:168px;top:252px;,width:168px;height:96px;left:324px;top:720px;,width:168px;height:564px;left:0px;top:252px;,width:120px;height:48px;left:492px;top:48px;,width:132px;height:48px;left:192px;top:204px;,width:156px;height:48px;left:612px;top:48px;,width:156px;height:48px;left:0px;top:72px;,width:156px;height:312px;left:168px;top:504px;,width:960px;height:48px;left:0px;top:24px;,width:168px;height:48px;left:156px;top:72px;,width:168px;height:48px;left:324px;top:72px;,width:144px;height:96px;left:816px;top:96px;,width:144px;height:264px;left:816px;top:240px;,width:144px;height:48px;left:816px;top:192px;,width:156px;height:384px;left:492px;top:432px;,width:156px;height:168px;left:492px;top:264px;,width:168px;height:72px;left:648px;top:264px;,width:168px;height:480px;left:648px;top:336px;,width:156px;height:168px;left:492px;top:96px;,width:168px;height:96px;left:648px;top:168px;,width:144px;height:312px;left:816px;top:504px;,width:168px;height:72px;left:648px;top:96px;,width:84px;height:48px;left:876px;top:48px;";
-const textAreaDefaults = ' Good day. You have the ability to reposition these blocks by clicking (□ or ▭) and holding (the left) corner or by pressing the ` key on your keyboard. ([ctrl]+[`]=Reset to Defaults) Alternatively, double-click (▭) to maximize them or minimize (□). You can also change the theme by right-clicking (context menu) and customize the colors and background image through the user interface. If locked, you can unlock it by clicking a few times on the background and then entering the default PIN: 520. Alternatively, you can clear the localStorage (since this project stores data such as PIN(password) and other settings in localStorage). Now you can type your text here.';
+const textAreaDefaults = 'Good day. You have the ability to reposition these blocks by clicking (□ or ▭) and holding (the left) corner or by pressing the ` key on your keyboard. ([ctrl]+[`]=Reset to Defaults) Alternatively, double-click (▭) to maximize them or minimize (□). You can also change the theme by right-clicking (context menu) and customize the colors and background image through the user interface. If locked, you can unlock it by clicking a few times on the background and then entering the default PIN: 520. Alternatively, you can clear the localStorage (since this project stores data such as PIN(password) and other settings in localStorage). Now you can type your text here.';
 const counts = {
   allMouseClicks: 0,
  clicks: 0,
@@ -1062,17 +1062,6 @@ async function init() {
   // console.log('%c🐾Welcome to the Cuddle Zone of Coding!🐾\n%cKeep your coding paws steady and have fun!', 'font-size: 20px; background-color: #f7f7f7; color: #000000; padding: 0 4px; border-radius: 5px;', 'font-size: 16px; background-color: #e0e6ed; color: #000000; padding: 0 4px; border-radius: 5px;');
 }
 
-// const concat = (...arrays) => [].concat(...arrays.filter(Array.isArray));
-
-// async function typeText(textarea, text, delayMs = 70) {
-//   for (let i = 0; i < text.length; i++) {
-//     await delay(delayMs);            // wait before next char, don't append delay!
-//     textarea.value += text[i];       // append single character
-//     textarea.scrollTop = textarea.scrollHeight;
-//   }
-// }
-
-
 function setColors() {
   const compStyles = w.getComputedStyle(root);
   const colors = d.querySelectorAll('#colors input[type=color]');
@@ -1119,6 +1108,7 @@ function contextMenuFun(e) {
     //set local storage only when user click
     StorageNamespace.setItem('theme', THEME_CHANGE.value);
     setColors();
+    resizeElementToFullSize();
   }
 
   if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'P' || e.target.tagName === 'I' || e.target.tagName === 'OUTPUT' || e.target.id === 'clipboard') {
@@ -1390,42 +1380,12 @@ const cursorPositions = {
 async function mouseMoveEvents(event) {
   const { moving, target } = state;
   if (!moving || !target || !target.classList.contains('movable')) return;
-
   cursorPositions.x = event.clientX - 12;
   cursorPositions.y = event.clientY - 12;
-
-
-  // Updated size
-  // const rect = target.getBoundingClientRect();
-  // const height = rect.height;
-  //
-  // const rootHeight = w.innerHeight;
-  // const docHeight = root.scrollHeight;
-  // const maxScroll = docHeight - rootHeight;
-  //
-  // let scrollY;
-
   mouseMoves(target);
   await delay(200);
-
   resizeElementToFullSize();
-
-  // if (cursorPositions.y + height > rootHeight) {
-  //   // Case: element bottom goes beyond viewport → push to bottom
-  //   scrollY = maxScroll;
-  // } else {
-  //   // Otherwise: follow cursor Y
-  //   scrollY = cursorPositions.y;
-  // }
-  // await delay(200);
-  // await w.scrollTo({
-  //   top: scrollY,
-  //   left: cursorPositions.x,
-  //   behavior: "auto"
-  // });
 }
-
-
 
 function mouseUpEvents(e) {
   const eventTarget = e.target;
@@ -1454,7 +1414,7 @@ function mouseUpEvents(e) {
   }
 
   try {
-    if (scalingTarget && peTarget && scalingTarget.tagName === 'TEXTAREA' && scalingTarget !== null) {
+    if (widthMatch() && scalingTarget && peTarget && scalingTarget.tagName === 'TEXTAREA' && scalingTarget !== null) {
       const peScalingTarget = getPE(scalingTarget);
       scalingTarget.style.height = peScalingTarget.style.height = roundToTen(peScalingTarget.offsetHeight) + 'px';
       peScalingTarget.style.width = roundToTen(peScalingTarget.offsetWidth) + 'px';
@@ -1730,7 +1690,6 @@ function doAfter19h(action) {
 
 function resizeElementToFullSize() {
   const padding = 36;
-  if (w.matchMedia('(max-width: 960px)').matches) return;
 
   // Reset height to natural before measuring
   main.style.height = '';
@@ -1746,14 +1705,8 @@ function resizeElementToFullSize() {
   overlay.style.height = `${adjusted}px`;
 }
 
-let resizeTimeout;
 
 function onResize() {
-  // const widthMatch = w.matchMedia('(min-width: 960px)').matches;
-
-  clearTimeout(resizeTimeout);
-  resizeTimeout = setTimeout(() => {
-
     if (widthMatch()) {
       const styles = StorageNamespace.getItem('element-styles') || blockDefaults;
       const getStyle = styles.split(',');
@@ -1762,11 +1715,8 @@ function onResize() {
           movable[i].style = getStyle[i];
           movable[i].style.position = 'absolute';
           movable[i].removeEventListener('click', elemDblclic);
-
           // Bind the new dblclick listener
           movable[i].addEventListener('dblclick', elemDblclic);
-
-          resizeElementToFullSize();
         }
       }
     } else {
@@ -1777,8 +1727,7 @@ function onResize() {
       }
       );
     }
-    resizeElementToFullSize();
-  }, 70);
+  resizeElementToFullSize();
 }
 
 function onScroll(e) {
