@@ -1682,7 +1682,10 @@ input[type=text]:focus {
     line-height: 3;
     font-size: 16px
   }
-
+  #content {
+  padding: 0 2em;
+  overflow:hidden;
+  }
   .movable h1,
   .movable h1 a,
   .movable::before {
@@ -1713,10 +1716,6 @@ input[type=text]:focus {
   #timer,
   #vr {
     display: none !important
-  }
-
-  .main {
-    overflow-x: hidden
   }
 
   .main,
@@ -1751,6 +1750,9 @@ input[type=text]:focus {
     background: 0 0;
     max-width: initial;
     height: 48px
+  }
+  .e .movable:first-child, .e .movable:nth-child(16), .e .movable:nth-child(18), .e .movable:nth-child(19), .e .movable:nth-child(2), .e .movable:nth-child(21), .e .movable:nth-child(22), .e .movable:nth-child(23), .e .movable:nth-child(3), .e .movable:nth-child(35), .hide, .mode-cute .cute img, p::after {
+    display: none;
   }
 }
 
