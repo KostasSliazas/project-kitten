@@ -1683,7 +1683,7 @@ input[type=text]:focus {
     font-size: 16px
   }
   #content {
-  padding: 0 2em;
+  padding: 0 1em;
   overflow:hidden;
   }
   .movable h1,
@@ -1712,7 +1712,7 @@ input[type=text]:focus {
   .tetris {
     clip-path: none
   }
-
+  #controls,
   #timer,
   #vr {
     display: none !important
