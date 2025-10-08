@@ -3,6 +3,7 @@
   const main = document.querySelector('#main')
   const addButton = document.querySelector('#add')
   const exportToExcel = document.querySelector('#export')
+  const inputNumber = document.querySelector('#number')
 
   function toggleClass (e) {
     e.stopPropagation()
@@ -24,8 +25,14 @@
     return document.querySelector(element).value
   }
 
+  function isEmpty(el) {
+    const element = document.getElementById(el)
+    return element.children.length === 0 && element.textContent.trim() === "";
+  }
+
   function removeElement () {
     this.parentElement.remove()
+    inputNumber.disabled = !isEmpty('table');
   }
 
   function addText (e) {
@@ -87,6 +94,11 @@
     elements[elements.length - 1].innerText = firstText;
   }
 
+  function capitalize(word) {
+    if (!word) return "";
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  }
+
   function CreateRow (days, name) {
     if (name.length > 0) {
       let table
@@ -103,7 +115,7 @@
       this.row = document.createDocumentFragment()
       this.line = new CreateOneWindow('tr', '')
       this.row.appendChild(this.line)
-      const nameElement = new CreateOneWindow('td', name)
+      const nameElement = new CreateOneWindow('td', capitalize(name))
       nameElement.addEventListener('dblclick', addText.bind(nameElement))
       this.line.appendChild(nameElement)
       for (let i = 1; i <= this.days; i++) {
@@ -135,22 +147,80 @@
     }
   }
 
+  function inlineTableStyles(table) {
+    Array.from(table.children).forEach(e => {
+      Array.from(e.children).forEach(cell => {
+      const cs = getComputedStyle(cell);
+      // Background
+      // if (['<', '>', 'remove'].includes(cell.textContent.trim())) {
+      //   cell.remove();
+      // }
+      if (cs.backgroundColor && cs.backgroundColor !== "rgba(0, 0, 0, 0)") {
+        cell.setAttribute("bgcolor", cs.backgroundColor);
+      }
+
+   });  });
+  }
 
   const tableToExcel = (function () {
     const uri = 'data:application/vnd.ms-excel;base64,'
-    const template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>'
+    const template = `
+    <html xmlns:o="urn:schemas-microsoft-com:office:office"
+    xmlns:x="urn:schemas-microsoft-com:office:excel"
+    xmlns="http://www.w3.org/TR/REC-html40">
+    <head>
+    <!--[if gte mso 9]>
+    <xml>
+    <x:ExcelWorkbook>
+    <x:ExcelWorksheets>
+    <x:ExcelWorksheet>
+    <x:Name>{worksheet}</x:Name>
+    <x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions>
+    </x:ExcelWorksheet>
+    </x:ExcelWorksheets>
+    </x:ExcelWorkbook>
+    </xml>
+    <![endif]-->
+    <meta http-equiv="content-type" content="text/plain; charset=UTF-8"/>
+    </head>
+    <body>
+    <table>{table}</table>
+    </body>
+    </html>`;
+
     const base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
     const format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p] }) }
     return function (table, name) {
       if (!table.nodeType) table = document.getElementById(table)
+      inlineTableStyles(table)
       const ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
+
       window.location.href = uri + base64(format(template, ctx))
     }
   })()
   document.getElementById('add-text-to-selected').addEventListener('click', addTextToSelected)
   exportToExcel.addEventListener('click', () => tableToExcel('table'))
+
   addButton.addEventListener('click', () => {
-    const ner = new CreateRow(getValue('#number'), getValue('#name'))
+    if (isEmpty('table')) {
+      new CreateRow (getValue('#number'), formattedDate)
+      inputNumber.disabled = !isEmpty('table');
+    }
+  else
+     new CreateRow(getValue('#number'), getValue('#name'))
+
   })
-  new CreateRow (getValue('#number'), 'Name')
+
+  // Get today's date
+  const today = new Date();
+  // Format YYYY-MM-DD
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0'); // months start at 0
+  const day = String(today.getDate()).padStart(2, '0');
+  const formattedDate = `${year}-${month}-${day}`;
+
+      if (main.innerHTML.trim() === "") {
+        new CreateRow (getValue('#number'), formattedDate)
+      }
+
 })()
