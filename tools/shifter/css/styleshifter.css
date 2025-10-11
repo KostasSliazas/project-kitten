@@ -1,17 +1,47 @@
+html {
+  height: 100%;
+}
 body {
     font: 16px/1.5 Candara, Calibri, Segoe, Segoe UI, Optima, Arial, sans-serif;
-    margin: 0;
-    display: flex;
     flex-direction: column;
+    display: flex;
     place-items: center;
+    height: 100%;
+    margin: 0 auto;
+    overflow-x: hidden;
+    place-content: center;
 }
-
+#main {
+  display: inline-flex;
+  width: 100%;
+  background: rgb(218, 240, 227);
+  overflow-x: scroll;
+  flex: 1 1 100%;
+  place-content: center;
+}
+footer {
+  place-self: self-end;
+  place-content: center;
+  height: 100%;
+  place-items: end;
+  width: 100%;
+  background: rgb(130, 152, 139);
+  font-size: .75em;
+  display: inline-flex;
+  flex: 1 1 2em;
+}
 header {
-    margin: 2em;
+    background: rgb(86, 108, 95);
+    min-width: 100%;
+    place-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    place-content: center;
+    padding: 1em 0;
 }
 
 table {
-    border-top: 1px solid #aaa;
+    border-top: 1px solid rgb(174, 196, 183);
     margin: 2em;
     border-collapse: collapse;
 }
@@ -19,25 +49,26 @@ input{line-height: 2}
 button{line-height: 2;cursor: pointer;min-width: 72px;}
 table>tr {
     text-align: center;
-    border-bottom: 1px solid #aaa;
-    border-right: 1px solid #aaa;
+    border-bottom: 1px solid rgb(174, 196, 183);
+    border-right: 1px solid rgb(174, 196, 183);
+    display: flex;
 }
 
 table>tr>td:nth-last-child(-0n+3) {
-    width: 100px;
-    background: #f00;
+    background: #f953a8;
+    padding: 0 .75em;
 }
 
 table>tr>td:nth-last-child(-0n+2),
 table>tr>td:last-of-type {
-    width: 48px;
     background: #f0f;
+    padding: 0 .75em;
 }
 
 table>tr>td {
     white-space:nowrap;
     line-height: 2;
-    border-left: 1px solid #aaa;
+    border-left: 1px solid rgb(174, 196, 183);
     overflow: hidden;
     text-overflow: ellipsis;
     cursor: pointer;
@@ -45,6 +76,8 @@ table>tr>td {
     user-select: none;
     box-sizing: border-box;
     min-width: 3ch;
+    --col-width: 2;
+    font-size: .75em;
 }
 
 table>tr>td:first-of-type {
