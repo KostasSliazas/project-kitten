@@ -146,14 +146,39 @@
     main.appendChild(table);
   };
 
+  function cloneWithComputedStyles(element) {
+    // Clone the element (deep clone)
+    const clone = element.cloneNode(true);
+
+    // Get computed styles of the original element
+    const computedStyle = window.getComputedStyle(element);
+
+    // Apply each computed style to the clone
+    for (let i = 0; i < computedStyle.length; i++) {
+      const prop = computedStyle[i];
+      clone.style[prop] = computedStyle.getPropertyValue(prop);
+    }
+
+    // Optional: recursively copy child styles
+    const originalChildren = element.children;
+    const cloneChildren = clone.children;
+    for (let i = 0; i < originalChildren.length; i++) {
+      cloneWithComputedStyles(originalChildren[i]);
+    }
+
+    return clone;
+  }
+
   // Inline table styles for Excel
   const inlineTableStyles = (table) => {
     Array.from(table.rows).forEach((row) => {
       Array.from(row.cells).forEach((cell) => {
+
         const cs = getComputedStyle(cell);
+        if(cell.textContent.toLowerCase() === 'remove' || cell.textContent === '<' || cell.textContent === '>' ) cell.remove();
 
         if (cs.backgroundColor && cs.backgroundColor !== 'rgba(0, 0, 0, 0)') {
-          cell.setAttribute('bgcolor', cs.backgroundColor);
+          cell.setAttribute('bgcolor', '#eee');
         }
 
         if (cs.width && cs.width !== 'auto' && cs.width !== '0px') {
@@ -165,6 +190,7 @@
         }
       });
     });
+    return table;
   };
 
   // Export table to Excel
@@ -204,9 +230,14 @@
     const format = (s, c) => s.replace(/{(\w+)}/g, (m, p) => c[p]);
 
     return (table, name) => {
-      if (!table.nodeType) table = document.getElementById(table);
+      if (!table.nodeType) {
+        table = document.getElementById(table);
+      }
       inlineTableStyles(table);
-      const ctx = { worksheet: name || 'Worksheet', table: table.innerHTML };
+
+      const cloneTable = table.cloneNode(true);
+
+      const ctx = { worksheet: name || 'Worksheet', table: cloneTable.innerHTML };
       window.location.href = uri + base64(format(template, ctx));
     };
   })();
