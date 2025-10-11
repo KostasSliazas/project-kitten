@@ -90,7 +90,7 @@
 
   // Create table row
   const createRow = (days, name) => {
-    if (!name || name.length === 0) return;
+    // if (!name || name.length === 0) return;
 
     let table;
     if (main.children.length > 0) {
