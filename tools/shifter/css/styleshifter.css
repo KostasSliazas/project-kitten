@@ -54,13 +54,12 @@ table>tr {
     display: flex;
 }
 
-table>tr>td:nth-last-child(-0n+3) {
+#remove {
     background: #f953a8;
     padding: 0 .75em;
 }
 
-table>tr>td:nth-last-child(-0n+2),
-table>tr>td:last-of-type {
+#left, #right {
     background: #f0f;
     padding: 0 .75em;
 }
