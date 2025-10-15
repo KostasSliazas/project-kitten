@@ -125,7 +125,7 @@
 
       const elem = createElement('td', fill);
       elem.align = 'center';
-      elem.className = 'Name';
+      if(i===0)elem.className = 'Name';
       elem.onclick = toggleClass;
       elem.ondblclick = addText;
       line.appendChild(elem);
@@ -135,6 +135,9 @@
     const remove = createElement('td', 'remove');
     const left = createElement('td', '<');
     const right = createElement('td', '>');
+    remove.id = "remove";
+    left.id = "left";
+    right.id = "right";
     remove.onclick = (e) => removeElement.call(remove, e);
     left.onclick = (e) => prevElement.call(left, e);
     right.onclick = (e) => nextElement.call(right, e);
@@ -145,29 +148,6 @@
     table.appendChild(rowFragment);
     main.appendChild(table);
   };
-
-  function cloneWithComputedStyles(element) {
-    // Clone the element (deep clone)
-    const clone = element.cloneNode(true);
-
-    // Get computed styles of the original element
-    const computedStyle = window.getComputedStyle(element);
-
-    // Apply each computed style to the clone
-    for (let i = 0; i < computedStyle.length; i++) {
-      const prop = computedStyle[i];
-      clone.style[prop] = computedStyle.getPropertyValue(prop);
-    }
-
-    // Optional: recursively copy child styles
-    const originalChildren = element.children;
-    const cloneChildren = clone.children;
-    for (let i = 0; i < originalChildren.length; i++) {
-      cloneWithComputedStyles(originalChildren[i]);
-    }
-
-    return clone;
-  }
 
   // Inline table styles for Excel
   const inlineTableStyles = (table) => {
@@ -249,10 +229,10 @@
   addButton.addEventListener('click', () => {
     if (isEmpty('table')) {
       createRow(getValue('#number'), formattedDate);
-      inputNumber.disabled = !isEmpty('table');
     } else {
       createRow(getValue('#number'), getValue('#name'));
     }
+    inputNumber.disabled = true;
   });
 
   // Today's date
@@ -264,5 +244,6 @@
 
   if (main.innerHTML.trim() === '') {
     createRow(getValue('#number'), formattedDate);
+    inputNumber.disabled = true;
   }
 })();
