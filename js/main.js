@@ -1150,7 +1150,7 @@ function rootClick(e) {
   if (e.target.tagName === 'BUTTON' && e.target.parentElement.classList.contains('counter')) {
     if (timers.isCounting) {
       timers.stop();
-      timers.start();
+      //timers.start();
     }
     timers.counterTime.textContent = addLeadingZero(timers.totalSeconds());
   }
@@ -1374,7 +1374,7 @@ const mouseMoves = e => {
 
 const cursorPositions = {
   y: 0,
- x: 0,
+  x: 0,
 };
 
 async function mouseMoveEvents(event) {
