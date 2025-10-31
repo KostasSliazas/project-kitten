@@ -269,15 +269,10 @@ html {
 
 .e {
   --color0: #f7b3b3;
-  /* light red / pink */
   --color1: #faeded;
-  /* very soft red-tinted background */
   --color2: #f2c3c3;
-  /* pastel red */
   --color3: #7d4c4c;
-  /* muted dark red */
   --color4: #302828;
-  /* deep red-tinted dark */
 }
 
 .e.bg-image {
@@ -335,11 +330,11 @@ html {
 }
 
 .k {
-  --color0: #e6c18a;
-  --color1: #bbaa8f;
-  --color2: #91897d;
-  --color3: #665a47;
-  --color4: #3c3020;
+  --color0: #7faee6;
+  --color1: #7d91a8;
+  --color2: #9cb5d7;
+  --color3: #c7d1e3;
+  --color4: #1a2533;
   --blend: soft-light
 }
 
@@ -457,11 +452,11 @@ html {
 }
 
 .q {
-  --color0: #6b726b;
-  --color1: #4a594a;
-  --color2: #5d6a57;
-  --color3: #aab8a1;
-  --color4: #e1eade
+  --color0: #6d5a78;
+  --color1: #4f3d59;
+  --color2: #5e4b67;
+  --color3: #b6a3c2;
+  --color4: #e6dff0;
 }
 
 .q.bg-image {
@@ -1739,11 +1734,11 @@ input[type=text]:focus {
     padding: 0 0 0 48px
   }
   .movable {
-    pointer-events: none; /* disable on the main div */
+    pointer-events: none;
   }
 
   .movable > * {
-    pointer-events: auto; /* re-enable for children */
+    pointer-events: auto;
   }
   #sunshine {
     background: 0 0;
