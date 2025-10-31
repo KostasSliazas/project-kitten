@@ -624,7 +624,7 @@ const arrayHelper = function () {
 };
 
 const themeName = d.getElementById('theme-name');
-const longNames = ['inner peace', 'peace on earth', 'cool dudes', 'sunshine', 'someday', 'everything fine', 'night', 'green', 'happiness', 'jupiter', 'Karma', 'lightness', 'marigold', 'neutral', 'optimistic', 'paradise', 'colored calcium', 'respect', 'silver'];
+const longNames = ['inner peace', 'peace on earth', 'cool dudes', 'sunshine', 'someday', 'everything fine', 'night', 'green', 'happiness', 'jupiter', 'kindness', 'lightness', 'marigold', 'neutral', 'optimistic', 'paradise', 'quiescent', 'respect', 'silver'];
 const classNameVariables = [0, 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y'];
 const nightThemes = ['b', 'd', 'f', 'g', 'o', 'p', 'q', 'r', 't', 'v', 'y'];
 const THEME_CHANGE = arrayHelper.call(classNameVariables);
