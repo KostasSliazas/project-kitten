@@ -1,32 +1,57 @@
 /* jshint esversion: 6 */
-(function () {
+(() => {
   'use strict';
+
+  /*** ===========================
+   *  CONSTANTS & SELECTORS
+   *  =========================== */
   const main = document.querySelector('#main');
   const addButton = document.querySelector('#add');
+  const cloneButton = document.querySelector('#clone');
   const exportToExcel = document.querySelector('#export');
   const inputNumber = document.querySelector('#number');
+  const addTextButton = document.getElementById('add-text-to-selected');
 
-  // Toggle "selected" class
-  function toggleClass(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    e.currentTarget.classList.toggle('selected');
-  }
+  // Today's date (used as default row label)
+  const today = new Date();
+  const formattedDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
 
-  let counter = 0;
+  /*** ===========================
+   *  UTILITY FUNCTIONS
+   *  =========================== */
+  const getValue = (selector) => document.querySelector(selector).value;
 
-  const filler = () => {
-    const val = getValue('#text');
-    const firstNum = val[0];
-    counter += Number(firstNum);
-    return (counter % firstNum === 0) ? 1 : 0;
+  const isEmpty = (id) => {
+    const element = document.getElementById(id);
+    return element.children.length === 0 && element.textContent.trim() === '';
   };
 
-  const getValue = (element) => document.querySelector(element).value;
+  const capitalize = (word) =>
+  word ? word.charAt(0).toUpperCase() + word.slice(1) : '';
 
-  const isEmpty = (el) => {
-    const element = document.getElementById(el);
-    return element.children.length === 0 && element.textContent.trim() === '';
+  const createElement = (tag, content = '') => {
+    const el = document.createElement(tag);
+    el.innerHTML = content;
+    return el;
+  };
+
+  /*** ===========================
+   *  EVENT HANDLERS
+   *  =========================== */
+  const toggleClass = (e) => {
+    e.preventDefault();
+    e.currentTarget.classList.toggle('selected');
+  };
+
+  const addText = (e) => {
+    e.preventDefault();
+    e.currentTarget.innerText = getValue('#text');
+  };
+
+  const addTextToSelected = () => {
+    const selected = main.querySelectorAll('.selected');
+    const text = getValue('#text');
+    selected.forEach((el) => (el.innerText = text));
   };
 
   const removeElement = function () {
@@ -34,29 +59,16 @@
     inputNumber.disabled = !isEmpty('table');
   };
 
-  function addText(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    e.currentTarget.innerText = getValue('#text');
-    return e.currentTarget.innerText;
-  }
-
-  const addTextToSelected = () => {
-    const selected = main.querySelectorAll('.selected');
-    selected.forEach((element) => {
-      element.innerText = getValue('#text');
-    });
+  let counter = 0;
+  const filler = () => {
+    const val = getValue('#text');
+    const firstNum = Number(val[0]);
+    counter += firstNum;
+    return counter % firstNum === 0 ? 1 : 0;
   };
 
-  // Factory function for creating elements
-  const createElement = (tag, content) => {
-    const el = document.createElement(tag);
-    el.innerHTML = content;
-    return el;
-  };
-
-  const getAllDivs = function (e) {
-    const [, ...listOfAll] = e.parentElement.children;
+  const getAllDivs = (btn) => {
+    const [, ...listOfAll] = btn.parentElement.children;
     listOfAll.length -= 3;
     return listOfAll;
   };
@@ -83,97 +95,92 @@
     elements[elements.length - 1].innerText = firstText;
   };
 
-  const capitalize = (word) => {
-    if (!word) return '';
-    return word.charAt(0).toUpperCase() + word.slice(1);
-  };
-
-  // Create table row
+  /*** ===========================
+   *  TABLE & ROW CREATION
+   *  =========================== */
   const createRow = (days, name) => {
-    // if (!name || name.length === 0) return;
-
-    let table;
-    if (main.children.length > 0) {
-      table = document.getElementsByTagName('table')[0];
-    } else {
+    let table = main.querySelector('table');
+    if (!table) {
       table = document.createElement('table');
       table.id = 'table';
-      table.setAttribute('cellpadding', '0');
-      table.setAttribute('cellspacing', '0');
+      table.cellPadding = '0';
+      table.cellSpacing = '0';
       table.style.gridTemplateColumns = `repeat(${Number(days) + 4}, minmax(20px, 1fr))`;
+      main.appendChild(table);
     }
 
+    const row = document.createElement('tr');
     const rowFragment = document.createDocumentFragment();
-    const line = createElement('tr', '');
-    rowFragment.appendChild(line);
 
     // Name cell
-    const nameElement = createElement('td', capitalize(name));
-    nameElement.addEventListener('dblclick', (e) => addText.call(nameElement, e));
-    line.appendChild(nameElement);
+    const nameCell = createElement('td', capitalize(name));
+    nameCell.addEventListener('dblclick', addText);
+    row.appendChild(nameCell);
 
-    // Day cells
+    // Days
     const totalDays = Number(days) >= 28 && Number(days) <= 31 ? Number(days) : 31;
+    const textValue = getValue('#text');
+
     for (let i = 1; i <= totalDays; i++) {
       let fill = i < 10 ? `0${i}` : i;
-      const textValue = getValue('#text');
-      if (textValue.indexOf('+') > 0) {
+      if (textValue.includes('+')) {
         fill = filler();
-      } else if (textValue.length > 0) {
+      } else if (textValue) {
         fill = textValue;
       }
 
-      const elem = createElement('td', fill);
-      elem.align = 'center';
-      if(i===0)elem.className = 'Name';
-      elem.onclick = toggleClass;
-      elem.ondblclick = addText;
-      line.appendChild(elem);
+      const cell = createElement('td', fill);
+      cell.align = 'center';
+      cell.addEventListener('click', toggleClass);
+      cell.addEventListener('dblclick', addText);
+      row.appendChild(cell);
     }
 
-    // Control cells
-    const remove = createElement('td', 'remove');
-    const left = createElement('td', '<');
-    const right = createElement('td', '>');
-    remove.id = "remove";
-    left.id = "left";
-    right.id = "right";
-    remove.onclick = (e) => removeElement.call(remove, e);
-    left.onclick = (e) => prevElement.call(left, e);
-    right.onclick = (e) => nextElement.call(right, e);
-    line.appendChild(remove);
-    line.appendChild(left);
-    line.appendChild(right);
+    // Controls
+    const controls = [
+      { text: 'remove', handler: removeElement },
+      { text: '<', handler: prevElement },
+      { text: '>', handler: nextElement }
+    ];
 
+    controls.forEach(({ text, handler }) => {
+      const ctrl = createElement('td', text);
+      ctrl.id = text;
+      ctrl.addEventListener('click', handler);
+      row.appendChild(ctrl);
+    });
+
+    rowFragment.appendChild(row);
     table.appendChild(rowFragment);
-    main.appendChild(table);
   };
 
-  // Inline table styles for Excel
+  /*** ===========================
+   *  EXPORT TO EXCEL
+   *  =========================== */
   const inlineTableStyles = (table) => {
     Array.from(table.rows).forEach((row) => {
       Array.from(row.cells).forEach((cell) => {
-
         const cs = getComputedStyle(cell);
-        if(cell.textContent.toLowerCase() === 'remove' || cell.textContent === '<' || cell.textContent === '>' ) cell.remove();
+
+        if (['remove', '<', '>'].includes(cell.textContent.toLowerCase())) {
+          cell.remove();
+          return;
+        }
 
         if (cs.backgroundColor && cs.backgroundColor !== 'rgba(0, 0, 0, 0)') {
           cell.setAttribute('bgcolor', '#eee');
         }
 
-        if (cs.width && cs.width !== 'auto' && cs.width !== '0px') {
-          const widthPx = parseInt(cs.width, 10);
-          if (!isNaN(widthPx)) {
-            cell.setAttribute('width', widthPx);
-            cell.style.width = widthPx + 'px';
-          }
+        const widthPx = parseInt(cs.width, 10);
+        if (!isNaN(widthPx) && widthPx > 0) {
+          cell.setAttribute('width', widthPx);
+          cell.style.width = `${widthPx}px`;
         }
       });
     });
     return table;
   };
 
-  // Export table to Excel
   const tableToExcel = (() => {
     const uri = 'data:application/vnd.ms-excel;base64,';
     const template = `
@@ -182,66 +189,79 @@
     xmlns="http://www.w3.org/TR/REC-html40">
     <head>
     <!--[if gte mso 9]>
-    <xml>
-    <x:ExcelWorkbook>
-    <x:ExcelWorksheets>
-    <x:ExcelWorksheet>
+    <xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>
     <x:Name>{worksheet}</x:Name>
     <x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions>
-    </x:ExcelWorksheet>
-    </x:ExcelWorksheets>
-    </x:ExcelWorkbook>
-    </xml>
+    </x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml>
     <![endif]-->
-    <meta http-equiv="content-type" content="text/plain; charset=UTF-8"/>
-    </head>
-    <body>
-    <table>{table}</table>
-    </body>
-    </html>`;
+    <meta charset="UTF-8"/>
+    </head><body><table>{table}</table></body></html>`;
 
     const base64 = (s) => {
-      const utf8Bytes = new TextEncoder().encode(s); // UTF-8 bytes
-      let binary = '';
-      utf8Bytes.forEach((b) => (binary += String.fromCharCode(b)));
-      return window.btoa(binary);
+      const utf8Bytes = new TextEncoder().encode(s);
+      return btoa(String.fromCharCode(...utf8Bytes));
     };
 
-    const format = (s, c) => s.replace(/{(\w+)}/g, (m, p) => c[p]);
+    const format = (s, c) => s.replace(/{(\w+)}/g, (_, key) => c[key]);
 
     return (table, name) => {
-      if (!table.nodeType) {
-        table = document.getElementById(table);
-      }
-      inlineTableStyles(table);
-
-      const cloneTable = table.cloneNode(true);
-
-      const ctx = { worksheet: name || 'Worksheet', table: cloneTable.innerHTML };
+      if (!table.nodeType) table = document.getElementById(table);
+      const clone = inlineTableStyles(table.cloneNode(true));
+      const ctx = { worksheet: name || 'Worksheet', table: clone.innerHTML };
       window.location.href = uri + base64(format(template, ctx));
     };
   })();
 
-
-  document.getElementById('add-text-to-selected').addEventListener('click', addTextToSelected);
+  /*** ===========================
+   *  EVENT BINDINGS
+   *  =========================== */
+  addTextButton.addEventListener('click', addTextToSelected);
   exportToExcel.addEventListener('click', () => tableToExcel('table'));
 
   addButton.addEventListener('click', () => {
-    if (isEmpty('table')) {
-      createRow(getValue('#number'), formattedDate);
-    } else {
-      createRow(getValue('#number'), getValue('#name'));
-    }
+    const number = getValue('#number');
+    const name = isEmpty('table') ? formattedDate : getValue('#name');
+    createRow(number, name);
     inputNumber.disabled = true;
   });
 
-  // Today's date
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, '0');
-  const day = String(today.getDate()).padStart(2, '0');
-  const formattedDate = `${year}-${month}-${day}`;
+  cloneButton.addEventListener('click', function () {
+    const table = document.getElementById('table');
+    if (!table) return;
 
+    const rows = table.getElementsByTagName('tr');
+    if (!rows.length) return;
+
+    const lastRow = rows[rows.length - 1];
+    const clone = lastRow.cloneNode(true);
+
+    // Reattach all event listeners
+    const cells = clone.querySelectorAll('td');
+    cells.forEach((cell) => {
+      const text = cell.textContent.trim().toLowerCase();
+
+      // Regular day cells
+      if (!['remove', '<', '>'].includes(text)) {
+        cell.addEventListener('click', toggleClass);
+        cell.addEventListener('dblclick', addText);
+      }
+
+      // Control cells
+      if (text === 'remove') {
+        cell.addEventListener('click', removeElement);
+      } else if (text === '<') {
+        cell.addEventListener('click', prevElement);
+      } else if (text === '>') {
+        cell.addEventListener('click', nextElement);
+      }
+    });
+
+    table.appendChild(clone);
+  });
+
+  /*** ===========================
+   *  INITIALIZATION
+   *  =========================== */
   if (main.innerHTML.trim() === '') {
     createRow(getValue('#number'), formattedDate);
     inputNumber.disabled = true;

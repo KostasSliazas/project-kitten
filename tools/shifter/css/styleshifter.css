@@ -1,90 +1,107 @@
 html {
-  height: 100%;
+    height: 100%
 }
+
+#main,body {
+place-content: center
+}
+
 body {
-    font: 16px/1.5 Candara, Calibri, Segoe, Segoe UI, Optima, Arial, sans-serif;
+    font: 16px/1.5 Candara,Calibri,Segoe,Segoe UI,Optima,Arial,sans-serif;
     flex-direction: column;
     display: flex;
-    place-items: center;
-    height: 100%;
     margin: 0 auto;
     overflow-x: hidden;
-    place-content: center;
-}
-#main {
-  display: inline-flex;
-  width: 100%;
-  background: rgb(218, 240, 227);
-  overflow-x: scroll;
-  flex: 1 1 100%;
-  place-content: center;
-}
-footer {
-  place-self: self-end;
-  place-content: center;
-  height: 100%;
-  place-items: end;
-  width: 100%;
-  background: rgb(130, 152, 139);
-  font-size: .75em;
-  display: inline-flex;
-  flex: 1 1 2em;
-}
-header {
-    background: rgb(86, 108, 95);
-    min-width: 100%;
     place-items: center;
+    background:linear-gradient(0deg,#8eeea3,#284964) no-repeat, #8eeea3;
+}
+
+#main {
+background: #daf0e3;
+place-content: center;
+display: flex;
+flex: 1 1 100%;
+min-height: 1000px;
+width: 100%;
+}
+
+body,footer,header {
+    place-items: center
+}
+
+footer {
+    place-self: self-end;
+    background: #82988b;
+    font-size: .75em;
+    flex: 1 1 2em;
+    display: flex;
+    place-content: center;
+    width: 100%;
+}
+
+header {
+    background: #566c5f;
+    min-width: 100%;
     display: flex;
     flex-wrap: wrap;
     place-content: center;
     padding: 1em 0;
+    position: sticky;
+    top: 0;
 }
 
 table {
-    border-top: 1px solid rgb(174, 196, 183);
+    border-top: 1px solid #aec4b7;
     margin: 2em;
-    border-collapse: collapse;
+    border-collapse: collapse
 }
-input{line-height: 2}
-button{line-height: 2;cursor: pointer;min-width: 72px;}
+
+input {
+    line-height: 2
+}
+
+button,table>tr>td {
+    line-height: 2;
+    cursor: pointer;
+    min-width: 72px
+}
+
 table>tr {
     text-align: center;
-    border-bottom: 1px solid rgb(174, 196, 183);
-    border-right: 1px solid rgb(174, 196, 183);
-    display: flex;
+    border-bottom: 1px solid #aec4b7;
+    border-right: 1px solid #aec4b7;
+    display: flex
 }
 
 #remove {
-    background: #f953a8;
-    padding: 0 .75em;
+background: #f953a8;
+padding: 0 .75em
 }
 
-#left, #right {
-    background: #f0f;
-    padding: 0 .75em;
+#left,#right {
+background: #f0f;
+padding: 0 .75em
 }
 
 table>tr>td {
-    white-space:nowrap;
-    line-height: 2;
-    border-left: 1px solid rgb(174, 196, 183);
+    white-space: nowrap;
+    border-left: 1px solid #aec4b7;
     overflow: hidden;
     text-overflow: ellipsis;
-    cursor: pointer;
     padding: 0 2px;
     user-select: none;
     box-sizing: border-box;
     min-width: 3ch;
     --col-width: 2;
-    font-size: .75em;
+    font-size: .75em
 }
 
 table>tr>td:first-of-type {
     width: 100px;
-    cursor: default;
+    cursor: default
 }
 
 .selected {
     background: #eee;
-    box-shadow: 0 0 0 1px #000 inset;
+    box-shadow: 0 0 0 1px #000 inset
 }
