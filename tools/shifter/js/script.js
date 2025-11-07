@@ -16,6 +16,12 @@
   const today = new Date();
   const formattedDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
 
+  const updateCloneButtonState = () => {
+    const table = document.getElementById('table');
+    const hasRows = table && table.querySelectorAll('tr').length > 0;
+    cloneButton.disabled = !hasRows;
+  };
+
   /*** ===========================
    *  UTILITY FUNCTIONS
    *  =========================== */
@@ -57,6 +63,7 @@
   const removeElement = function () {
     this.parentElement.remove();
     inputNumber.disabled = !isEmpty('table');
+    updateCloneButtonState();
   };
 
   let counter = 0;
@@ -223,6 +230,7 @@
     const name = isEmpty('table') ? formattedDate : getValue('#name');
     createRow(number, name);
     inputNumber.disabled = true;
+    updateCloneButtonState();
   });
 
   cloneButton.addEventListener('click', function () {
