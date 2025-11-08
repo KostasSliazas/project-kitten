@@ -1,34 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShifterX</title>
+    <link rel="stylesheet" href="css/styleshifter.min.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ShifterX</title>
-  <link rel="stylesheet" href="css/styleshifter.min.css">
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-  <link rel="manifest" href="/site.webmanifest">
-</head>
-
-<body>
-  <header>
-  <div>
-    <input id="name" type="text" placeholder="Type name here...">
-    <input id="number" type="number" name="number" min="28" max="31" value="31">
-    <input id="text" type="text" placeholder="Text to add on double click...">
-    <button id="add">Add</button>
-    <button id="clone">Clone Last</button>
-    <button id="add-text-to-selected">Add text selected</button>
-    <button id="export">export to excel</button>
-  </div>
-  </header>
-  <main id="main">
-  </main>
-  <footer>by Kostas Šliažas</footer>
-  <script src="js/script.min.js"></script>
-</body>
-
+  <body>
+    <header>
+      <div class="inline-flex">
+        <input id="name" type="text" placeholder="Type name here...">
+        <input id="number" type="number" name="number" min="28" max="31" value="31">
+        <input id="text" type="text" placeholder="Text to add on double click...">
+        <div class="inline-flex">
+          <div>
+            <button id="add-text-to-selected">Add text selected</button>
+          </div>
+          <div>
+            <label class="checkbox">
+              <input type="checkbox" id="break">
+              <span>Add text with break</span>
+            </label>
+          </div>
+        </div>
+        <button id="add">Add</button>
+        <button id="clone">Clone Last</button>
+        <button id="export">export to excel</button>
+      </div>
+    </header>
+    <main id="main"></main>
+    <footer>by Kostas Šliažas</footer>
+    <script src="js/script.min.js"></script>
+  </body>
 </html>

@@ -1,107 +1,240 @@
+:root {
+    --color-dark: #415532;
+    --color-mid: #6f8561;
+    --color-light: #9bb28b;
+    --color-soft: #aec4b7;
+    --color-bg: #b8cca9;
+    --color-bg-light: #daf0e3;
+    --color-white: #ffffff;
+    --color-black: #1e2616;
+    --color-accent: #d65a31;
+    --color-accent-dark: #a94220
+}
+
 html {
     height: 100%
 }
 
-#main,body {
-place-content: center
+body,table>tr>td {
+    color: var(--color-black)
 }
 
 body {
-    font: 16px/1.5 Candara,Calibri,Segoe,Segoe UI,Optima,Arial,sans-serif;
-    flex-direction: column;
     display: flex;
-    margin: 0 auto;
-    overflow-x: hidden;
+    flex-direction: column;
     place-items: center;
-    background:linear-gradient(0deg,#8eeea3,#284964) no-repeat, #8eeea3;
+    font: 16px/1.5 Candara,Calibri,Segoe,"Segoe UI",Optima,Arial,sans-serif;
+    margin: 0 auto;
+    overflow-x: hidden
 }
 
 #main {
-background: #daf0e3;
-place-content: center;
-display: flex;
 flex: 1 1 100%;
 min-height: 1000px;
 width: 100%;
+background: var(--color-bg-light)
 }
 
-body,footer,header {
-    place-items: center
+#main,footer,header {
+display: flex;
+place-content: center
 }
 
-footer {
-    place-self: self-end;
-    background: #82988b;
-    font-size: .75em;
-    flex: 1 1 2em;
-    display: flex;
-    place-content: center;
-    width: 100%;
+body,header {
+    background: var(--color-bg)
 }
 
 header {
-    background: #566c5f;
-    min-width: 100%;
-    display: flex;
     flex-wrap: wrap;
-    place-content: center;
-    padding: 1em 0;
-    position: sticky;
-    top: 0;
+    color: var(--color-white);
+    place-self: center;
+    margin: 8px;
+}
+
+footer {
+    font-size: .75em
 }
 
 table {
-    border-top: 1px solid #aec4b7;
-    margin: 2em;
+    border-top: 1px solid var(--color-soft);
+    margin: 8px;
     border-collapse: collapse
-}
-
-input {
-    line-height: 2
-}
-
-button,table>tr>td {
-    line-height: 2;
-    cursor: pointer;
-    min-width: 72px
 }
 
 table>tr {
     text-align: center;
-    border-bottom: 1px solid #aec4b7;
-    border-right: 1px solid #aec4b7;
-    display: flex
-}
-
-#remove {
-background: #f953a8;
-padding: 0 .75em
-}
-
-#left,#right {
-background: #f0f;
-padding: 0 .75em
+    display: flex;
+    flex-wrap: wrap;
 }
 
 table>tr>td {
-    white-space: nowrap;
-    border-left: 1px solid #aec4b7;
-    overflow: hidden;
+    white-space: pre-wrap;
+    box-shadow: 0 0 0 1px var(--color-soft);
+    overflow-x: hidden;
     text-overflow: ellipsis;
-    padding: 0 2px;
+    padding: 0 1px;
     user-select: none;
-    box-sizing: border-box;
+    background: var(--color-white);
+    cursor: pointer;
+    flex: 1;
     min-width: 3ch;
-    --col-width: 2;
-    font-size: .75em
+    max-width: 4ch;
+    box-sizing: border-box;
 }
 
 table>tr>td:first-of-type {
-    width: 100px;
+    min-width: 100px;
     cursor: default
 }
 
 .selected {
-    background: #eee;
-    box-shadow: 0 0 0 1px #000 inset
+    background: var(--color-bg);
+    color: var(--color-white);
+}
+
+td[data-control] {
+    background: var(--color-dark);
+    color: var(--color-white);
+    font-weight: 700;
+    text-align: center;
+    user-select: none;
+    padding: 0 6px;
+    min-width: 48px
+}
+
+td[data-control]:hover {
+    background: var(--color-mid);
+}
+
+td[data-control=count] {
+    background: var(--color-black);
+}
+
+button,td[data-control=remove] {
+    color: var(--color-white);
+    cursor: pointer
+}
+
+td[data-control=remove] {
+    background: var(--color-accent);
+    font-weight: 700;
+    flex: 1 1 auto;
+    max-width: max-content;
+}
+
+td[data-control=remove]:hover {
+    background: var(--color-accent-dark);
+}
+
+button {
+    background: var(--color-mid);
+    border: 1px solid var(--color-dark);
+    border-radius: 4px;
+    padding: .35em .8em;
+    font-size: .85em;
+    min-height: 32px;
+    min-width: 72px;
+    transition: background .2s ease
+}
+
+button:hover {
+    background: var(--color-dark)
+}
+
+button:active {
+    background: var(--color-accent);
+    border-color: var(--color-accent-dark)
+}
+
+button:disabled {
+    background: var(--color-soft);
+    color: var(--color-bg-light);
+    cursor: not-allowed
+}
+
+input[type=number],input[type=text] {
+    background: var(--color-white);
+    color: var(--color-black);
+    border: 1px solid var(--color-mid);
+    border-radius: 4px;
+    padding: .35em .8em;
+    font-size: .85em;
+    min-height: 32px;
+    min-width: 72px;
+    box-sizing: border-box;
+    transition: background .2s ease,border-color .2s ease
+}
+
+input[type=number]:focus,input[type=text]:focus {
+    background: var(--color-white);
+    border-color: var(--color-accent-dark)
+}
+
+input:disabled {
+    background: var(--color-soft);
+    color: var(--color-bg-light);
+    cursor: not-allowed
+}
+/* Hide native checkbox */
+.checkbox input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Wrapper for label text + custom box */
+.checkbox {
+  display: flex;
+  place-content: center;
+  position: relative;
+  color: var(--color-black);
+  cursor: pointer;
+  user-select: none;
+  place-items: center;
+  line-height: 1;
+}
+
+.checkbox span {
+  place-content: center;
+  display: flex;
+  place-items: center;
+  gap: 8px;
+}
+/* Custom checkbox box */
+.checkbox span::before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--color-dark);
+  border-radius: 4px;
+  background: var(--color-white);
+  transition: all 0.2s ease;
+  display: inline-flex;
+  position: relative;
+}
+
+/* Checkmark (shown when checked) */
+.checkbox input[type="checkbox"]:checked + span::after {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 2px;
+  width: 6px;
+  height: 12px;
+  border: solid var(--color-dark);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Hover effect */
+.checkbox:hover span::before {
+  background: var(--color-bg-light);
+  border-color: var(--color-mid);
+}
+
+.inline-flex{
+    display: flex;
+    place-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
 }
