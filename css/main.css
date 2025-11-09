@@ -491,7 +491,9 @@ html {
 }
 
 .default,
+.o,
 .h,
+.k,
 .g,
 .a {
   font-variant-caps: all-small-caps;
