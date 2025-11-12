@@ -1709,7 +1709,6 @@ input[type=text]:focus {
   .tetris {
     clip-path: none
   }
-  #controls,
   #timer,
   #vr {
     display: none !important
