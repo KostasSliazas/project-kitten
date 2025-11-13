@@ -727,11 +727,23 @@ a {
 .mode-numbering .links a::before,
 .mode-numbering .links i:nth-child(odd)::before,
 .mode-numbering .links p::before {
-  counter-increment: section;
-  content: counter(section, decimal-leading-zero) '. ';
   color: var(--color3);
   font-size: 12px;
   white-space: preserve nowrap;
+  counter-increment: section;
+  content: counter(section,decimal-leading-zero);
+  box-shadow: 0 0 0 1px currentcolor;
+  height: 16px;
+  width: 16px;
+  display: inline-flex;
+  overflow: hidden;
+  margin: 0 4px 0 0;
+  position: relative;
+  box-sizing: border-box;
+  text-align: center;
+  place-content: center;
+  place-items: center;
+  vertical-align: text-top;
 }
 
 .local.links a::before,
