@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShifterX</title>
-    <link rel="stylesheet" href="css/styleshifter.min.css">
+    <link rel="stylesheet" href="css/styleshifter.css">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -32,10 +32,25 @@
         <button id="add">Add</button>
         <button id="clone">Clone Last</button>
         <button id="export">export to excel</button>
+        <div class="inline-flex">
+        <div>HOURS:</div>
+          <div class="inline-flex">
+            <label>C1:<input id="C1" type="number" value="0"></label>
+            <label>C2:<input id="C2" type="number" value="0"></label>
+          </div>
+          <div class="inline-flex">
+            <label>C3:<input id="C3" type="number" value="0"></label>
+            <label>C4:<input id="C4" type="number" value="0"></label>
+          </div>
+          <div class="inline-flex">
+            <label>C5:<input id="C5" type="number" value="0"></label>
+            <div id="output" class="inline-flex"></div>
+          </div>
+        </div>
       </div>
     </header>
     <main id="main"></main>
     <footer>by Kostas Šliažas</footer>
-    <script src="js/script.min.js"></script>
+    <script src="js/script.js"></script>
   </body>
 </html>

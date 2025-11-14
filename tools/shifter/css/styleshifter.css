@@ -46,9 +46,8 @@ body,header {
 
 header {
     flex-wrap: wrap;
-    color: var(--color-white);
     place-self: center;
-    margin: 8px;
+    margin: 8px
 }
 
 footer {
@@ -64,7 +63,7 @@ table {
 table>tr {
     text-align: center;
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: wrap
 }
 
 table>tr>td {
@@ -79,7 +78,7 @@ table>tr>td {
     flex: 1;
     min-width: 3ch;
     max-width: 4ch;
-    box-sizing: border-box;
+    box-sizing: border-box
 }
 
 table>tr>td:first-of-type {
@@ -89,7 +88,7 @@ table>tr>td:first-of-type {
 
 .selected {
     background: var(--color-bg);
-    color: var(--color-white);
+    color: var(--color-white)
 }
 
 td[data-control] {
@@ -103,11 +102,11 @@ td[data-control] {
 }
 
 td[data-control]:hover {
-    background: var(--color-mid);
+    background: var(--color-mid)
 }
 
 td[data-control=count] {
-    background: var(--color-black);
+    background: var(--color-black)
 }
 
 button,td[data-control=remove] {
@@ -119,11 +118,11 @@ td[data-control=remove] {
     background: var(--color-accent);
     font-weight: 700;
     flex: 1 1 auto;
-    max-width: max-content;
+    max-width: max-content
 }
 
 td[data-control=remove]:hover {
-    background: var(--color-accent-dark);
+    background: var(--color-accent-dark)
 }
 
 button {
@@ -156,8 +155,7 @@ input[type=number],input[type=text] {
     background: var(--color-white);
     color: var(--color-black);
     border: 1px solid var(--color-mid);
-    border-radius: 4px;
-    padding: .35em .8em;
+    padding: 0 .35em 0 .8em;
     font-size: .85em;
     min-height: 32px;
     min-width: 72px;
@@ -165,9 +163,19 @@ input[type=number],input[type=text] {
     transition: background .2s ease,border-color .2s ease
 }
 
+input[type=text] {
+    border-radius: 4px
+}
+
 input[type=number]:focus,input[type=text]:focus {
     background: var(--color-white);
     border-color: var(--color-accent-dark)
+}
+
+input[type=number] {
+    border-radius: 3px;
+    outline: 0;
+    max-inline-size: 8ch
 }
 
 input:disabled {
@@ -175,66 +183,63 @@ input:disabled {
     color: var(--color-bg-light);
     cursor: not-allowed
 }
-/* Hide native checkbox */
-.checkbox input[type="checkbox"] {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
+
+.checkbox input[type=checkbox] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer
 }
 
-/* Wrapper for label text + custom box */
+.checkbox,.checkbox span {
+    place-content: center;
+    display: flex;
+    place-items: center
+}
+
 .checkbox {
-  display: flex;
-  place-content: center;
-  position: relative;
-  color: var(--color-black);
-  cursor: pointer;
-  user-select: none;
-  place-items: center;
-  line-height: 1;
+    position: relative;
+    color: var(--color-black);
+    cursor: pointer;
+    user-select: none;
+    line-height: 1
 }
 
 .checkbox span {
-  place-content: center;
-  display: flex;
-  place-items: center;
-  gap: 8px;
+    gap: 8px
 }
-/* Custom checkbox box */
+
 .checkbox span::before {
-  content: "";
-  width: 18px;
-  height: 18px;
-  border: 2px solid var(--color-dark);
-  border-radius: 4px;
-  background: var(--color-white);
-  transition: all 0.2s ease;
-  display: inline-flex;
-  position: relative;
+    content: "";
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--color-dark);
+    border-radius: 4px;
+    background: var(--color-white);
+    transition: all .2s ease;
+    display: inline-flex;
+    position: relative
 }
 
-/* Checkmark (shown when checked) */
-.checkbox input[type="checkbox"]:checked + span::after {
-  content: "";
-  position: absolute;
-  left: 7px;
-  top: 2px;
-  width: 6px;
-  height: 12px;
-  border: solid var(--color-dark);
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
+.checkbox input[type=checkbox]:checked+span::after {
+    content: "";
+    position: absolute;
+    left: 7px;
+    top: 2px;
+    width: 6px;
+    height: 12px;
+    border: solid var(--color-dark);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg)
 }
 
-/* Hover effect */
 .checkbox:hover span::before {
-  background: var(--color-bg-light);
-  border-color: var(--color-mid);
+    background: var(--color-bg-light);
+    border-color: var(--color-mid)
 }
 
-.inline-flex{
+.inline-flex {
     display: flex;
     place-items: center;
     gap: 8px;
-    flex-wrap: wrap;
+    flex-wrap: wrap
 }
