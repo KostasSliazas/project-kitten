@@ -558,9 +558,9 @@
 
   // Counter state (basic defaults)
   const counterState = {
-    min: 0.1,
+    min: 0,
     max: 100,
-    step: 0.1,
+    step: 0,
     value: 0,
     set number(n) {
       if (typeof n !== 'number') return;
