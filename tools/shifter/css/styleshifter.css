@@ -25,19 +25,19 @@ body {
     place-items: center;
     font: 16px/1.5 Candara,Calibri,Segoe,"Segoe UI",Optima,Arial,sans-serif;
     margin: 0 auto;
-    overflow-x: hidden
+    overflow-x: hidden;
+    margin: 1em;
 }
 
 #main {
 flex: 1 1 100%;
 min-height: 1000px;
 width: 100%;
-background: var(--color-bg-light)
 }
 
 #main,footer,header {
 display: flex;
-place-content: center
+place-content: center;
 }
 
 body,header {
@@ -56,8 +56,11 @@ footer {
 
 table {
     border-top: 1px solid var(--color-soft);
-    margin: 8px;
-    border-collapse: collapse
+    border-collapse: collapse;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0 auto;
 }
 
 table>tr {
@@ -68,17 +71,17 @@ table>tr {
 
 table>tr>td {
     white-space: pre-wrap;
-    box-shadow: 0 0 0 1px var(--color-soft);
+    box-shadow: 0 0 0 1px var(--color-mid);
     overflow-x: hidden;
     text-overflow: ellipsis;
     padding: 0 1px;
     user-select: none;
     background: var(--color-white);
     cursor: pointer;
-    flex: 1;
+    flex: 1 1 auto;
     min-width: 3ch;
     max-width: 4ch;
-    box-sizing: border-box
+    box-sizing: border-box;
 }
 
 table>tr>td:first-of-type {
@@ -241,5 +244,5 @@ input:disabled {
     display: flex;
     place-items: center;
     gap: 8px;
-    flex-wrap: wrap
+    flex-wrap: wrap;
 }

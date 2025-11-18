@@ -48,6 +48,17 @@
   const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
   /*** ===========================
+   *  GLOBAL RECALC (call everywhere)
+   *  centralised: updates counts, sums and persists
+   *  =========================== */
+  const recalc = () => {
+    countSelected();
+    sumTableByVariables();
+    saveTable();
+    updateCloneButtonState();
+  };
+
+  /*** ===========================
    *  TEXT HANDLING (dblclick add text)
    *  =========================== */
   const addText = (e) => {
@@ -66,9 +77,7 @@
     applyTextToCell(cell, text, breakCheckbox.checked);
 
     // After both changes, update counts, sum, and save table
-    countSelected();
-    sumTableByVariables();
-    saveTable();
+    recalc();
   };
 
   /*** ===========================
@@ -126,6 +135,8 @@
     const text = textInput.value;
     const addBreak = breakCheckbox.checked;
     selectedCells.forEach((cell) => applyTextToCell(cell, text, addBreak));
+
+    recalc();
   };
 
   /*** ===========================
@@ -139,9 +150,15 @@
 
     let cellContent = cell.innerHTML;
 
+    // FIX: create plain-text version for duplicate check
+    const plainText = cellContent.replace(/<br\s*\/?>/gi, " ");
+
     variables.forEach(variable => {
       const regex = new RegExp(`\\b${variable}\\b`, 'i'); // check if variable exists
-      if (!regex.test(cellContent)) {
+
+      // use plainText instead of cellContent for duplicate detection
+      if (!regex.test(plainText)) {
+
         // Add break if requested and not already added
         if (addBreak && !cell.dataset.breakAdded) {
           cellContent += (cellContent ? '<br>' : '') + variable;
@@ -161,9 +178,7 @@
     }
 
     // Update counts, totals, and save table
-    countSelected();
-    sumTableByVariables();
-    saveTable();
+    recalc();
   };
 
   /*** ===========================
@@ -175,9 +190,7 @@
     // do not toggle first cell
     if (cell.cellIndex === 0) return;
     cell.classList.toggle('selected');
-    countSelected();
-    sumTableByVariables(); // updates variable totals immediately
-    saveTable(); // ✅ save immediately
+    recalc(); // updates variable totals immediately and saves
   };
 
   const removeElement = function () {
@@ -187,8 +200,7 @@
 
     inputNumber.disabled = !isEmpty('table'); // enable input if table is empty
     updateCloneButtonState();
-    countSelected();  // update counts after removal
-    saveTable();      // save immediately
+    recalc();
   };
 
   let counter = 0;
@@ -213,6 +225,7 @@
       elements[i].innerText = elements[i - 1].innerText;
     }
     elements[0].innerText = lastText;
+    recalc();
   };
 
   const prevElement = function () {
@@ -223,6 +236,7 @@
       elements[i].innerText = elements[i + 1].innerText;
     }
     elements[elements.length - 1].innerText = firstText;
+    recalc();
   };
 
   const countSelected = () => {
@@ -328,6 +342,9 @@
 
     rowFragment.appendChild(row);
     t.appendChild(rowFragment);
+
+    // ensure UI state is consistent after row creation
+    recalc();
   };
 
   /*** ===========================
@@ -376,11 +393,33 @@
 
     const format = (s, c) => s.replace(/{(\w+)}/g, (_, key) => c[key]);
 
+    // NEW → generate timestamp + random part
+    const exportName = (name) => {
+      const d = new Date();
+      const pad = (n) => String(n).padStart(2, '0');
+
+      const timestamp =
+      d.getFullYear() + '-' +
+      pad(d.getMonth() + 1) + '-' +
+      pad(d.getDate()) + '-' +
+      pad(d.getHours()) + '-' +
+      pad(d.getMinutes());
+
+      const rnd = Math.random().toString(36).slice(2, 8);
+
+      return (name || 'worksheet') + '-' + timestamp + '-' + rnd + '.xls';
+    };
+
     return (table, name) => {
       if (!table.nodeType) table = document.getElementById(table);
+
       const clone = inlineTableStyles(table.cloneNode(true));
       const ctx = { worksheet: name || 'Worksheet', table: clone.innerHTML };
-      window.location.href = uri + base64(format(template, ctx));
+
+      const link = document.createElement('a');
+      link.download = exportName(name);
+      link.href = uri + base64(format(template, ctx));
+      link.click();
     };
   })();
 
@@ -397,6 +436,8 @@
     createRow(number, name);
     inputNumber.disabled = true;
     updateCloneButtonState();
+    // ensure totals and save after adding
+    recalc();
   });
 
   /*** ===========================
@@ -418,14 +459,9 @@
         label.addEventListener('click', (e) => {
           e.preventDefault(); // prevent default label behavior
           setVariable();
+          recalc();
         });
       }
-
-      const recalc = () => {
-        sumTableByVariables(); // recalc totals
-        countSelected();       // update selection counts
-        saveTable();           // save current state
-      };
 
       input.addEventListener('input', recalc);   // triggers as user types
       input.addEventListener('change', recalc);  // triggers on blur or manual change
@@ -466,6 +502,8 @@
     });
 
       t.appendChild(clone);
+      // ensure totals and save after cloning
+      recalc();
   });
 
   /*** ===========================
@@ -492,8 +530,7 @@
       });
     });
 
-    countSelected();       // update counts
-    sumTableByVariables(); // update totals
+    recalc();
   };
 
   /*** ===========================
@@ -512,9 +549,7 @@
       cell.classList.remove('selected'); // unselect
       cell.dataset.breakAdded = '';      // reset break flag
 
-      countSelected();        // update counts
-      sumTableByVariables();  // update totals
-      saveTable();            // save table state
+      recalc();
     });
   };
 
@@ -528,14 +563,15 @@
       // Load table from localStorage if data exists
       loadTable();
       enableClearOnRightClick();
-      sumTableByVariables(); // update totals
     } else if (main.innerHTML.trim() === '') {
       // No saved data, create default row
       createRow(getValue('#number'), formattedDate);
       inputNumber.disabled = true;
       enableClearOnRightClick();
-      sumTableByVariables(); // update totals
     }
+
+    // always ensure totals are correct on startup
+    recalc();
   });
 
   // ----------------------
@@ -664,4 +700,3 @@
   });
 
 })();
-
