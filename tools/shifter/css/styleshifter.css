@@ -27,6 +27,7 @@ body {
     margin: 0 auto;
     overflow-x: hidden;
     margin: 1em;
+    user-select: none;
 }
 
 #main {
@@ -47,7 +48,7 @@ body,header {
 header {
     flex-wrap: wrap;
     place-self: center;
-    margin: 8px
+    margin: 0 0 1em 0;
 }
 
 footer {
@@ -100,6 +101,9 @@ td[data-control] {
     font-weight: 700;
     text-align: center;
     user-select: none;
+    display: flex;
+    place-content: center;
+    flex-direction: column;
     padding: 0 6px;
     min-width: 48px
 }
@@ -245,4 +249,16 @@ input:disabled {
     place-items: center;
     gap: 8px;
     flex-wrap: wrap;
+    place-content: center;
+}
+
+h1 {
+    margin: 0 0 .5em 0;
+    font-size: 1em;
+    display: block;
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    top: 0;
+    z-index: -1;
 }
