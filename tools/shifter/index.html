@@ -14,43 +14,41 @@
 
   <body>
     <header>
-      <div class="inline-flex">
-        <input id="name" type="text" placeholder="Type name here...">
-        <input id="number" type="number" name="number" min="28" max="31" value="31">
-        <input id="text" type="text" placeholder="Text to add on double click...">
-        <div class="inline-flex">
-          <div>
-            <button id="add-text-to-selected">Add text selected</button>
-          </div>
-          <div>
-            <label class="checkbox">
-              <input type="checkbox" id="break">
-              <span>Add text with break</span>
-            </label>
-          </div>
+      <h1>ShifterX</h1>
+      <div class="inline-flex" aria-label="Main controls">
+        <input id="name" type="text" placeholder="Type name here..." aria-label="Name input">
+        <input id="number" type="number" name="number" min="28" max="31" value="31" aria-label="Number input">
+        <input id="text" type="text" placeholder="Text to add on double click..." aria-label="Text input">
+        <label class="checkbox">
+          <input type="checkbox" id="break" aria-label="Add text with break">
+          <span>Add text with break</span>
+        </label>
+        <div class="inline-flex" aria-label="Row actions">
+          <button id="add-text-to-selected" aria-label="Add text to selected cells">Add text selected</button>
+          <button id="clone" aria-label="Clone last row">Clone Last</button>
+          <button id="add" aria-label="Add new row">Add</button>
         </div>
-        <button id="add">Add</button>
-        <button id="clone">Clone Last</button>
-        <button id="export">export to excel</button>
-        <div class="inline-flex">
-        <div>HOURS:</div>
+        <div class="inline-flex" aria-label="Data export and import">
+          <button id="export" aria-label="Export table to Excel">Export to Excel</button>
+          <button id="export-json" aria-label="Export table to JSON">Export JSON</button>
+          <button id="import-json" aria-label="Import table from JSON">Import JSON</button>
+          <input type="file" id="import-file" accept=".json" style="display:none;" aria-label="Select JSON file to import">
+        </div>
+        <div class="inline-flex" aria-label="Hour counters">
           <div class="inline-flex">
-            <label>C1:<input id="C1" type="number" value="0"></label>
-            <label>C2:<input id="C2" type="number" value="0"></label>
+            <div>HOURS:</div>
+            <label>C1<input id="C1" type="number" value="0" aria-label="Counter C1"></label>
+            <label>C2<input id="C2" type="number" value="0" aria-label="Counter C2"></label>
+            <label>C3<input id="C3" type="number" value="0" aria-label="Counter C3"></label>
+            <label>C4<input id="C4" type="number" value="0" aria-label="Counter C4"></label>
+            <label>C5<input id="C5" type="number" value="0" aria-label="Counter C5"></label>
           </div>
-          <div class="inline-flex">
-            <label>C3:<input id="C3" type="number" value="0"></label>
-            <label>C4:<input id="C4" type="number" value="0"></label>
-          </div>
-          <div class="inline-flex">
-            <label>C5:<input id="C5" type="number" value="0"></label>
-            <div id="output" class="inline-flex"></div>
-          </div>
+          <div class="inline-flex" id="output" aria-label="Output area"></div>
         </div>
       </div>
     </header>
-    <main id="main"></main>
-    <footer>by Kostas Šliažas</footer>
+    <main id="main" aria-label="Main content area"></main>
+    <footer aria-label="Footer">by Kostas Šliažas</footer>
     <script src="js/script.min.js"></script>
   </body>
 </html>
