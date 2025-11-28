@@ -9,19 +9,47 @@
 /**
  * Global error handler for uncaught runtime errors.
  *
- * @param {string | Event} message - The error message or event object.
- * @param {string} [source] - The URL of the script where the error occurred (if applicable).
- * @param {number} [lineno] - The line number in the script where the error occurred (if applicable).
- * @param {number} [colno] - The column number in the script where the error occurred (if applicable).
- * @param {Error} [error] - The actual Error object associated with the error (if available).
+ * @param {string | Event} message
+ * @param {string} [source]
+ * @param {number} [lineno]
+ * @param {number} [colno]
+ * @param {Error} [error]
  */
-w.onerror = (message, source, lineno, colno, error) => {
-  console.error('Critical error detected:', message);
-  console.error('Source:', source, 'Line:', lineno, 'Column:', colno, 'Error object:', error);
+
+let fatalTriggered = false;
+let errorCount = 0;
+
+w.onerror = function(message, source, lineno, colno, error) {
+  // Prevent recursive crash loops
+  if (fatalTriggered) return true;
+
+  errorCount++;
+  const MAX_ALLOWED = 3; // prevent crash spam
+
+  const safeMessage = (typeof message === 'string') ? message : '[Event error with no string message]';
+
+  const errorInfo = {
+    message: safeMessage,
+    source: source || '[unknown]',
+    line: lineno || 0,
+    column: colno || 0,
+    stack: error && error.stack ? error.stack : '[no stack]',
+    time: new Date().toISOString()
+  };
+
+  console.error('🚨 Critical error detected:', errorInfo);
+
+  // if too many errors fire in a row:
+  if (errorCount > MAX_ALLOWED) {
+    alert('Too many critical errors occurred. Execution halted.');
+    fatalTriggered = true;
+    throw new Error('Execution stopped due to repeated critical failures.');
+  }
 
   alert('A critical error occurred. The page will stop working.');
 
-  // Prevent further execution by throwing a critical error
+  fatalTriggered = true;
+
   throw new Error('Stopping execution due to critical failure.');
 };
 
@@ -118,7 +146,7 @@ function monitorOnlineStatus(callback) {
 
 const root = d.documentElement;
 const bodyElement = d.body;
-const version = 7;
+const version = 1.33;
 const negativeOrPositive = number => (number > 0 ? `+${number}` : `${number}`);
 const main = d.getElementById('main');
 const overlay = d.getElementById('overlay');
@@ -201,7 +229,7 @@ const codeDivElms = Array.from(codeDiv.children[0].children);
 const textarea = d.getElementsByTagName('TEXTAREA')[0];
 const bg = d.querySelector('#bg-file');
 const styles = ['width', 'height', 'left', 'top'];
-const blockDefaults = "width:960px;height:48px;left:0px;top:0px;,width:492px;height:48px;left:0px;top:48px;,width:108px;height:48px;left:768px;top:48px;,width:132px;height:48px;left:192px;top:156px;,width:132px;height:60px;left:192px;top:96px;,width:192px;height:156px;left:0px;top:96px;,width:168px;height:72px;left:324px;top:96px;,width:168px;height:168px;left:324px;top:168px;,width:168px;height:144px;left:324px;top:336px;,width:168px;height:96px;left:324px;top:480px;,width:168px;height:144px;left:324px;top:576px;,width:36px;height:144px;left:792px;top:672px;,width:156px;height:252px;left:168px;top:252px;,width:168px;height:96px;left:324px;top:720px;,width:168px;height:564px;left:0px;top:252px;,width:120px;height:48px;left:492px;top:48px;,width:132px;height:48px;left:192px;top:204px;,width:156px;height:48px;left:612px;top:48px;,width:156px;height:48px;left:0px;top:72px;,width:156px;height:312px;left:168px;top:504px;,width:960px;height:48px;left:0px;top:24px;,width:168px;height:48px;left:156px;top:72px;,width:168px;height:48px;left:324px;top:72px;,width:144px;height:96px;left:816px;top:96px;,width:144px;height:264px;left:816px;top:240px;,width:144px;height:48px;left:816px;top:192px;,width:156px;height:384px;left:492px;top:432px;,width:156px;height:168px;left:492px;top:264px;,width:168px;height:72px;left:648px;top:264px;,width:168px;height:480px;left:648px;top:336px;,width:156px;height:168px;left:492px;top:96px;,width:168px;height:96px;left:648px;top:168px;,width:144px;height:312px;left:816px;top:504px;,width:168px;height:72px;left:648px;top:96px;,width:84px;height:48px;left:876px;top:48px;";
+const blockDefaults = "width:960px;height:48px;left:0px;top:0px;,width:492px;height:48px;left:0px;top:48px;,width:108px;height:48px;left:768px;top:48px;,width:132px;height:48px;left:192px;top:156px;,width:132px;height:60px;left:192px;top:96px;,width:192px;height:132px;left:0px;top:120px;,width:168px;height:72px;left:324px;top:96px;,width:168px;height:168px;left:324px;top:168px;,width:168px;height:144px;left:324px;top:336px;,width:168px;height:96px;left:324px;top:480px;,width:168px;height:144px;left:324px;top:576px;,width:192px;height:48px;left:0px;top:96px;,width:156px;height:252px;left:168px;top:252px;,width:168px;height:96px;left:324px;top:720px;,width:168px;height:564px;left:0px;top:252px;,width:120px;height:48px;left:492px;top:48px;,width:132px;height:48px;left:192px;top:204px;,width:156px;height:48px;left:612px;top:48px;,width:156px;height:48px;left:0px;top:72px;,width:156px;height:312px;left:168px;top:504px;,width:960px;height:48px;left:0px;top:24px;,width:168px;height:48px;left:156px;top:72px;,width:168px;height:48px;left:324px;top:72px;,width:144px;height:96px;left:816px;top:96px;,width:144px;height:264px;left:816px;top:240px;,width:144px;height:48px;left:816px;top:192px;,width:156px;height:384px;left:492px;top:432px;,width:156px;height:168px;left:492px;top:264px;,width:168px;height:72px;left:648px;top:264px;,width:168px;height:480px;left:648px;top:336px;,width:156px;height:168px;left:492px;top:96px;,width:168px;height:96px;left:648px;top:168px;,width:144px;height:312px;left:816px;top:504px;,width:168px;height:72px;left:648px;top:96px;,width:84px;height:48px;left:876px;top:48px;";
 const textAreaDefaults = 'Good day. You have the ability to reposition these blocks by clicking (□ or ▭) and holding (the left) corner or by pressing the ` key on your keyboard. ([ctrl]+[`]=Reset to Defaults) Alternatively, double-click (▭) to maximize them or minimize (□). You can also change the theme by right-clicking (context menu) and customize the colors and background image through the user interface. If locked, you can unlock it by clicking a few times on the background and then entering the default PIN: 520. Alternatively, you can clear the localStorage (since this project stores data such as PIN(password) and other settings in localStorage). Now you can type your text here.';
 const counts = {
   allMouseClicks: 0,
@@ -1027,7 +1055,7 @@ async function init() {
   if ('serviceWorker' in navigator) {
     try {
       navigator.serviceWorker
-      .register('/project-kitten/sw.js?v=7')
+      .register(`/project-kitten/sw.js?v=${version}`)
       .then(registration => {
         console.log('Service Worker registered with scope:', registration.scope);
       })
@@ -1392,7 +1420,7 @@ function mouseUpEvents(e) {
   // Make opacity (highlight).5 for links with class "movable" till next refresh(like visited)
   if (eventTarget.tagName === 'A') {
     if (d.hasFocus()) {
-      eventTarget.style.opacity = '.5';
+      eventTarget.classList.add('visited');
       // Default behavior: let the browser handle navigation
     } else {
       e.preventDefault(); // Block navigation
