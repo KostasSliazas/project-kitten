@@ -66,7 +66,6 @@ button {
 
 #clock div,
 #loader,
-#vr h1,
 .bottom,
 .cnt,
 .counter input,
@@ -597,7 +596,6 @@ p::after {
   display: flex
 }
 
-#vr,
 .space {
   place-content: space-between
 }
@@ -766,8 +764,6 @@ a:hover {
   color: var(--color3)
 }
 
-#vr a,
-#vr p,
 .movable h1 a,
 input[type=color],
 input[type=file],
@@ -890,10 +886,6 @@ textarea:hover {
   line-height: 1.71428571;
   place-items: baseline;
   flex-wrap: wrap
-}
-
-.tetris {
-  clip-path: polygon(107% -7%, 107% 335px, 143px 335px, 143px 107%, -7% 107%, -7% -7%)
 }
 
 .center h1,
@@ -1099,7 +1091,6 @@ textarea {
   flex-wrap: wrap
 }
 
-#vr,
 .forms {
   place-items: stretch
 }
@@ -1182,7 +1173,6 @@ input[type=text] {
   height: 23px
 }
 
-#vr,
 .forms,
 .forms div {
   display: flex
@@ -1376,23 +1366,6 @@ fieldset {
 
 .cnt {
   place-self: center
-}
-
-#vr h1 {
-  height: 100%;
-  margin: -1px 0;
-  padding: 23px 0 2px;
-  width: 24px
-}
-
-#vr {
-  flex-direction: row
-}
-
-#vr.minimized {
-  width: 24px !important;
-  min-width: 0;
-  height: auto !important
 }
 
 .sleepy {
@@ -1718,11 +1691,7 @@ input[type=text]:focus {
     max-width: initial
   }
 
-  .tetris {
-    clip-path: none
-  }
-  #timer,
-  #vr {
+  #timer{
     display: none !important
   }
 
@@ -1759,7 +1728,7 @@ input[type=text]:focus {
     max-width: initial;
     height: 48px
   }
-  .e .movable:first-child, .e .movable:nth-child(16), .e .movable:nth-child(18), .e .movable:nth-child(19), .e .movable:nth-child(2), .e .movable:nth-child(21), .e .movable:nth-child(22), .e .movable:nth-child(23), .e .movable:nth-child(3), .e .movable:nth-child(35), .hide, .mode-cute .cute img, p::after {
+  #settings,.e .movable:first-child, .e .movable:nth-child(16), .e .movable:nth-child(18), .e .movable:nth-child(19), .e .movable:nth-child(2), .e .movable:nth-child(21), .e .movable:nth-child(22), .e .movable:nth-child(23), .e .movable:nth-child(3), .e .movable:nth-child(35), .hide, .mode-cute .cute img, p::after {
     display: none;
   }
 }
