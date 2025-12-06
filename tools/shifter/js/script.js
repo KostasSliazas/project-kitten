@@ -288,7 +288,7 @@
     row.appendChild(nameCell);
 
     // data cells
-    for (let i = 0; i < days; i++) {
+    for (let i = 1; i <= days; i++) {
       let text = (!textInput.value) ? i : textInput.value;
       const cell = createElement('td', text);
       cell.align = 'center';
