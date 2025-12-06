@@ -1,144 +1,131 @@
-/* jshint esversion: 6 */
+/* jshint esversion: 11 */
+
 (() => {
   'use strict';
 
-  /*** ===========================
-   *  CONSTANTS & SELECTORS
-   *  =========================== */
+  // ------------------------------
+  // CONSTANTS & SELECTORS
+  // ------------------------------
+  const DATA_CELLS_END_OFFSET = 4; // last N cells in each row are controls and must NOT be counted
   const main = document.querySelector('#main');
   const addButton = document.querySelector('#add');
   const cloneButton = document.querySelector('#clone');
   const exportToExcel = document.querySelector('#export');
+
   const inputNumber = document.querySelector('#number');
   const addTextButton = document.getElementById('add-text-to-selected');
   const breakCheckbox = document.getElementById('break');
+  const name = document.getElementById('name');
   const textInput = document.querySelector('#text');
-  const output = document.getElementById('output');
   const sumTableButton = document.getElementById('sum-table');
+  const exportJsonButton = document.getElementById('export-json');
+  const importJsonButton = document.getElementById('import-json');
+  const importFileInput = document.getElementById('import-file');
 
-  // Today's date (used as default row label)
+  const variableIDs = ['C1','C2','C3','C4','C5'];
+
   const today = new Date();
-  const formattedDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
-
-  // Variables used for counting
-  const variableIDs = ['C1', 'C2', 'C3', 'C4', 'C5'];
-
-  /*** ===========================
-   *  UTILITY FUNCTIONS
-   *  =========================== */
-  const table = () => document.getElementById('table');
-  const getValue = (selector) => document.querySelector(selector)?.value ?? '';
-  const isEmpty = (id) => {
-    const element = document.getElementById(id);
-    return element && element.children.length === 0 && element.textContent.trim() === '';
-  };
-  const capitalize = (word) => word ? word.charAt(0).toUpperCase() + word.slice(1) : '';
-  const createElement = (tag, content = '') => {
-    const el = document.createElement(tag);
-    el.innerHTML = content;
-    return el;
-  };
-
-  const updateCloneButtonState = () => {
-    const t = table();
-    cloneButton.disabled = !(t && t.querySelectorAll('tr').length > 0);
-  };
-
+  const formattedDate = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
   // Safe delay helper (used by counters/highlight/save)
   const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-
-  /*** ===========================
-   *  GLOBAL RECALC (call everywhere)
-   *  centralised: updates counts, sums and persists
-   *  =========================== */
-  const recalc = () => {
-    countSelected();
-    sumTableByVariables();
-    saveTable();
-    updateCloneButtonState();
-  };
-
-  /*** ===========================
-   *  TEXT HANDLING (dblclick add text)
-   *  =========================== */
-  const addText = (e) => {
-    e.preventDefault();
-    const text = textInput.value;
-    if (!text) return;
-
-    const cell = e.currentTarget;
-
-    // only select non-first cells
-    if (cell.cellIndex !== 0 && !cell.classList.contains('selected')) {
-      cell.classList.add('selected');
-    }
-
-    // Apply text (with optional break)
-    applyTextToCell(cell, text, breakCheckbox.checked);
-
-    // After both changes, update counts, sum, and save table
-    recalc();
-  };
-
-  /*** ===========================
-   *  STORAGE NAMESPACE
-   *  =========================== */
+  // ------------------------------
+  // STORAGE NAMESPACE
+  // ------------------------------
   class StorageNamespace {
-    constructor(namespace) {
-      this.namespace = namespace;
-    }
-
-    setItem(key, value) {
-      localStorage.setItem(`${this.namespace}:${key}`, JSON.stringify(value));
-    }
-
-    getItem(key, defaultValue = null) {
+    constructor(namespace){ this.namespace = namespace; }
+    setItem(key, value){ localStorage.setItem(`${this.namespace}:${key}`, JSON.stringify(value)); }
+    getItem(key, defaultValue = null){
       const val = localStorage.getItem(`${this.namespace}:${key}`);
       return val !== null ? JSON.parse(val) : defaultValue;
     }
-
-    removeItem(key) {
-      localStorage.removeItem(`${this.namespace}:${key}`);
-    }
-
-    clear() {
-      Object.keys(localStorage)
-      .filter(k => k.startsWith(this.namespace + ':'))
-      .forEach(k => localStorage.removeItem(k));
-    }
+    removeItem(key){ localStorage.removeItem(`${this.namespace}:${key}`); }
   }
   const loopStorage = new StorageNamespace('table');
+  // ONE unified timestamp filename generator
+  const exportFilename = (base = "export", ext = "json") => {
+    const d = new Date();
+    const pad = (n) => String(n).padStart(2, "0");
 
-  const saveTable = () => {
+    const stamp =
+    d.getFullYear() + "-" +
+    pad(d.getMonth() + 1) + "-" +
+    pad(d.getDate()) + "-" +
+    pad(d.getHours()) + "-" +
+    pad(d.getMinutes()) + "-" +
+    pad(d.getSeconds());
+
+    const randomID = Math.random().toString(36).substring(2, 8).toUpperCase();
+
+    return `${base}-${stamp}-${randomID}.${ext}`;
+  };
+
+  // ------------------------------
+  // UTILITIES
+  // ------------------------------
+  const table = () => document.getElementById('table');
+  const createElement = (tag, html='') => { const e = document.createElement(tag); e.innerHTML = html; return e; };
+  const getVariableValue = name => {
+    const el = document.getElementById(name.toUpperCase());
+    return el ? (parseFloat(el.value) || 0) : 0;
+  };
+
+  // central recalc helper
+  const recalc = () => {
+    sumTableByVariables();
+    saveTable();
+  };
+
+  // ------------------------------
+  // ROW SUM & SELECTED COUNT (uses DATA_CELLS_END_OFFSET)
+  // ------------------------------
+  const updateRowCounts = row => {
+    const cells = row.querySelectorAll("td");
+    const limit = cells.length - DATA_CELLS_END_OFFSET;
+
+    let total = 0;
+    let selected = 0;
+
+    for (let i = 0; i < limit; i++) {
+      const cell = cells[i];
+
+      // count selected
+      if (cell.classList.contains("selected")) {
+        selected++;
+      }
+
+      // detect variables C1..C5
+      const text = (cell.innerHTML || '')
+      .replace(/<br\s*\/?>/gi, ' ')
+      .toUpperCase();
+
+      const matches = text.match(/\bC[1-5]\b/g);
+
+      if (matches) {
+        for (let j = 0; j < matches.length; j++) {
+          total += getVariableValue(matches[j]);
+        }
+      }
+    }
+
+    const countCell =
+    row.querySelector('td[data-control="count"]') ||
+    cells[cells.length - 1];
+
+    if (countCell) {
+      countCell.textContent = `${selected}/${total}`;
+    }
+  };
+
+
+  const sumTableByVariables = () => {
     const t = table();
     if (!t) return;
-
-    const data = Array.from(t.rows).map(row => {
-      const cells = Array.from(row.cells);
-      const dataCells = cells.slice(0, -4); // exclude last 4 control cells
-      const rowData = dataCells.map(cell => ({
-        html: cell.innerHTML,        // save HTML with <br>
-        selected: cell.classList.contains('selected')
-      }));
-
-      // Add last 4 cells as plain text (controls)
-      const controlCells = cells.slice(-4).map(cell => ({ html: cell.innerHTML }));
-      return rowData.concat(controlCells);
-    });
-
-    loopStorage.setItem('tableData', data);
+    Array.from(t.rows).forEach(updateRowCounts);
   };
 
-  const addTextToSelected = () => {
-    const selectedCells = main.querySelectorAll('.selected');
-    if (!selectedCells.length) return;
-    const text = textInput.value;
-    const addBreak = breakCheckbox.checked;
-    selectedCells.forEach((cell) => applyTextToCell(cell, text, addBreak));
-
-    recalc();
-  };
-
+  // ------------------------------
+  // APPLY TEXT TO CELL (dblclick or add-to-selected)
+  // ------------------------------
   /*** ===========================
    *  APPLY TEXT TO CELL (no auto-select for first cell)
    *  =========================== */
@@ -176,124 +163,113 @@
     if (cell.cellIndex !== 0 && !cell.classList.contains('selected')) {
       cell.classList.add('selected');
     }
-
     // Update counts, totals, and save table
     recalc();
   };
-
-  /*** ===========================
-   *  TABLE CELL INTERACTIONS
-   *  =========================== */
+  // ------------------------------
+  // CELL INTERACTIONS (click/dblclick handlers)
+  // ------------------------------
   const toggleClass = (e) => {
-    e.preventDefault();
     const cell = e.currentTarget;
-    // do not toggle first cell
-    if (cell.cellIndex === 0) return;
+    // do not toggle first cell nor control cells
+    if (!cell || cell.cellIndex === 0) return;
+    // Prevent toggling control cells (last N)
+    const cells = cell.parentElement.querySelectorAll('td');
+    if (cell.cellIndex >= cells.length - DATA_CELLS_END_OFFSET) return;
+
     cell.classList.toggle('selected');
-    recalc(); // updates variable totals immediately and saves
-  };
-
-  const removeElement = function () {
-    const row = this.closest('tr'); // ensures we get the correct row
-    if (!row) return;
-    row.remove();
-
-    inputNumber.disabled = !isEmpty('table'); // enable input if table is empty
-    updateCloneButtonState();
     recalc();
   };
 
-  let counter = 0;
-  const filler = () => {
-    const val = textInput.value;
-    const firstNum = Number(val[0]);
-    counter += firstNum;
-    return counter % firstNum === 0 ? 1 : 0;
+  const addTextHandler = (e) => {
+    const cell = e.currentTarget;
+    // only apply to non-control cells
+    const cells = cell.parentElement.querySelectorAll('td');
+    if (cell.cellIndex >= cells.length - DATA_CELLS_END_OFFSET) return;
+    applyTextToCell(cell, textInput.value, breakCheckbox.checked);
   };
 
-  const getAllDivs = (btn) => {
-    const [, ...listOfAll] = btn.parentElement.children;
-    listOfAll.length -= 4;
-    return listOfAll;
-  };
-
-  const nextElement = function () {
-    const elements = getAllDivs(this);
-    if (elements.length < 2) return;
-    const lastText = elements[elements.length - 1].innerText;
-    for (let i = elements.length - 1; i > 0; i--) {
-      elements[i].innerText = elements[i - 1].innerText;
-    }
-    elements[0].innerText = lastText;
+  const removeRow = function () {
+    const row = this.closest('tr');
+    if (!row) return;
+    row.remove();
     recalc();
   };
 
   const prevElement = function () {
-    const elements = getAllDivs(this);
-    if (elements.length < 2) return;
-    const firstText = elements[0].innerText;
-    for (let i = 0; i < elements.length - 1; i++) {
-      elements[i].innerText = elements[i + 1].innerText;
+    const row = this.closest('tr');
+    if (!row) return;
+    const cells = Array.from(row.querySelectorAll('td'));
+    const dataCells = cells.slice(1, -DATA_CELLS_END_OFFSET);
+    if (dataCells.length < 2) return;
+    const firstHTML = dataCells[0].innerHTML;
+    for (let i = 0; i < dataCells.length - 1; i++) {
+      dataCells[i].innerHTML = dataCells[i + 1].innerHTML;
     }
-    elements[elements.length - 1].innerText = firstText;
+    dataCells[dataCells.length - 1].innerHTML = firstHTML;
     recalc();
   };
 
-  const countSelected = () => {
-    const t = table();
-    if (!t) return;
-    Array.from(t.rows).forEach(row => {
-      const selectedCells = row.querySelectorAll('td.selected').length;
-      const countCell = row.querySelector('td[data-control="count"]');
-      if (countCell) countCell.textContent = selectedCells;
-    });
+  const nextElement = function () {
+    const row = this.closest('tr');
+    if (!row) return;
+    const cells = Array.from(row.querySelectorAll('td'));
+    const dataCells = cells.slice(1, -DATA_CELLS_END_OFFSET);
+    if (dataCells.length < 2) return;
+    const lastHTML = dataCells[dataCells.length - 1].innerHTML;
+    for (let i = dataCells.length - 1; i > 0; i--) {
+      dataCells[i].innerHTML = dataCells[i - 1].innerHTML;
+    }
+    dataCells[0].innerHTML = lastHTML;
+    recalc();
   };
 
-  /*** ===========================
-   *  VARIABLE SUMMATION
-   *  =========================== */
-  const getVariableValue = (name) => {
-    const el = document.getElementById(name.toUpperCase());
-    return el ? parseFloat(el.value) || 0 : 0;
-  };
-
-  const sumTableByVariables = () => {
+  // ------------------------------
+  // CLONE ROW (reattach event handlers, clear selected classes on data cells)
+  // ------------------------------
+  const cloneRow = () => {
     const t = table();
     if (!t) return;
 
-    let total = 0;
-    const found = {};
+    const rows = t.getElementsByTagName('tr');
+    if (!rows.length) return;
 
-    const cells = t.querySelectorAll('td');
+    const lastRow = rows[rows.length - 1];
+    const clone = lastRow.cloneNode(true);
+
+    const cells = clone.querySelectorAll('td');
 
     for (let i = 0; i < cells.length; i++) {
-      const html = cells[i].innerHTML.toUpperCase();
+      const cell = cells[i];
 
-      // match variables like C1, C2, C3, C4, C5 anywhere in the cell
-      const match = html.match(/\bC[1-5]\b/);
-
-      if (match) {
-        const variable = match[0];
-        const val = getVariableValue(variable);
-
-        // safe decimal addition
-        total = Number((total + val).toFixed(10));
-
-        found[variable] = (found[variable] || 0) + 1;
+      // First cell: dblclick → addTextHandler
+      if (i === 0) {
+        cell.addEventListener('dblclick', addTextHandler);
+        continue;
       }
+
+      // Data cells: click + dblclick
+      if (i < cells.length - DATA_CELLS_END_OFFSET) {
+        cell.addEventListener('click', toggleClass);
+        cell.addEventListener('dblclick', addTextHandler);
+        continue;
+      }
+
+      // Control cells
+      const ctl = (cell.textContent || '').trim();
+      if (ctl === 'remove') cell.addEventListener('click', removeRow);
+      else if (ctl === '>') cell.addEventListener('click', nextElement);
+      else if (ctl === '<') cell.addEventListener('click', prevElement);
     }
 
-    const details = Object.keys(found)
-    .map((key) => `${key} × ${found[key]} = ${getVariableValue(key) * found[key]}`);
-
-    output.innerHTML = `
-    <div class="section-title">Variables found: ${details || 'None'}</div>
-    <div class="section-title">Total sum:${total}</div>`;
+    t.appendChild(clone);
+    recalc();
   };
 
-  /*** ===========================
-   *  TABLE & ROW CREATION
-   *  =========================== */
+
+  // ------------------------------
+  // CREATE ROW (attach events correctly)
+  // ------------------------------
   const createRow = (days, name) => {
     let t = table();
     if (!t) {
@@ -305,48 +281,168 @@
     }
 
     const row = document.createElement('tr');
-    const rowFragment = document.createDocumentFragment();
 
-    const nameCell = createElement('td', capitalize(name));
-    nameCell.addEventListener('dblclick', addText);
+    const nameCell = createElement('td', name || '');
+    // nameCell: dblclick to add text (same handler style)
+    nameCell.addEventListener('dblclick', addTextHandler);
     row.appendChild(nameCell);
 
-    const totalDays = Number(days) >= 28 && Number(days) <= 31 ? Number(days) : 31;
-    const textValue = textInput.value;
-
-    for (let i = 1; i <= totalDays; i++) {
-      let fill = i < 10 ? `0${i}` : i;
-      if (textValue.includes('+')) fill = filler();
-      else if (textValue) fill = textValue;
-
-      const cell = createElement('td', fill);
+    // data cells
+    for (let i = 0; i < days; i++) {
+      let text = (!textInput.value) ? i : textInput.value;
+      const cell = createElement('td', text);
       cell.align = 'center';
+      cell.style.textAlign = 'center';
       cell.addEventListener('click', toggleClass);
-      cell.addEventListener('dblclick', addText);
+      cell.addEventListener('dblclick', addTextHandler);
       row.appendChild(cell);
     }
 
+    // controls (last DATA_CELLS_END_OFFSET cells)
     const controls = [
-      { text: 'remove', control: 'remove', handler: removeElement },
+      { text: 'remove', control: 'remove', handler: removeRow },
       { text: '<', control: 'prev', handler: prevElement },
       { text: '>', control: 'next', handler: nextElement },
-      { text: '0', control: 'count', handler: countSelected }
+      { text: '0', control: 'count', handler: null } // display cell
     ];
 
-    controls.forEach(({ text, control, handler }) => {
-      const ctrl = createElement('td', text);
-      ctrl.dataset.control = control;
-      ctrl.addEventListener('click', handler);
+    controls.forEach(c => {
+      const ctrl = createElement('td', c.text);
+      ctrl.dataset.control = c.control;
+      if (c.handler) ctrl.addEventListener('click', c.handler);
       row.appendChild(ctrl);
     });
 
-    rowFragment.appendChild(row);
-    t.appendChild(rowFragment);
-
-    // ensure UI state is consistent after row creation
+    t.appendChild(row);
     recalc();
   };
 
+  // ------------------------------
+  // CONTEXT MENU: right-click to clear cell (skip control cells)
+  // ------------------------------
+  const enableClearOnRightClick = () => {
+    const t = table();
+    if (!t) return;
+    t.addEventListener('contextmenu', (e) => {
+      const cell = e.target.closest('td');
+      if (!cell) return;
+      // skip control cells
+      const cells = cell.parentElement.querySelectorAll('td');
+      if (cell.cellIndex >= cells.length - DATA_CELLS_END_OFFSET) return;
+
+      e.preventDefault();
+      cell.innerHTML = '';
+      cell.classList.remove('selected');
+      delete cell.dataset.breakAdded;
+      recalc();
+    });
+  };
+
+  // ------------------------------
+  // SAVE / LOAD TABLE (data cells only, exclude last N controls)
+  // ------------------------------
+  const saveTable = () => {
+    const t = table();
+    if (!t) return;
+
+    const data = Array.from(t.rows).map(row => {
+      const cells = Array.from(row.cells);
+      return cells
+      .slice(0, cells.length - DATA_CELLS_END_OFFSET)
+      .map(cell => ({
+        html: cell.innerHTML,
+        selected: cell.classList.contains("selected")
+      }));
+    });
+    loopStorage.setItem("tableData", data);
+  };
+
+  const loadTable = () => {
+    const data = loopStorage.getItem("tableData", []);
+
+    // remove existing table to avoid duplicate rows/cells
+    const old = table();
+    if (old) old.remove();
+
+    if (!Array.isArray(data) || data.length === 0) {
+      // nothing saved
+      return;
+    }
+
+    data.forEach(rowData => {
+      // rowData.length = number of data cells (including name cell)
+      const numData = rowData.length;
+      const name = rowData[0]?.html || '';
+
+      // createRow expects 'days' = number of data cells minus 1 (because it creates nameCell + days data cells)
+      createRow(Math.max(0, numData - 1), name.value || formattedDate);
+
+      const t = table();
+      const row = t.rows[t.rows.length - 1];
+
+      // restore content & selection for data cells only
+      for (let i = 0; i < numData; i++) {
+        const cellData = rowData[i];
+        if (!cellData) continue;
+        const cell = row.cells[i];
+        if (!cell) continue;
+        cell.innerHTML = cellData.html || '';
+        if (cellData.selected) cell.classList.add('selected');
+        else cell.classList.remove('selected');
+      }
+    });
+
+    recalc();
+  };
+
+
+  // ------------------------------
+  // JSON IMPORT / EXPORT
+  // ------------------------------
+  exportJsonButton?.addEventListener('click', () => {
+    const t = table();
+    if (!t) return;
+    const data = Array.from(t.rows).map(row => {
+      const cells = Array.from(row.cells);
+      return cells.slice(0, -DATA_CELLS_END_OFFSET).map(cell => ({
+        html: cell.innerHTML,
+        selected: cell.classList.contains('selected')
+      }));
+    });
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = exportFilename(name.value || "data-table", "json");
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  importJsonButton?.addEventListener('click', () => importFileInput.click());
+  importFileInput?.addEventListener('change', function () {
+    const file = this.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      try {
+        const json = JSON.parse(e.target.result);
+        if (!Array.isArray(json)) throw new Error('Invalid JSON');
+        // clear previous table and store then load
+        const t = table();
+        if (t) t.remove();
+        loopStorage.setItem('tableData', json);
+        loadTable();
+      } catch (err) {
+        console.error('Import JSON error:', err);
+        alert('Invalid JSON file!');
+      }
+    };
+    reader.readAsText(file);
+  });
+
+  // ------------------------------
+  // EXPORT TO EXCEL (cloned html)
+  // ------------------------------
   /*** ===========================
    *  EXPORT TO EXCEL
    *  =========================== */
@@ -393,187 +489,76 @@
 
     const format = (s, c) => s.replace(/{(\w+)}/g, (_, key) => c[key]);
 
-    // NEW → generate timestamp + random part
-    const exportName = (name) => {
-      const d = new Date();
-      const pad = (n) => String(n).padStart(2, '0');
-
-      const timestamp =
-      d.getFullYear() + '-' +
-      pad(d.getMonth() + 1) + '-' +
-      pad(d.getDate()) + '-' +
-      pad(d.getHours()) + '-' +
-      pad(d.getMinutes());
-
-      const rnd = Math.random().toString(36).slice(2, 8);
-
-      return (name || 'worksheet') + '-' + timestamp + '-' + rnd + '.xls';
-    };
-
-    return (table, name) => {
+    return (table) => {
       if (!table.nodeType) table = document.getElementById(table);
 
       const clone = inlineTableStyles(table.cloneNode(true));
       const ctx = { worksheet: name || 'Worksheet', table: clone.innerHTML };
 
       const link = document.createElement('a');
-      link.download = exportName(name);
+      link.download = exportFilename(name.value || "worksheet", "xls");
       link.href = uri + base64(format(template, ctx));
       link.click();
     };
   })();
+  exportToExcel?.addEventListener('click', () => tableToExcel('table'));
 
-  /*** ===========================
-   *  EVENT BINDINGS
-   *  =========================== */
-  addTextButton.addEventListener('click', addTextToSelected);
-  exportToExcel.addEventListener('click', () => tableToExcel('table'));
-  sumTableButton?.addEventListener('click', sumTableByVariables);
-
-  addButton.addEventListener('click', () => {
-    const number = getValue('#number');
-    const name = isEmpty('table') ? formattedDate : getValue('#name');
-    createRow(number, name);
-    inputNumber.disabled = true;
-    updateCloneButtonState();
-    // ensure totals and save after adding
-    recalc();
-  });
-
-  /*** ===========================
-   *  VARIABLE INPUT CLICK TO TEXT
-   *  =========================== */
+  // ------------------------------
+  // VARIABLE INPUT CLICK (C1..C5): put id into text input
+  // ------------------------------
   variableIDs.forEach(id => {
-    const input = document.getElementById(id);
-    if (input) {
-      const setVariable = () => {
-        textInput.value = id.toUpperCase(); // replace previous text
-      };
+    const inp = document.getElementById(id);
+    if (!inp) return;
+    const setVar = (e) => {
+      e?.preventDefault();
+      textInput.value = id.toUpperCase();
+    };
+    inp.addEventListener('click', setVar);
 
-      // Clicking the input itself
-      input.addEventListener('click', setVariable);
-
-      // Clicking the label also works
-      const label = input.closest('label');
-      if (label) {
-        label.addEventListener('click', (e) => {
-          e.preventDefault(); // prevent default label behavior
-          setVariable();
-          recalc();
-        });
-      }
-
-      input.addEventListener('input', recalc);   // triggers as user types
-      input.addEventListener('change', recalc);  // triggers on blur or manual change
-    }
-  });
-
-  /*** ===========================
-   *  CLONE ROW
-   *  =========================== */
-  cloneButton.addEventListener('click', function () {
-    const t = table();
-    if (!t) return;
-    const rows = t.getElementsByTagName('tr');
-    if (!rows.length) return;
-
-    const lastRow = rows[rows.length - 1];
-    const clone = lastRow.cloneNode(true);
-
-    const cells = clone.querySelectorAll('td');
-    cells.forEach((cell) => {
-      const text = cell.textContent.trim().toLowerCase();
-
-      // First cell (name) should only have dblclick for addText (no toggle)
-      if (cell.cellIndex === 0) {
-        cell.addEventListener('dblclick', addText);
-        return;
-      }
-
-      // controls are the last 4 cells
-      if (!['remove', '<', '>'].includes(text) && cell.dataset.control !== 'count') {
-        cell.addEventListener('click', toggleClass);
-        cell.addEventListener('dblclick', addText);
-      }
-
-      if (text === 'remove') cell.addEventListener('click', removeElement);
-      else if (text === '<') cell.addEventListener('click', prevElement);
-      else if (text === '>') cell.addEventListener('click', nextElement);
-    });
-
-      t.appendChild(clone);
-      // ensure totals and save after cloning
-      recalc();
-  });
-
-  /*** ===========================
-   *  LOAD TABLE FROM STORAGE
-   *  =========================== */
-  const loadTable = () => {
-    const data = loopStorage.getItem('tableData', []);
-    if (!data.length) return;
-
-    data.forEach(rowData => {
-      const name = rowData[0]?.text || '';
-      const days = rowData.length - 5; // first cells only, excluding last 4 controls
-      createRow(days, name);
-
-      const t = table();
-      const row = t.rows[t.rows.length - 1];
-
-      rowData.forEach((cellData, i) => {
-        row.cells[i].innerHTML = cellData.html || '';
-        // restore selection only if it's not a control cell and not the first cell
-        if (i > 0 && i < row.cells.length - 4 && cellData.selected) {
-          row.cells[i].classList.add('selected');
-        }
+    // if label exists, clicking label also sets variable and recalcs
+    const label = inp.closest('label');
+    if (label) {
+      label.addEventListener('click', (e) => {
+        e.preventDefault();
+        setVar();
+        recalc();
       });
-    });
-
-    recalc();
-  };
-
-  /*** ===========================
-   *  CLEAR CELL TEXT ON RIGHT-CLICK
-   *  =========================== */
-  const enableClearOnRightClick = () => {
-    const t = table();
-    if (!t) return;
-
-    t.addEventListener('contextmenu', (e) => {
-      const cell = e.target.closest('td');
-      if (!cell || cell.dataset.control) return; // ignore control cells
-
-      e.preventDefault(); // prevent default browser context menu
-      cell.innerHTML = '';          // clear text
-      cell.classList.remove('selected'); // unselect
-      cell.dataset.breakAdded = '';      // reset break flag
-
-      recalc();
-    });
-  };
-
-  /*** ===========================
-   *  INITIALIZATION
-   *  =========================== */
-  document.addEventListener('DOMContentLoaded', () => {
-    const tableData = loopStorage.getItem('tableData', null);
-
-    if (tableData && tableData.length > 0) {
-      // Load table from localStorage if data exists
-      loadTable();
-      enableClearOnRightClick();
-    } else if (main.innerHTML.trim() === '') {
-      // No saved data, create default row
-      createRow(getValue('#number'), formattedDate);
-      inputNumber.disabled = true;
-      enableClearOnRightClick();
     }
 
-    // always ensure totals are correct on startup
-    recalc();
+    // also trigger recalc on input change (value changes of variables affect sums)
+    inp.addEventListener('input', recalc);
+    inp.addEventListener('change', recalc);
   });
 
+  // ------------------------------
+  // INIT
+  // ------------------------------
+  document.addEventListener('DOMContentLoaded', () => {
+    const data = loopStorage.getItem('tableData', null);
+    if (data && Array.isArray(data) && data.length > 0) {
+      loadTable();
+    } else {
+      createRow(Number(inputNumber.value) || 31, name.value || formattedDate);
+    }
+    enableClearOnRightClick();
+  });
+
+  addButton?.addEventListener('click', () => {
+    createRow(Number(inputNumber.value) || 31, name.value || formattedDate);
+  });
+
+  cloneButton?.addEventListener('click', cloneRow);
+
+  addTextButton?.addEventListener('click', () => {
+    const sel = main.querySelectorAll('.selected');
+    if (!sel.length) return;
+    sel.forEach(cell => applyTextToCell(cell, textInput.value, breakCheckbox.checked));
+  });
+
+  sumTableButton?.addEventListener('click', () => {
+    recalc();
+    saveTable();
+  });
   // ----------------------
   // DECIMAL COUNTER LOGIC USING table's StorageNamespace
   // ----------------------
@@ -698,5 +683,4 @@
     // attach input change handler
     inputEl.addEventListener('change', counterInputChange);
   });
-
 })();

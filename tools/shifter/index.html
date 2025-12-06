@@ -15,24 +15,26 @@
   <body>
     <header>
       <h1>ShifterX</h1>
-      <div class="inline-flex" aria-label="Main controls">
-        <input id="name" type="text" placeholder="Type name here..." aria-label="Name input">
-        <input id="number" type="number" name="number" min="28" max="31" value="31" aria-label="Number input">
-        <input id="text" type="text" placeholder="Text to add on double click..." aria-label="Text input">
-        <label class="checkbox">
-          <input type="checkbox" id="break" aria-label="Add text with break">
-          <span>Add text with break</span>
-        </label>
-        <div class="inline-flex" aria-label="Row actions">
-          <button id="add-text-to-selected" aria-label="Add text to selected cells">Add text selected</button>
-          <button id="clone" aria-label="Clone last row">Clone Last</button>
-          <button id="add" aria-label="Add new row">Add</button>
+      <div class="inline-flex mlr" aria-label="Main controls">
+        <div class="inline-flex" aria-label="Row text">
+          <input id="name" type="text" placeholder="Type name here..." aria-label="Name input">
+          <input id="text" type="text" placeholder="Text to add on double click..." aria-label="Text input">
+          <label class="checkbox">
+            <input type="checkbox" id="break" aria-label="Add text with break">
+            <span>Add text with break</span>
+          </label>
+          <input id="number" type="number" name="number" min="28" max="31" value="31" aria-label="Number input">
         </div>
         <div class="inline-flex" aria-label="Data export and import">
           <button id="export" aria-label="Export table to Excel">Export to Excel</button>
           <button id="export-json" aria-label="Export table to JSON">Export JSON</button>
           <button id="import-json" aria-label="Import table from JSON">Import JSON</button>
           <input type="file" id="import-file" accept=".json" style="display:none;" aria-label="Select JSON file to import">
+        </div>
+        <div class="inline-flex" aria-label="Row actions">
+          <button id="add-text-to-selected" aria-label="Add text to selected cells">Add text selected</button>
+          <button id="clone" aria-label="Clone last row">Clone Last</button>
+          <button id="add" aria-label="Add new row">Add</button>
         </div>
         <div class="inline-flex" aria-label="Hour counters">
           <div class="inline-flex">

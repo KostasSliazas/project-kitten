@@ -24,9 +24,8 @@ body {
     flex-direction: column;
     place-items: center;
     font: 16px/1.5 Candara,Calibri,Segoe,"Segoe UI",Optima,Arial,sans-serif;
-    margin: 0 auto;
     overflow-x: hidden;
-    margin: 1em;
+    margin: 0;
     user-select: none;
 }
 
@@ -44,7 +43,7 @@ place-content: center;
 body,header {
     background: var(--color-bg)
 }
-
+.mlr{margin: 0 1em}
 header {
     flex-wrap: wrap;
     place-self: center;
@@ -60,7 +59,7 @@ table {
     border-collapse: collapse;
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: auto;
     margin: 0 auto;
 }
 
@@ -79,10 +78,9 @@ table>tr>td {
     user-select: none;
     background: var(--color-white);
     cursor: pointer;
-    flex: 1 1 auto;
     min-width: 3ch;
-    max-width: 4ch;
     box-sizing: border-box;
+    max-inline-size: 3ch;
 }
 
 table>tr>td:first-of-type {
@@ -105,7 +103,8 @@ td[data-control] {
     place-content: center;
     flex-direction: column;
     padding: 0 6px;
-    min-width: 48px
+    min-width: 48px;
+    max-inline-size: fit-content;
 }
 
 td[data-control]:hover {
@@ -253,12 +252,11 @@ input:disabled {
 }
 
 h1 {
-    margin: 0 0 .5em 0;
+    margin: 0 0 1em 0;
     font-size: 1em;
     display: block;
     width: 100%;
     text-align: center;
-    position: absolute;
-    top: 0;
-    z-index: -1;
+    background: var(--color-mid);
+    color: var(--color-bg-light);
 }
