@@ -496,14 +496,17 @@
   const api_url = 'https://api.open-meteo.com/v1/forecast?latitude=55.7068&longitude=21.1391&hourly=temperature_2m';
   // Defining async function
   async function getAll(url) {
-    // Storing response
-    const response = await w.fetch(url);
-    // Storing data in form of JSON
-    const data = await response.json();
-    // no data? return
-    if (!response || !data) return false;
-    // set data to storage
-    return StorageNamespace.setItem('temperature', data.hourly.temperature_2m);
+    if (setTimeStamp(77) && online){
+      // Storing response
+      const response = await w.fetch(url);
+      // Storing data in form of JSON
+      const data = await response.json();
+      // no data? return
+      if (!response || !data) return false;
+      // set data to storage
+      StorageNamespace.setItem('temperature', data.hourly.temperature_2m);
+    }
+    stats(StorageNamespace.getItem('temperature'));
   }
 
   // round values replace for better showing stats
@@ -956,7 +959,7 @@
       onlineElement.textContent = 'disconnected';
     }
   }
-  async function init() {
+  function init() {
     // lines background
     toggleClassFromStorage('bg-lines', main);
     toggleClassFromStorage('bg-image', root);
@@ -1033,11 +1036,10 @@
     resizeElementToFullSize();
 
     //is time 43m passed and we are online?
-    if (setTimeStamp(77) && online) {
-      await getAll(api_url);
-    }
+    getAll(api_url);
+
     // show the data to user
-    stats(StorageNamespace.getItem('temperature'));
+
     d.getElementById('loader').style.display = 'none'; // Hide the loader
     d.getElementById('content').style.visibility = 'visible'; // Show the content
     d.getElementById('today').innerHTML = showDate();
