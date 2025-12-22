@@ -25,7 +25,7 @@ p::after {
 .e .movable:nth-child(22),
 .e .movable:nth-child(35),
 .e .movable:nth-child(23),
-.e .movable:nth-child(3),
+.e .movable:nth-child(5),
 .hide,
 .mode-cute .cute img,
 p::after {
@@ -956,7 +956,6 @@ textarea:hover {
 }
 
 .svg-holder {
-  margin: 4px 0;
   position: relative;
   font-size: 0
 }
@@ -971,8 +970,9 @@ textarea:hover {
 
 #sunshine {
   background: var(--color0);
-  height: 24px;
-  border: 1px solid var(--color3);
+  height: 23px;
+  scale: 1;
+  shape-rendering: geometricprecision;
 }
 
 #battery {
