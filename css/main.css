@@ -643,14 +643,10 @@ p>span {
   padding: 0 4px;
   pointer-events: none;
   user-select: none;
-}
-
-p>span {
   bottom: 0;
   background: var(--color0);
   text-align: center;
   white-space: nowrap;
-  min-width: 140px;
   pointer-events: none;
   transition: opacity .1s 0.1s ease-in-out;
   box-shadow: 0 0 7px;
@@ -1376,12 +1372,16 @@ fieldset {
 }
 
 .bottom {
-  padding: 0;
   bottom: 0;
-  right: 0;
-  display: block;
+  left: 0;
+  display: flex;
   margin: 0 auto;
-  width: 100%
+  writing-mode: sideways-lr;
+  place-content: end;
+  padding: 0;
+  color: #223;
+  line-height: 1;
+  font-size: .85em;
 }
 
 .fixed {
@@ -1677,10 +1677,6 @@ input[type=text]:focus {
   .mw50,
   .mw96 {
     min-width: 0
-  }
-
-  .bottom {
-    position: relative
   }
 
   .movable {
