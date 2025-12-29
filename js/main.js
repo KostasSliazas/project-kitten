@@ -1700,7 +1700,7 @@
   }
 
   function resizeElementToFullSize() {
-    //const padding = 36;
+    const padding = 48;
 
     // Reset height to natural before measuring
     main.style.height = '';
@@ -1709,7 +1709,7 @@
     // Measure clean scroll height
     const fullHeight = Math.max(w.innerHeight, root.scrollHeight);
 
-    const adjusted = fullHeight //+ padding;
+    const adjusted = fullHeight + padding;
 
     // Set final height
     main.style.height = `${adjusted}px`;
