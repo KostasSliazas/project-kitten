@@ -292,10 +292,10 @@ html {
 
 .g {
   --color0: #444444;
-  --color1: #242424;
+  --color1: #1C3827;
   --color2: #181818;
-  --color3: #0c0c0c;
-  --color4: #9ec91b;
+  --color3: #0C0C0C;
+  --color4: #9EC91B;
   --size: right bottom/70px
 }
 
@@ -643,10 +643,14 @@ p>span {
   padding: 0 4px;
   pointer-events: none;
   user-select: none;
+}
+
+p>span {
   bottom: 0;
   background: var(--color0);
   text-align: center;
   white-space: nowrap;
+  min-width: 140px;
   pointer-events: none;
   transition: opacity .1s 0.1s ease-in-out;
   box-shadow: 0 0 7px;
@@ -1373,15 +1377,12 @@ fieldset {
 
 .bottom {
   bottom: 0;
-  left: 0;
-  display: flex;
+  right: 0;
+  display: block;
   margin: 0 auto;
   writing-mode: sideways-lr;
   place-content: end;
-  padding: 0;
-  color: #223;
-  line-height: 1;
-  font-size: .85em;
+  padding:0;
 }
 
 .fixed {
