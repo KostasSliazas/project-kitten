@@ -12,6 +12,7 @@ WEB-based tools and links for Developers, Creators and others. To reset to defau
 * [Screenshots](#screenshots)
 * [Getting Started](#getting-started)
 * [License](#license)
+* [Disclaimer](#disclaimer)
 
 ## Screenshots
 ![Project K Screenshot](screenshots.png)
@@ -61,5 +62,7 @@ git clone https://github.com/KostasSliazas/project-kitten.git
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+
+## Disclaimer
 
 Please remember: this project is shared openly with the community. By downloading or using it, you agree to take responsibility for your own use. The maintainers and contributors are not liable for any issues that may arise — use it with care and enjoy building with it!
