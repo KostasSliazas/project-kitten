@@ -528,7 +528,7 @@
     const currentHour = now.getHours();
 
     const main = d.querySelector('.svg-holder');
-    data.length = 24;
+    data.length = 27;
 
     const arrayConverted = reduceValuesDynamically(
       data.map(e => e.toFixed(2) * 10),
@@ -992,7 +992,7 @@
       changerClass(0);
       applyStyles(true, widthMatch());
       loopElem(widthMatch);
-      centerElements();
+      //centerElements();
       //reload versions
       // w.location.reload(); // This reloads the page after your actions
     } else {
