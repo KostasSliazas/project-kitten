@@ -5,7 +5,9 @@
 [![Issues](https://img.shields.io/github/issues/KostasSliazas/project-kitten)](https://github.com/KostasSliazas/project-kitten/issues)
 [![Last Commit](https://img.shields.io/github/last-commit/KostasSliazas/project-kitten)](https://github.com/KostasSliazas/project-kitten/commits)
 
-WEB-based tools and links for Developers, Creators and others. To reset to defaults use [ctrl + `] (clears localStorage). 
+This project mostly discriminated by search engines contains WEB-based tools and links for Developers, Creators and others. 
+
+To reset to defaults use [ctrl + `] (clears localStorage). 
 
 ## Table of Contents
 
