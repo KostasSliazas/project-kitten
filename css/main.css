@@ -233,7 +233,7 @@ html {
 }
 
 .b.bg-image {
-  --bg: url(../img/b.webp?v=1)
+  --bg: url(../img/b.svg?v=1)
 }
 
 .c {
@@ -251,7 +251,7 @@ html {
 }
 
 .c.bg-image {
-  --bg: url(../img/c.webp?v=1)
+  --bg: url(../img/c.svg?v=1)
 }
 
 .d {
@@ -263,7 +263,7 @@ html {
 }
 
 .d.bg-image {
-  --bg: url(../img/d.webp?v=1)
+  --bg: url(../img/d.svg?v=1)
 }
 
 .e {
@@ -275,7 +275,7 @@ html {
 }
 
 .e.bg-image {
-  --bg: url(../img/e.webp?v=1)
+  --bg: url(../img/e.svg?v=1)
 }
 
 .f {
@@ -287,7 +287,7 @@ html {
 }
 
 .f.bg-image {
-  --bg: url(../img/f.webp?v=1)
+  --bg: url(../img/f.svg?v=1)
 }
 
 .g {
@@ -494,12 +494,13 @@ html {
 .h,
 .k,
 .r,
+.d,
 .g,
+.b,
 .a {
   font-variant-caps: all-small-caps;
 }
 
-.b,
 .f,
 .y {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif
@@ -511,7 +512,7 @@ html {
 }
 
 .c,
-.d {
+.f {
   font-family: system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Roboto, 'Helvetica Neue', 'Liberation Sans', Arial, sans-serif
 }
 
