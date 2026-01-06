@@ -48,6 +48,7 @@ git clone https://github.com/KostasSliazas/project-kitten.git
 | **todo-app-2**           | A simple to-do list application 2.                          | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/todo-app)             |
 | **todo-app-1**           | A simple to-do list application 1.                          | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/todo-app-1)           |
 | **word-generator**       | A tool for generating random words.                       | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/word-generator)       |
+| **shifterX**              | A tool for generating .xls, JSON tables.                 | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/shifter)       |
 
 
 ## Available games
