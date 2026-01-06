@@ -45,8 +45,8 @@ git clone https://github.com/KostasSliazas/project-kitten.git
 | **regex-extractor**      | A tool for extracting data using regular expressions.     | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/regex-extractor)      |
 | **resistor-calculator**  | A calculator for determining resistor values.             | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/resistor-calculator)  |
 | **text-shadow**          | A tool for generating CSS text shadows.                   | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/text-shadow)          |
-| **todo-app**             | A simple to-do list application.                          | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/todo-app)             |
-| **todo-app-1**           | An enhanced version of the to-do list application.        | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/todo-app-1)           |
+| **todo-app-2**           | A simple to-do list application 2.                          | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/todo-app)             |
+| **todo-app-1**           | A simple to-do list application 1.                          | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/todo-app-1)           |
 | **word-generator**       | A tool for generating random words.                       | [Live Demo](https://kostassliazas.github.io/project-kitten/tools/word-generator)       |
 
 
