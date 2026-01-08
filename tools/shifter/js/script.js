@@ -199,30 +199,51 @@
   const prevElement = function () {
     const row = this.closest('tr');
     if (!row) return;
-    const cells = Array.from(row.querySelectorAll('td'));
-    const dataCells = cells.slice(1, -DATA_CELLS_END_OFFSET);
+
+    const cells = row.querySelectorAll('td');
+    const dataCells = Array.prototype.slice.call(cells, 1, -DATA_CELLS_END_OFFSET);
     if (dataCells.length < 2) return;
+
     const firstHTML = dataCells[0].innerHTML;
+    const firstClass = dataCells[0].className;
+
     for (let i = 0; i < dataCells.length - 1; i++) {
       dataCells[i].innerHTML = dataCells[i + 1].innerHTML;
+      dataCells[i].className = dataCells[i + 1].className;
     }
-    dataCells[dataCells.length - 1].innerHTML = firstHTML;
+
+    const last = dataCells.length - 1;
+    dataCells[last].innerHTML = firstHTML;
+    dataCells[last].className = firstClass;
+
     recalc();
   };
 
   const nextElement = function () {
     const row = this.closest('tr');
     if (!row) return;
-    const cells = Array.from(row.querySelectorAll('td'));
-    const dataCells = cells.slice(1, -DATA_CELLS_END_OFFSET);
+
+    const cells = row.querySelectorAll('td');
+    const dataCells = Array.prototype.slice.call(cells, 1, -DATA_CELLS_END_OFFSET);
     if (dataCells.length < 2) return;
-    const lastHTML = dataCells[dataCells.length - 1].innerHTML;
-    for (let i = dataCells.length - 1; i > 0; i--) {
+
+    const last = dataCells.length - 1;
+    const lastHTML = dataCells[last].innerHTML;
+    const lastClass = dataCells[last].className;
+
+    for (let i = last; i > 0; i--) {
       dataCells[i].innerHTML = dataCells[i - 1].innerHTML;
+      dataCells[i].className = dataCells[i - 1].className;
     }
+
     dataCells[0].innerHTML = lastHTML;
+    dataCells[0].className = lastClass;
+
     recalc();
   };
+
+
+
 
   // ------------------------------
   // CLONE ROW (reattach event handlers, clear selected classes on data cells)
