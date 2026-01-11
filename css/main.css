@@ -124,11 +124,11 @@ table {
 }
 
 :root {
-  --color0: #DDE7F7;
-  --color1: #F7F7F7;
-  --color2: #E0F0E7;
-  --color3: #C0BFB7;
-  --color4: #212027;
+  --color0: #F7F7F8;
+  --color1: #E6E7EF;
+  --color2: #D6D7E5;
+  --color3: #AAB7E7;
+  --color4: #232B37;
   --bg: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQIW2NgAAIAAAUAAR4f7BQAAAAASUVORK5CYII=);
   --repeat: no-repeat;
   --size: center/cover;
