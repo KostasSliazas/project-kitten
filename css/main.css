@@ -1188,6 +1188,7 @@ textarea {
   max-width: 100%;
   min-height: 1em;
   outline: 0;
+  align-self: stretch;
   position: relative
 }
 
