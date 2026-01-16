@@ -8,95 +8,93 @@
   --color-white: #ffffff;
   --color-black: #1e2616;
   --color-accent: #d65a31;
-  --color-accent-dark: #a94220;
+  --color-accent-dark: #a94220
 }
 
 html {
-  height: 100%;
+  height: 100%
 }
 
-body,
-table > tr > td {
+body,table>tr>td {
   color: var(--color-black);
+  overflow-x: hidden;
+  user-select: none
+}
+
+body,table {
+  display: flex;
+  flex-direction: column
 }
 
 body {
-  display: flex;
-  flex-direction: column;
   place-items: center;
-  font: 16px/1.5 Candara, Calibri, Segoe, 'Segoe UI', Optima, Arial, sans-serif;
-  overflow-x: hidden;
-  margin: 0;
-  user-select: none;
+  font: 16px/1.5 Candara,Calibri,Segoe,"Segoe UI",Optima,Arial,sans-serif;
+  margin: 0
 }
 
 #main {
-  flex: 1 1 100%;
-  min-height: 1000px;
+flex: 1 1 100%;
+min-height: 1000px;
+width: 100%
+}
+
+#main,footer,header,table>tr {
+display: flex;
+place-content: center
+}
+
+table>tr {
+  flex-wrap: wrap;
+  place-content: space-between;
+  place-self: stretch;
   width: 100%;
 }
 
-#main,
-footer,
-header {
-  display: flex;
-  place-content: center;
+body,header {
+  background: var(--color-bg)
 }
 
-body,
-header {
-  background: var(--color-bg);
-}
 .mlr {
-  margin: 0 1em;
+  margin: 0 1em
 }
+
 header {
   flex-wrap: wrap;
   place-self: center;
-  margin: 0 0 1em 0;
+  margin: 0 0 1em
 }
 
 footer {
-  font-size: 0.75em;
+  font-size: .75em
 }
 
 table {
   border-top: 1px solid var(--color-soft);
   border-collapse: collapse;
-  display: flex;
-  flex-direction: column;
   width: auto;
-  margin: 0 auto;
+  margin: 0 auto
 }
 
-table > tr {
-  display: flex;
-  flex-wrap: wrap;
-  place-content: flex-start;
-}
-
-table > tr > td {
+table>tr>td {
   white-space: pre-wrap;
   box-shadow: 0 0 0 1px var(--color-mid);
-  overflow-x: hidden;
   text-overflow: ellipsis;
   padding: 0 1px;
-  user-select: none;
   background: var(--color-white);
   cursor: pointer;
   min-width: 3ch;
   box-sizing: border-box;
-  max-inline-size: 3ch;
+  max-inline-size: 3ch
 }
 
-table > tr > td:first-of-type {
+table>tr>td:first-of-type {
   min-width: 100px;
-  cursor: default;
+  cursor: default
 }
 
 .selected {
   background: var(--color-bg);
-  color: var(--color-white);
+  color: var(--color-white)
 }
 
 td[data-control] {
@@ -111,106 +109,105 @@ td[data-control] {
   padding: 0 6px;
   min-width: 48px;
   max-inline-size: fit-content;
+  block-size: 3em
 }
 
 td[data-control]:hover {
-  background: var(--color-mid);
+  background: var(--color-mid)
 }
 
-td[data-control='count'] {
+td[data-control=count] {
   background: var(--color-black);
+  place-content: space-evenly;
+  flex: 1 1 100%
 }
 
-button,
-td[data-control='remove'] {
+button,td[data-control=remove] {
   color: var(--color-white);
-  cursor: pointer;
+  cursor: pointer
 }
 
-td[data-control='remove'] {
+td[data-control=remove] {
   background: var(--color-accent);
   font-weight: 700;
   flex: 1 1 auto;
-  max-width: max-content;
+  max-width: max-content
 }
 
-td[data-control='remove']:hover {
-  background: var(--color-accent-dark);
+td[data-control=remove]:hover {
+  background: var(--color-accent-dark)
 }
 
 button {
   background: var(--color-mid);
   border: 1px solid var(--color-dark);
   border-radius: 4px;
-  padding: 0.35em 0.8em;
-  font-size: 0.85em;
+  padding: .35em .8em;
+  font-size: .85em;
   min-height: 32px;
   min-width: 72px;
-  transition: background 0.2s ease;
+  transition: background .2s ease
 }
 
 button:hover {
-  background: var(--color-dark);
+  background: var(--color-dark)
 }
 
 button:active {
   background: var(--color-accent);
-  border-color: var(--color-accent-dark);
+  border-color: var(--color-accent-dark)
 }
 
 button:disabled {
   background: var(--color-soft);
   color: var(--color-bg-light);
-  cursor: not-allowed;
+  cursor: not-allowed
 }
 
-input[type='number'],
-input[type='text'] {
+input[type=number],input[type=text] {
   background: var(--color-white);
   color: var(--color-black);
   border: 1px solid var(--color-mid);
-  padding: 0 0.35em 0 0.8em;
-  font-size: 0.85em;
+  padding: 0 .35em 0 .8em;
+  font-size: .85em;
   min-height: 32px;
   min-width: 72px;
   box-sizing: border-box;
-  transition: background 0.2s ease, border-color 0.2s ease;
+  transition: background .2s ease,border-color .2s ease
 }
 
-input[type='text'] {
-  border-radius: 4px;
+input[type=text] {
+  border-radius: 4px
 }
 
-input[type='number']:focus,
-input[type='text']:focus {
+input[type=number]:focus,input[type=text]:focus {
   background: var(--color-white);
-  border-color: var(--color-accent-dark);
+  border-color: var(--color-accent-dark)
 }
 
-input[type='number'] {
+input[type=number] {
   border-radius: 3px;
   outline: 0;
   margin: 0 4px;
-  max-inline-size: 8ch;
+  max-inline-size: 8ch
 }
 
 input:disabled {
   background: var(--color-soft);
   color: var(--color-bg-light);
-  cursor: not-allowed;
+  cursor: not-allowed
 }
 
-.checkbox input[type='checkbox'] {
+.checkbox input[type=checkbox] {
   position: absolute;
   opacity: 0;
-  cursor: pointer;
+  cursor: pointer
 }
 
-.checkbox,
-.checkbox span {
+.checkbox,.checkbox span {
   place-content: center;
   display: flex;
-  place-items: center;
+  place-items: center
 }
 
 .checkbox {
@@ -218,27 +215,27 @@ input:disabled {
   color: var(--color-black);
   cursor: pointer;
   user-select: none;
-  line-height: 1;
+  line-height: 1
 }
 
 .checkbox span {
-  gap: 8px;
+  gap: 8px
 }
 
 .checkbox span::before {
-  content: '';
+  content: "";
   width: 18px;
   height: 18px;
   border: 2px solid var(--color-dark);
   border-radius: 4px;
   background: var(--color-white);
-  transition: all 0.2s ease;
+  transition: all .2s ease;
   display: inline-flex;
-  position: relative;
+  position: relative
 }
 
-.checkbox input[type='checkbox']:checked + span::after {
-  content: '';
+.checkbox input[type=checkbox]:checked+span::after {
+  content: "";
   position: absolute;
   left: 7px;
   top: 2px;
@@ -246,12 +243,12 @@ input:disabled {
   height: 12px;
   border: solid var(--color-dark);
   border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
+  transform: rotate(45deg)
 }
 
 .checkbox:hover span::before {
   background: var(--color-bg-light);
-  border-color: var(--color-mid);
+  border-color: var(--color-mid)
 }
 
 .inline-flex {
@@ -259,15 +256,15 @@ input:disabled {
   place-items: center;
   gap: 8px;
   flex-wrap: wrap;
-  place-content: center;
+  place-content: center
 }
 
 h1 {
-  margin: 0 0 1em 0;
+  margin: 0 0 1em;
   font-size: 1em;
   display: block;
   width: 100%;
   text-align: center;
   background: var(--color-mid);
-  color: var(--color-bg-light);
+  color: var(--color-bg-light)
 }
