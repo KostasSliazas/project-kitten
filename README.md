@@ -54,8 +54,7 @@ git clone https://github.com/KostasSliazas/project-kitten.git
 ## Available games
 | Game Name                | Description                                               | Quick Link                  |
 |--------------------------|-----------------------------------------------------------|-----------------------------|
-| **Memory Game2**         | A fun memory matching game  
-| [Live Demo](https://kostassliazas.github.io/project-kitten/games/memory-game)       |
+| **Memory Game2**         | A fun memory matching game  | [Live Demo](https://kostassliazas.github.io/project-kitten/games/memory-game)       |
 | **Questionnaire**        | A game for answering customizable sets of questions.                  | [Live Demo](https://kostassliazas.github.io/project-kitten/games/questionnaire)     |
 | **Roulette**             | A simple roulette game for fun and entertainment.          | [Live Demo](https://kostassliazas.github.io/project-kitten/games/roulette)          |
 
