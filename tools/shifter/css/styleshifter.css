@@ -45,7 +45,7 @@ place-content: center
 
 table>tr {
   flex-wrap: wrap;
-  place-content: space-between;
+  place-content: end;
   place-self: stretch;
   width: 100%;
 }
