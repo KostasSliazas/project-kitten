@@ -148,4 +148,5 @@ function colorDetect(e, i) {
 // events
 document.addEventListener('DOMContentLoaded', resistorCreator);
 switcher.addEventListener('change', resistorCreator);
+document.addEventListener('dblclick', resistorCreator);
 })();
