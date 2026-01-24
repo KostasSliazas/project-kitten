@@ -82,6 +82,8 @@ selections.appendChild(outputTolerance);
 
 
 function resistorCreator() {
+  outputToleranceSpan.innerHTML = "";
+  outputValueSpan.innerHTML = "";
   // reset resistor
   theResistor.length = 0;
   //create parent element of band (line)
