@@ -228,13 +228,13 @@
   const textarea = d.getElementsByTagName('TEXTAREA')[0];
   const bg = d.querySelector('#bg-file');
   const styles = ['width', 'height', 'left', 'top'];
-  const blockDefaults = 'width:960px;height:48px;left:0px;top:0px;,width:492px;height:48px;left:0px;top:48px;,width:156px;height:48px;left:0px;top:120px;,width:156px;height:48px;left:0px;top:216px;,width:120px;height:48px;left:840px;top:48px;,width:168px;height:156px;left:156px;top:96px;,width:168px;height:72px;left:324px;top:96px;,width:168px;height:168px;left:324px;top:168px;,width:168px;height:144px;left:324px;top:336px;,width:168px;height:96px;left:324px;top:480px;,width:168px;height:144px;left:324px;top:576px;,width:156px;height:48px;left:0px;top:96px;,width:156px;height:252px;left:0px;top:264px;,width:168px;height:96px;left:324px;top:720px;,width:168px;height:564px;left:156px;top:252px;,width:120px;height:48px;left:492px;top:48px;,width:156px;height:48px;left:0px;top:168px;,width:144px;height:48px;left:612px;top:48px;,width:156px;height:48px;left:0px;top:72px;,width:156px;height:300px;left:0px;top:516px;,width:960px;height:48px;left:0px;top:24px;,width:168px;height:48px;left:156px;top:72px;,width:168px;height:48px;left:324px;top:72px;,width:144px;height:96px;left:816px;top:96px;,width:144px;height:264px;left:816px;top:240px;,width:144px;height:48px;left:816px;top:192px;,width:156px;height:384px;left:492px;top:432px;,width:156px;height:168px;left:492px;top:264px;,width:168px;height:72px;left:648px;top:264px;,width:168px;height:480px;left:648px;top:336px;,width:156px;height:168px;left:492px;top:96px;,width:168px;height:96px;left:648px;top:168px;,width:144px;height:312px;left:816px;top:504px;,width:168px;height:72px;left:648px;top:96px;,width:84px;height:48px;left:756px;top:48px;';
-  const textAreaDefaults = 'Good day. You have the ability to reposition these blocks by clicking (□ or ▭) and holding (the left) corner or by pressing the ` key on your keyboard. ([ctrl]+[`]=Reset to Defaults) Alternatively, double-click (▭) to maximize them or minimize (□). You can also change the theme by right-clicking (context menu) and customize the colors and background image through the user interface. If locked, you can unlock it by clicking a few times on the background and then entering the default PIN: 520. Alternatively, you can clear the localStorage (since this project stores data such as PIN(password) and other settings in localStorage). Now you can type your text here.';
+  const blockDefaults = 'width:960px;height:48px;left:0px;top:0px;,width:492px;height:48px;left:0px;top:48px;,width:156px;height:48px;left:0px;top:120px;,width:156px;height:48px;left:0px;top:216px;,width:120px;height:48px;left:840px;top:48px;,width:168px;height:156px;left:156px;top:96px;,width:168px;height:72px;left:324px;top:96px;,width:168px;height:168px;left:324px;top:168px;,width:168px;height:144px;left:324px;top:336px;,width:168px;height:96px;left:324px;top:480px;,width:168px;height:144px;left:324px;top:576px;,width:156px;height:48px;left:0px;top:96px;,width:156px;height:252px;left:0px;top:264px;,width:168px;height:96px;left:324px;top:720px;,width:168px;height:564px;left:156px;top:252px;,width:120px;height:48px;left:492px;top:48px;,width:156px;height:48px;left:0px;top:168px;,width:144px;height:48px;left:612px;top:48px;,width:132px;height:108px;left:0px;top:72px;,width:156px;height:300px;left:0px;top:516px;,width:960px;height:48px;left:0px;top:24px;,width:168px;height:84px;left:132px;top:72px;,width:192px;height:756px;left:300px;top:72px;,width:144px;height:96px;left:816px;top:96px;,width:144px;height:264px;left:816px;top:240px;,width:144px;height:48px;left:816px;top:192px;,width:156px;height:384px;left:492px;top:432px;,width:156px;height:168px;left:492px;top:264px;,width:168px;height:72px;left:648px;top:264px;,width:168px;height:480px;left:648px;top:336px;,width:156px;height:168px;left:492px;top:96px;,width:168px;height:96px;left:648px;top:168px;,width:144px;height:312px;left:816px;top:504px;,width:168px;height:72px;left:648px;top:96px;,width:84px;height:48px;left:756px;top:48px;';
+  const textAreaDefaults = 'Good day! You can reposition these blocks by clicking and dragging the corner handles (□ or ▭).  Double-click (▭) to maximize them or minimize (□). If the layout is locked, click the background a few times to unlock it, then enter the default PIN: 1204. Alternatively, you can clear your browser’s localStorage, since this project saves data such as the PIN (password) and other settings there ([ctrl]+[`]=Reset to Defaults). You can start typing your text here.';
   const counts = {
     allMouseClicks: 0,
     clicks: 0,
   };
-  let saved = StorageNamespace.getItem('carbine') || [5, 2, 0];
+  let saved = StorageNamespace.getItem('carbine') || [1, 2, 0, 4];
   let minimized = [1, 21, 22, 20, 0, 11, 18];
   let mousedown = false;
   let scalingTarget = null;
@@ -1008,6 +1008,7 @@
       (function (i, d, isLocking, isEnterPass, saved) {
         codeDivElms[i].onclick = e => {
           e.stopPropagation(); //prevent from parent clicks
+
           typed.push(codeDivElms.indexOf(e.target));
           if (isEnterPass === false && typed.length === saved.length && typed.every((v, i) => v === saved[i])) {
             StorageNamespace.setItem('is-locked', false);
@@ -1017,6 +1018,7 @@
             show(main);
             isLocking();
           }
+
         };
       })(i, d, isLocking, isEnterPass, saved);
     }
@@ -1419,6 +1421,7 @@
         alert('Please activate the tab before clicking the link.');
       }
     }
+
     state.moving = false;
 
     // GLOBAL target!!!
@@ -1438,6 +1441,9 @@
         const peScalingTarget = getPE(scalingTarget);
         scalingTarget.style.height = peScalingTarget.style.height = roundToTen(peScalingTarget.offsetHeight) + 'px';
         peScalingTarget.style.width = roundToTen(peScalingTarget.offsetWidth) + 'px';
+        if (eventTarget.tagName === 'TEXTAREA') {
+          textarea.style.width = roundToTen(peScalingTarget.offsetWidth) + 'px';
+        }
         StorageNamespace.setItem('element-styles', getStyles());
       }
     } catch (error) {

@@ -205,8 +205,7 @@ html {
 
 .j,
 .m,
-.n,
-.u {
+.n{
   --color4: #000000
 }
 
@@ -435,10 +434,11 @@ html {
 }
 
 .u {
-  --color0: #e0e0ce;
-  --color1: #b5b5a3;
-  --color2: #8a8a78;
-  --color3: #5f5f4d
+  --color0: #F7F7F8;
+  --color1: #B2F8FB;
+  --color2: #B7CFF9;
+  --color3: #3B8184;
+  --color4: #405882
 }
 
 .v {
@@ -1124,7 +1124,7 @@ textarea {
 }
 
 .t30 {
-  grid-template-columns: repeat(2, minmax(1em, auto));
+  grid-template-columns: repeat(2, minmax(70%, auto));
   grid-template-rows: repeat(30, minmax(1em, auto))
 }
 
@@ -1188,7 +1188,6 @@ textarea {
   max-width: 100%;
   min-height: 1em;
   outline: 0;
-  align-self: stretch;
   position: relative
 }
 
@@ -1342,6 +1341,7 @@ fieldset {
 
 .forms label {
   padding: 0;
+  text-transform: uppercase;
   flex: 1 1 auto
 }
 
