@@ -225,7 +225,8 @@ button:hover {
   display: grid;
   gap: 0.5em;
   padding: 0.5em;
-  grid-template-columns: repeat(auto-fit, minmax(144px, 1fr));
+  place-content: center;
+  grid-template-columns: repeat(auto-fit, minmax(118px, 144px));
 }
 
 .link img {
@@ -263,7 +264,7 @@ button:hover {
   align-items: center;
   text-decoration: none;
   word-break: break-word;
-  max-width: 256px;
+  width: 144px;
   height: 96px;
   margin: auto;
   position: relative;
