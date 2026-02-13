@@ -1327,6 +1327,12 @@ function uploadProgress(e) {
     const defaultTextNode = 'cv-json-';
     const name = containsOnlyLetters(nameElement.textContent) || defaultTextNode;
     const date = generateDate();
+    // Extract data from the page
+    extractLanguages();
+    extractSkills();
+    extractBasics();
+    extractWorkExperience();
+    extractEducation();
     // Export the data as JSON
     exportToJson(jsonData, `${name}-${date}.json`);
   }
