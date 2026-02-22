@@ -430,7 +430,16 @@
         selected: cell.classList.contains('selected')
       }));
     });
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+
+    var inputs = document.querySelectorAll('[id^="C"]');
+    var values = {};
+    var i;
+
+    for (i = 0; i < inputs.length; i++) {
+      values['C' + (i + 1)] = inputs[i].value;
+    }
+
+    const blob = new Blob([JSON.stringify(Object.assign({data,values}), null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -447,12 +456,30 @@
     reader.onload = e => {
       try {
         const json = JSON.parse(e.target.result);
-        if (!Array.isArray(json)) throw new Error('Invalid JSON');
-        // clear previous table and store then load
+
+        // VALIDATE STRUCTURE
+        if (!json || !Array.isArray(json.data)) {
+          throw new Error('Invalid JSON structure');
+        }
+
+        // 1️⃣ Restore variable values (C1–C5)
+        if (json.values && typeof json.values === 'object') {
+          for (const key in json.values) {
+            const input = document.getElementById(key);
+            if (input) {
+              input.value = json.values[key];
+            }
+          }
+        }
+
+        // 2️⃣ Clear old table
         const t = table();
         if (t) t.remove();
-        loopStorage.setItem('tableData', json);
+
+        // 3️⃣ Store & load table data ONLY
+        loopStorage.setItem('tableData', json.data);
         loadTable();
+
       } catch (err) {
         console.error('Import JSON error:', err);
         alert('Invalid JSON file!');
@@ -461,16 +488,13 @@
     reader.readAsText(file);
   });
 
-  // ------------------------------
-  // EXPORT TO EXCEL (cloned html)
-  // ------------------------------
   /*** ===========================
    *  EXPORT TO EXCEL
    *  =========================== */
   const inlineTableStyles = (table) => {
     Array.from(table.rows).forEach((row) => {
       Array.from(row.cells).forEach((cell) => {
-        const text = cell.textContent.trim().toLowerCase();
+        const text = cell.innerHTML.replace(/<br\s*\/?>/gi, '').replace(/\s+/g, '').toLowerCase();
         if (['remove', '<', '>'].includes(text)) {
           cell.remove();
           return;
