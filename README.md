@@ -4,8 +4,7 @@
 [![Forks](https://img.shields.io/github/forks/KostasSliazas/project-kitten?style=social)](https://github.com/KostasSliazas/project-kitten/forks)
 [![Issues](https://img.shields.io/github/issues/KostasSliazas/project-kitten)](https://github.com/KostasSliazas/project-kitten/issues)
 [![Last Commit](https://img.shields.io/github/last-commit/KostasSliazas/project-kitten)](https://github.com/KostasSliazas/project-kitten/commits)
-
-This is my last project mostly discriminated by search engines contains WEB-based tools and links for Developers, Creators and others. 
+Project contains WEB-based tools and links for Developers, Creators and others. 
 
 To reset to defaults use [ctrl + `] (clears localStorage). 
 
