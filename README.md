@@ -7,8 +7,6 @@
 
 Project contains WEB-based tools and links for Developers, Creators and others. 
 
-To reset to defaults use [ctrl + `] (clears localStorage). 
-
 ## Table of Contents
 
 * [Screenshots](#screenshots)
