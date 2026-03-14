@@ -169,6 +169,7 @@ declare -a apps=(
   "exfat-fuse"
   "exfat-utils"
   "net-tools"
+  "pngquant"
 )
 
 # Define a list of services to disable
@@ -519,17 +520,15 @@ run_all_tasks() {
 
 # Function: Show Main Menu
 show_menu() {
-  # Automatically clear screen before each function exits
-  #   trap 'clear' EXIT
-
-  CHOICE=$(dialog --title "CUTE Kubuntu Extras Script" --menu "Choose an action:" 20 60 7 \
+  CHOICE=$(dialog --title "CUTE Kubuntu Extras Script" --menu "Choose an action:" 20 70 10 \
     1 "Run All Tasks (Recommended)" \
     2 "Install packages" \
-    3 "Install kubuntu extras" \
-    4 "Update /etc/hosts" \
-    5 "Install VS Code + Extensions" \
-    6 "Optimize System" \
-    7 "Exit" \
+    3 "Install Kubuntu restricted extras" \
+    4 "Block Websites (Update /etc/hosts)" \
+    5 "Change DNS" \
+    6 "Install VS Code + Extensions" \
+    7 "Optimize System" \
+    8 "Exit" \
     3>&1 1>&2 2>&3)
 
   case $CHOICE in
@@ -537,9 +536,10 @@ show_menu() {
     2) install_packages ;;
     3) install_kubuntu_extras ;;
     4) update_hosts ;;
-    5) install_vscode_extensions ;;
-    6) optimize_system ;;
-    7)
+    5) change_dns ;;
+    6) install_vscode_extensions ;;
+    7) optimize_system ;;
+    8)
       log "🚀 Exiting script."
       exit 0
       ;;
