@@ -170,6 +170,7 @@ declare -a apps=(
   "exfat-utils"
   "net-tools"
   "pngquant"
+  "jpegoptim"
 )
 
 # Define a list of services to disable
