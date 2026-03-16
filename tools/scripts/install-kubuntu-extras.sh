@@ -171,6 +171,7 @@ declare -a apps=(
   "net-tools"
   "pngquant"
   "jpegoptim"
+  "obs-studio"
 )
 
 # Define a list of services to disable
