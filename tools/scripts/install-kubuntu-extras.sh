@@ -146,6 +146,7 @@ BLOCKED_DOMAINS=(
 
 # Define a global list of apps to be installed
 declare -a apps=(
+  "kubuntu-restricted-extras libavcodec-extra"
   "vlc"
   "gimp"
   "htop"
