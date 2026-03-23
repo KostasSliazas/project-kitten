@@ -173,6 +173,7 @@ declare -a apps=(
   "pngquant"
   "jpegoptim"
   "obs-studio"
+  "libimage-exiftool-perl"
 )
 
 # Define a list of services to disable
