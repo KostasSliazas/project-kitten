@@ -146,34 +146,34 @@ BLOCKED_DOMAINS=(
 
 # Define a global list of apps to be installed
 declare -a apps=(
-  "kubuntu-restricted-extras libavcodec-extra"
-  "vlc"
-  "gimp"
-  "htop"
-  "inkscape"
-  "firefox"
-  "curl"
-  "git"
-  "ufw"
-  "kget"
-  "strawberry"
-  "gnome-disk-utility"
-  "trimage"
-  "xdm"
-  "krita"
-  "darktable"
-  "stacer"
-  "chromium"
-  "transmission-cli"
-  "clamav"
-  "wget"
-  "exfat-fuse"
-  "exfat-utils"
-  "net-tools"
-  "pngquant"
-  "jpegoptim"
-  "obs-studio"
-  "libimage-exiftool-perl"
+    "kubuntu-restricted-extras libavcodec-extra"
+    "chromium"
+    "clamav"
+    "curl"
+    "darktable"
+    "exfat-fuse"
+    "exfat-utils"
+    "firefox"
+    "gimp"
+    "git"
+    "gnome-disk-utility"
+    "htop"
+    "inkscape"
+    "jpegoptim"
+    "kget"
+    "krita"
+    "libimage-exiftool-perl"
+    "net-tools"
+    "obs-studio"
+    "pngquant"
+    "stacer"
+    "strawberry"
+    "transmission-cli"
+    "trimage"
+    "ufw"
+    "vlc"
+    "wget"
+    "xdm"
 )
 
 # Define a list of services to disable
@@ -329,12 +329,6 @@ update_hosts() {
 
   # Flush DNS cache to apply changes
   flush_dns_cache
-}
-# Install Kubuntu restricted extras
-install_kubuntu_extras() {
-  clear # Clear the screen before exiting
-  log "Installing Kubuntu restricted extras..."
-  sudo apt install -y kubuntu-restricted-extras 2>/dev/null | tee -a "$LOGFILE"
 }
 
 # Install VS Code and required dependencies
@@ -511,10 +505,8 @@ change_dns() {
 # Function: Run Everything in One Step
 run_all_tasks() {
   log "🚀 Running all tasks in sequence..."
-
   manage_services
   install_packages
-  install_kubuntu_extras
   update_hosts
   install_vscode_extensions
   change_dns
@@ -524,26 +516,24 @@ run_all_tasks() {
 
 # Function: Show Main Menu
 show_menu() {
-  CHOICE=$(dialog --title "CUTE Kubuntu Extras Script" --menu "Choose an action:" 20 70 10 \
+  CHOICE=$(dialog --title "Install Kubuntu Extras Script" --menu "Choose an action:" 14 45 10 \
     1 "Run All Tasks (Recommended)" \
     2 "Install packages" \
-    3 "Install Kubuntu restricted extras" \
-    4 "Block Websites (Update /etc/hosts)" \
-    5 "Change DNS" \
-    6 "Install VS Code + Extensions" \
-    7 "Optimize System" \
-    8 "Exit" \
+    3 "Block Websites (Update /etc/hosts)" \
+    4 "Change DNS" \
+    5 "Install VS Code + Extensions" \
+    6 "Optimize System" \
+    7 "Exit" \
     3>&1 1>&2 2>&3)
 
   case $CHOICE in
     1) run_all_tasks ;;
     2) install_packages ;;
-    3) install_kubuntu_extras ;;
-    4) update_hosts ;;
-    5) change_dns ;;
-    6) install_vscode_extensions ;;
-    7) optimize_system ;;
-    8)
+    3) update_hosts ;;
+    4) change_dns ;;
+    5) install_vscode_extensions ;;
+    6) optimize_system ;;
+    7)
       log "🚀 Exiting script."
       exit 0
       ;;
