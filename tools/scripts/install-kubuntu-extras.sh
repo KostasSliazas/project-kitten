@@ -254,7 +254,7 @@ install_packages() {
   done
 
   # Run checklist with dialog/whiptail
-  selected=$(dialog --separate-output --checklist "Select applications to install:" 22 76 16 "${options[@]}" 2>&1 >/dev/tty)
+  selected=$(dialog --separate-output --checklist "Select applications to install:" 22 60 16 "${options[@]}" 2>&1 >/dev/tty)
 
   if [[ -z "$selected" ]]; then
     log "No packages selected. Exiting."
