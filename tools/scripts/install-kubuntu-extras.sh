@@ -153,6 +153,7 @@ declare -a apps=(
     "darktable"
     "exfat-fuse"
     "exfat-utils"
+    "exiv2"
     "firefox"
     "gimp"
     "git"
