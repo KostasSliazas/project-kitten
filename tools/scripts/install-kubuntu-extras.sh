@@ -146,7 +146,8 @@ BLOCKED_DOMAINS=(
 
 # Define a global list of apps to be installed
 declare -a apps=(
-    "kubuntu-restricted-extras libavcodec-extra"
+    "kubuntu-restricted-extras"
+    "libavcodec-extra"
     "chromium"
     "clamav"
     "curl"
@@ -165,6 +166,7 @@ declare -a apps=(
     "krita"
     "libimage-exiftool-perl"
     "net-tools"
+    "mpv"
     "obs-studio"
     "pngquant"
     "stacer"
