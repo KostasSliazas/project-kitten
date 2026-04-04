@@ -169,6 +169,7 @@ declare -a apps=(
     "mpv"
     "obs-studio"
     "pngquant"
+    "persepolis"
     "stacer"
     "strawberry"
     "transmission-cli"
