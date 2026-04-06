@@ -110,9 +110,6 @@ BLOCKED_DOMAINS=(
   "ads2go.com"
   "securitycheckup.com" # Fake security warning sites
   "shadyclicks.com"
-  "olifeja.lt"
-  "loto.lt"
-  "fb.com"
   "malwareexpert.com"
   "botattack.com"          # Associated with botnet attacks
   "zeusbot.net"            # Related to the Zeus botnet, often used in financial malware
