@@ -1,21 +1,54 @@
 #!/bin/bash
+# Kubuntu System Utility Script - Fully Improved Version
+# Author: Your Name
+# License: MIT
 
-set -e # Exit on error
+# -------------------------
+# Root / Sudo Check
+# -------------------------
+if [[ $EUID -ne 0 ]]; then
+  dialog --yesno "Some actions require sudo. Continue?" 7 50
+  if [ $? -ne 0 ]; then
+    clear
+    echo "User declined sudo. Exiting."
+    exit
+  fi
+fi
 
+# -------------------------
+# Trap Ctrl+C
+# -------------------------
+trap 'clear; echo "Interrupted."; exit' INT
+
+# -------------------------
+# Exit on any error
+# -------------------------
+set -e
+
+# -------------------------
 # Color Definitions
+# -------------------------
 GREEN="\e[32m"
 YELLOW="\e[33m"
 RED="\e[31m"
 RESET="\e[0m"
+CYAN="\e[36m"
 
+# -------------------------
 # Log File
+# -------------------------
 LOGFILE="/var/log/system_utility.log"
+mkdir -p "$(dirname "$LOGFILE")"
 
+# -------------------------
 # VS Code Extension Retry Config
+# -------------------------
 MAX_RETRIES=3
-RETRY_DELAY=3
+RETRY_DELAY=5
 
-# VS Code Extension examples
+# -------------------------
+# VS Code Extensions
+# -------------------------
 extensions=(
   "ms-python.python"
   "abusaidm.html-snippets"
@@ -25,11 +58,11 @@ extensions=(
   "capaj.vscode-standardjs-snippets"
   "chenxsan.vscode-standardjs"
   "cobeia.airbnb-react-snippets"
-  "glen-84.sass-lint"      # Replacement for adamwalzer.scss-lint
-  "esbenp.prettier-vscode" # Replacement for HookyQR.beautify
+  "glen-84.sass-lint"
+  "esbenp.prettier-vscode"
   "olback.es6-css-minify"
   "jasonnutter.search-node-modules"
-  "miguel-colmenares.css-js-minifier" # Replacement for justinlampe.js-minifier-with-closure
+  "miguel-colmenares.css-js-minifier"
   "kokororin.vscode-phpfmt"
   "leizongmin.node-module-intellisense"
   "mgmcdermott.vscode-language-babel"
@@ -44,7 +77,7 @@ extensions=(
   "redhat.fabric8-analytics"
   "redhat.vscode-commons"
   "redhat.vscode-yaml"
-  "glenn2223.live-sass" # Replacement for ritwickdey.live-sass
+  "glenn2223.live-sass"
   "ritwickdey.LiveServer"
   "roerohan.mongo-snippets-for-node-js"
   "sburg.vscode-javascript-booster"
@@ -54,7 +87,7 @@ extensions=(
   "stylelint.vscode-stylelint"
   "Swellaby.node-pack"
   "syler.sass-indented"
-  "dsznajder.es7-react-js-snippets" # Replacement for xabikos.JavaScriptSnippets
+  "dsznajder.es7-react-js-snippets"
   "thekalinga.bootstrap4-vscode"
   "Tobermory.es6-string-html"
   "VisualStudioExptTeam.vscodeintellicode"
@@ -62,122 +95,51 @@ extensions=(
   "WallabyJs.quokka-vscode"
   "wix.vscode-import-cost"
   "Wscats.eno"
-  "Equinusocio.vsc-material-theme" # Replacement for zhuangtongfa.material-theme
-  "ecmel.vscode-html-css"          # Replacement for Zignd.html-css-class-completion
+  "Equinusocio.vsc-material-theme"
+  "ecmel.vscode-html-css"
 )
 
-# List of domains to block EXAMPLE
-BLOCKED_DOMAINS=(
-  "0rbit.com"
-  "adclicksrv.com"
-  "ads.yieldmanager.com"
-  "adservinginternational.com"
-  "affiliate-network.com"
-  "amazonaws.com" # Often used for hosting phishing pages
-  "badb.com"
-  "clicksor.com"
-  "clickserve.cc"
-  "datr.com"        # Facebook's tracker, but can be used by malicious parties
-  "doubleclick.net" # Google's ad network often misused in malicious ads
-  "g.doubleclick.net"
-  "malwaredomainlist.com"
-  "phishing.com"
-  "static.advertising.com"
-  "track.360yield.com"
-  "track.adnxs.com"
-  "tracking.server.com"
-  "unwanted-ads.net"
-  "unsafeweb.com"
-  "winfixer.com" # Known for redirecting to fake antivirus sites
-  "yourdirtywork.com"
-  "zeusbot.com"         # Common in botnet infections
-  "amarketplace.com"    # Scam and fraudulent sites
-  "contentdelivery.com" # Often used in fake update prompts
-  "infoproc.net"        # Used in click fraud schemes
-  "clickture.com"
-  "spamhub.com"      # Used to host spam websites
-  "clickrewards.com" # Part of click fraud campaigns
-  "trackedlink.com"
-  "adservice.com"
-  "trackmyads.com"  # Known for tracking and delivering unwanted ads
-  "spybot.com"      # Often a rogue program related to adware
-  "cool-search.com" # Redirects to malicious or fake websites
-  "fakewebsecurity.com"
-  "adsrvmedia.com"     # Known to deliver adware
-  "smartlink.com"      # Associated with fraudulent redirection
-  "trustedsurveys.com" # Often used in phishing schemes
-  "phishing-attack.com"
-  "ads2go.com"
-  "securitycheckup.com" # Fake security warning sites
-  "shadyclicks.com"
-  "malwareexpert.com"
-  "botattack.com"          # Associated with botnet attacks
-  "zeusbot.net"            # Related to the Zeus botnet, often used in financial malware
-  "scamtracker.com"        # Used to host scams
-  "browser-optimizer.com"  # A malicious site posing as optimization software
-  "tools-virus.com"        # Known to distribute virus warnings
-  "spamlord.com"           # Hosts spam or fraudulent content
-  "admiraltracker.com"     # Tracker used for malicious purposes
-  "data-collection.com"    # Data harvesting and fraudulent activities
-  "research-adnetwork.com" # Unwanted ad network and trackers
-  "rootkit.com"            # Used for malware-related rootkits
-  "badads.com"             # Known for ad fraud and malware distribution
-  "fraudulentads.com"      # Used in scam advertising
-  "advertising-scams.com"
-  "clickfraudtracker.com"   # Associated with click fraud campaigns
-  "ssl-malware.com"         # Malicious SSL-related site
-  "fake-dns.com"            # DNS manipulation and fraud
-  "cyberthreat.com"         # Associated with cybersecurity threats
-  "malwarehost.com"         # Malware hosting site
-  "unsafe-surf.com"         # Risky site hosting malicious content
-  "phishing-host.com"       # Common in phishing attacks
-  "trojan-distribution.com" # Used for distributing trojans
-  "security-error.com"      # A site often used in fake warnings
-  "scamlandingpage.com"     # Scam landing page frequently used in phishing
-  "unsafe-exe.com"          # Hosts dangerous .exe files
-  "clickblocker.com"        # Used for malicious redirecting
-  "attack-router.com"       # Associated with network-based attacks
-  "clickdisguise.com"       # Fraudulent click and ad campaigns
-  "fraudulent-redirect.com" # Redirects to harmful or scam websites
+# -------------------------
+# Apps to Install
+# -------------------------
+apps=(
+  "kubuntu-restricted-extras"
+  "libavcodec-extra"
+  "chromium"
+  "clamav"
+  "curl"
+  "darktable"
+  "exfat-fuse"
+  "exfat-utils"
+  "exiv2"
+  "firefox"
+  "gimp"
+  "git"
+  "gnome-disk-utility"
+  "htop"
+  "inkscape"
+  "jpegoptim"
+  "kget"
+  "krita"
+  "libimage-exiftool-perl"
+  "net-tools"
+  "mpv"
+  "obs-studio"
+  "pngquant"
+  "persepolis"
+  "stacer"
+  "strawberry"
+  "transmission-cli"
+  "trimage"
+  "ufw"
+  "vlc"
+  "wget"
+  "xdm"
 )
 
-# Define a global list of apps to be installed
-declare -a apps=(
-    "kubuntu-restricted-extras"
-    "libavcodec-extra"
-    "chromium"
-    "clamav"
-    "curl"
-    "darktable"
-    "exfat-fuse"
-    "exfat-utils"
-    "exiv2"
-    "firefox"
-    "gimp"
-    "git"
-    "gnome-disk-utility"
-    "htop"
-    "inkscape"
-    "jpegoptim"
-    "kget"
-    "krita"
-    "libimage-exiftool-perl"
-    "net-tools"
-    "mpv"
-    "obs-studio"
-    "pngquant"
-    "persepolis"
-    "stacer"
-    "strawberry"
-    "transmission-cli"
-    "trimage"
-    "ufw"
-    "vlc"
-    "wget"
-    "xdm"
-)
-
-# Define a list of services to disable
+# -------------------------
+# Services to Disable
+# -------------------------
 services_to_disable=(
   "rsyslog"
   "systemd-journald"
@@ -191,134 +153,150 @@ services_to_disable=(
   "cups"
 )
 
-# Function: Logging with timestamp
+# -------------------------
+# Domains to Block
+# -------------------------
+BLOCKED_DOMAINS=(
+  "0rbit.com"
+  "adclicksrv.com"
+  "ads.yieldmanager.com"
+  "adservinginternational.com"
+  "affiliate-network.com"
+  "amazonaws.com"
+  "badb.com"
+  "clicksor.com"
+  "clickserve.cc"
+  "datr.com"
+  "doubleclick.net"
+  "g.doubleclick.net"
+  "malwaredomainlist.com"
+  "phishing.com"
+  "static.advertising.com"
+  "track.360yield.com"
+  "track.adnxs.com"
+  "tracking.server.com"
+  "unwanted-ads.net"
+  "unsafeweb.com"
+  "winfixer.com"
+  "yourdirtywork.com"
+  "zeusbot.com"
+  "amarketplace.com"
+  "contentdelivery.com"
+  "infoproc.net"
+  "clickture.com"
+  "spamhub.com"
+  "clickrewards.com"
+  "trackedlink.com"
+  "adservice.com"
+  "trackmyads.com"
+  "spybot.com"
+  "cool-search.com"
+  "fakewebsecurity.com"
+  "adsrvmedia.com"
+  "smartlink.com"
+  "trustedsurveys.com"
+  "phishing-attack.com"
+  "ads2go.com"
+  "securitycheckup.com"
+  "shadyclicks.com"
+  "malwareexpert.com"
+  "botattack.com"
+  "zeusbot.net"
+  "scamtracker.com"
+  "browser-optimizer.com"
+  "tools-virus.com"
+  "spamlord.com"
+  "admiraltracker.com"
+  "data-collection.com"
+  "research-adnetwork.com"
+  "rootkit.com"
+  "badads.com"
+  "fraudulentads.com"
+  "advertising-scams.com"
+  "clickfraudtracker.com"
+  "ssl-malware.com"
+  "fake-dns.com"
+  "cyberthreat.com"
+  "malwarehost.com"
+  "unsafe-surf.com"
+  "phishing-host.com"
+  "trojan-distribution.com"
+  "security-error.com"
+  "scamlandingpage.com"
+  "unsafe-exe.com"
+  "clickblocker.com"
+  "attack-router.com"
+  "clickdisguise.com"
+  "fraudulent-redirect.com"
+)
+
+# -------------------------
+# Logging Function
+# -------------------------
 log() {
   local message="$1"
   local timestamp="$(date '+%Y-%m-%d %H:%M:%S')"
-  local clean_message=$(echo -e "$message" | sed 's/\x1b\[[0-9;]*m//g') # Remove colors for logs
-
-  echo -e "${GREEN}$timestamp $message${RESET}" # Terminal output
+  local clean_message=$(echo -e "$message" | sed 's/\x1b\[[0-9;]*m//g') # Remove colors
+  echo -e "${GREEN}$timestamp $message${RESET}"
   echo "$timestamp $clean_message" >>"$LOGFILE"
 }
 
-# Function to disable a service with error checking
-disable_service() {
-  local service_name="$1"
-
-  # Check if the service is active or exists
-  echo -e "${CYAN}Checking if $service_name is active...${RESET}"
-  if systemctl list-units --full --all | grep -q "$service_name"; then
-    echo -e "${CYAN}Disabling $service_name...${RESET}"
-
-    # Stop the service and disable it, with error checking
-    sudo systemctl stop "$service_name" || {
-      echo -e "${RED}Failed to stop $service_name${RESET}"
-      return 1
-    }
-    sudo systemctl disable "$service_name" || {
-      echo -e "${RED}Failed to disable $service_name${RESET}"
-      return 1
-    }
-
-    echo -e "${GREEN}$service_name has been disabled.${RESET}"
-  else
-    echo -e "${YELLOW}$service_name is not found or not running.${RESET}"
-  fi
-}
-
+# -------------------------
+# Install Package Function
+# -------------------------
 install_package() {
   local pkg="$1"
-
-  # Check if package is installed correctly
   if ! dpkg-query -W -f='${Status}' "$pkg" 2>/dev/null | grep -q "install ok installed"; then
     log "📦 Installing $pkg..."
-
-    # Suppress errors, force "yes", and prevent interactive prompts
     if sudo apt update -qq && sudo DEBIAN_FRONTEND=noninteractive apt install -y "$pkg" &>/dev/null; then
       log "✅ $pkg successfully installed."
     else
-      log "⚠️ Failed to install $pkg, but continuing..."
+      log "⚠️ Failed to install $pkg, continuing..."
     fi
   else
-    log "✅ $pkg is already installed."
+    log "✅ $pkg already installed."
   fi
 }
 
-# Function to show an interactive checklist and install selected packages
+# -------------------------
+# Disable Service
+# -------------------------
+disable_service() {
+  local service_name="$1"
+  echo -e "${CYAN}Checking $service_name...${RESET}"
+  if systemctl list-units --full --all | grep -q "$service_name"; then
+    echo -e "${CYAN}Disabling $service_name...${RESET}"
+    sudo systemctl stop "$service_name" || log "⚠️ Failed to stop $service_name"
+    sudo systemctl disable "$service_name" || log "⚠️ Failed to disable $service_name"
+    echo -e "${GREEN}$service_name disabled.${RESET}"
+  else
+    echo -e "${YELLOW}$service_name not found or inactive.${RESET}"
+  fi
+}
+
+# -------------------------
+# Interactive Package Installer
+# -------------------------
 install_packages() {
   log "Displaying package selection menu..."
-
-  # Generate dialog options
   options=()
   for app in "${apps[@]}"; do
-    options+=("$app" "" off) # Each item: "<package>" "<description>" <on/off>
+    options+=("$app" "" off)
   done
-
-  # Run checklist with dialog/whiptail
-  selected=$(dialog --separate-output --checklist "Select applications to install:" 22 60 16 "${options[@]}" 2>&1 >/dev/tty)
-
-  if [[ -z "$selected" ]]; then
-    log "No packages selected. Exiting."
-    return 0 # Exit function without installing anything
-  fi
-
-  # Convert selected items into an array
-  selected_apps=($selected)
-
-  # Install selected packages using install_package function
-  log "Installing selected packages..."
-  for pkg in "${selected_apps[@]}"; do
-    install_package "$pkg"
-  done
+  selected=$(dialog --separate-output --checklist "Select packages to install:" 22 60 16 "${options[@]}" 2>&1 >/dev/tty)
+  clear
+  [[ -z "$selected" ]] && { log "No packages selected."; return; }
+  for pkg in $selected; do install_package "$pkg"; done
+  dialog --msgbox "Selected packages installed." 6 40
 }
-# Flush DNS cache based on available services
-flush_dns_cache() {
-  if command -v systemctl &>/dev/null; then
-    if systemctl list-units --full -all | grep -q "nscd.service"; then
-      sudo systemctl restart nscd
-    elif systemctl list-units --full -all | grep -q "systemd-resolved.service"; then
-      sudo systemctl restart systemd-resolved
-    elif systemctl list-units --full -all | grep -q "dnsmasq.service"; then
-      sudo systemctl restart dnsmasq
-    else
-      log "No DNS caching service found to restart."
-      return
-    fi
-    log "DNS cache flushed successfully."
-  else
-    log "Systemctl command not found. Unable to flush DNS cache."
-  fi
-}
-# Function to display interactive checklist using dialog
-select_domains() {
-  log "Displaying domain selection menu..."
 
-  # Prepare options for dialog checklist
-  options=()
-  for domain in "${BLOCKED_DOMAINS[@]}"; do
-    options+=("$domain" "" "on") # "on" means pre-selected
-  done
-
-  # Run dialog checklist and capture selected domains
-  selected=$(dialog --separate-output --checklist "Select domains to block:" 22 76 16 "${options[@]}" 2>&1 >/dev/tty)
-
-  clear # Clear screen after selection
-
-  if [[ -z "$selected" ]]; then
-    log "No domains selected. Exiting."
-    exit 0
-  fi
-
-  # Convert selected items into an array
-  SELECTED_DOMAINS=($selected)
-}
-# Function to block selected domains by updating /etc/hosts
+# -------------------------
+# Block Domains Function
+# -------------------------
 update_hosts() {
   select_domains
-  log "Blocking selected domains..."
-
+  sudo cp /etc/hosts /etc/hosts.bak.$(date +%F_%T)
   for domain in "${SELECTED_DOMAINS[@]}"; do
-    # Check if domain is already blocked
     if ! grep -q "$domain" /etc/hosts; then
       echo "127.0.0.1 $domain" | sudo tee -a /etc/hosts >/dev/null
       echo "127.0.0.1 www.$domain" | sudo tee -a /etc/hosts >/dev/null
@@ -327,222 +305,277 @@ update_hosts() {
       log "Already blocked: $domain"
     fi
   done
-
-  # Flush DNS cache to apply changes
   flush_dns_cache
+  dialog --msgbox "Selected domains blocked." 6 50
 }
 
-# Install VS Code and required dependencies
+select_domains() {
+  options=()
+  for domain in "${BLOCKED_DOMAINS[@]}"; do
+    options+=("$domain" "" on)
+  done
+  selected=$(dialog --separate-output --checklist "Select domains to block:" 22 76 16 "${options[@]}" 2>&1 >/dev/tty)
+  clear
+  [[ -z "$selected" ]] && { log "No domains selected."; exit 0; }
+  SELECTED_DOMAINS=($selected)
+}
+
+flush_dns_cache() {
+  if command -v systemctl &>/dev/null; then
+    for svc in nscd systemd-resolved dnsmasq; do
+      if systemctl list-units --full -all | grep -q "$svc.service"; then
+        sudo systemctl restart "$svc"
+        log "DNS cache flushed via $svc"
+        return
+      fi
+    done
+  fi
+  log "No DNS cache service found."
+}
+
+# =============================
+# Install VS Code safely
+# =============================
 install_vscode() {
-  wget -qO- https://packages.microsoft.com/keys/microsoft.asc | sudo gpg --dearmor >/usr/share/keyrings/microsoft-archive-keyring.gpg
-  echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft-archive-keyring.gpg] https://packages.microsoft.com/repos/vscode stable main" | sudo tee /etc/apt/sources.list.d/vscode.list >/dev/null
-  sudo apt update 2>/dev/null
-  sudo apt install -y code 2>/dev/null
-}
+    log "📥 Installing Visual Studio Code..."
 
-# Function to install a single extension with retries
-install_extension() {
-  local extension="$1"
-  local attempts=0
-  local MAX_RETRIES=3
-  local COUNTDOWN_TIME=5 # Countdown time for retry
+    sudo apt update -qq
+    sudo apt install -y wget gpg apt-transport-https >/dev/null 2>&1
 
-  # Loop for retry attempts
-  while ((attempts < MAX_RETRIES)); do
-    log "Installing $extension (Attempt $((attempts + 1))/$MAX_RETRIES)..."
+    # Add Microsoft GPG key
+    curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /usr/share/keyrings/microsoft-archive-keyring.gpg >/dev/null
 
-    # Try installing the extension
-    if code --no-sandbox --user-data-dir="$HOME/.vscode-data" --install-extension "$extension" --force; then
-      log "✅ Successfully installed: $extension"
-      return 0
+    # Add VS Code repository
+    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft-archive-keyring.gpg] https://packages.microsoft.com/repos/vscode stable main" | sudo tee /etc/apt/sources.list.d/vscode.list >/dev/null
+
+    sudo apt update -qq
+
+    # Install VS Code non-interactively
+    if sudo DEBIAN_FRONTEND=noninteractive apt install -y code >/dev/null 2>&1; then
+        log "✅ Visual Studio Code installed successfully."
     else
-      log "⚠️ Failed to install: $extension. Retrying in $COUNTDOWN_TIME seconds..."
-
-      # Countdown before retrying
-      for ((i = COUNTDOWN_TIME; i > 0; i--)); do
-        echo -ne "⏳ Retrying in $i... \r"
-        sleep 1
-      done
-
-      # Increment attempt count and retry
-      attempts=$((attempts + 1))
+        log "⚠️ VS Code installation failed."
+        return 1
     fi
-  done
-
-  # If all attempts fail, log failure
-  log "❌ Failed to install: $extension after $MAX_RETRIES attempts. Moving on to the next extension..."
 }
 
-# Function to display the list of extensions and install them
+# =============================
+# Install a single VS Code extension with retries
+# =============================
+install_extension() {
+    local extension="$1"
+    local attempts=0
+    local MAX_RETRIES=3
+    local WAIT=5
+
+    while (( attempts < MAX_RETRIES )); do
+        log "Installing extension: $extension (Attempt $((attempts+1))/$MAX_RETRIES)..."
+
+        # Headless installation
+        if code --user-data-dir="$HOME/.vscode-data" --install-extension "$extension" --force >/dev/null 2>&1; then
+            log "✅ Successfully installed: $extension"
+            return 0
+        else
+            log "⚠️ Failed to install $extension. Retrying in $WAIT seconds..."
+            sleep $WAIT
+            attempts=$((attempts+1))
+        fi
+    done
+
+    log "❌ Failed to install: $extension after $MAX_RETRIES attempts."
+}
+
+# =============================
+# Install multiple extensions using a dialog checklist
+# =============================
+# =============================
+# Install VS Code safely with dialog prompt
+# =============================
 install_vscode_extensions() {
-  # Ask the user if they want to install VSCode before proceeding
+    # Ask user using dialog instead of read
+    dialog --yesno "Do you want to install Visual Studio Code?" 8 50
+    if [[ $? -ne 0 ]]; then
+        log "❌ User chose not to install VS Code. Skipping."
+        return
+    fi
 
-  read -p "Do you want to install Visual Studio Code? (y/n): " install_choice
-  if [[ "$install_choice" == "y" || "$install_choice" == "Y" ]]; then
-    install_vscode
-  else
-    log "❌ User chose not to install Visual Studio Code. Exiting."
-    return 0
-  fi
+    log "📥 Installing Visual Studio Code..."
+    sudo apt update -qq
+    sudo apt install -y wget gpg apt-transport-https >/dev/null 2>&1
 
-  log "You will now be presented with a list of extensions to install."
+    # Add Microsoft GPG key
+    curl -fsSL https://packages.microsoft.com/keys/microsoft.asc \
+        | gpg --dearmor \
+        | sudo tee /usr/share/keyrings/microsoft-archive-keyring.gpg >/dev/null
 
-  # Create checkboxes for dialog UI
-  checkboxes=""
-  for extension_id in "${extensions[@]}"; do
-    checkboxes="$checkboxes $extension_id $extension_id off"
-  done
+    # Add VS Code repository
+    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft-archive-keyring.gpg] https://packages.microsoft.com/repos/vscode stable main" \
+        | sudo tee /etc/apt/sources.list.d/vscode.list >/dev/null
 
-  # Use dialog to allow users to select extensions
-  selected_extensions=$(dialog --title "VS Code Extension Installation" \
-    --checklist "Select extensions to install" 20 70 15 \
-    $checkboxes 2>&1 >/dev/tty)
+    sudo apt update -qq
 
-  # If no selection is made, log and do nothing
-  if [[ -z "$selected_extensions" ]]; then
-    log "No extensions selected. Skipping installation."
-    return 0 # Exit function without installing anything
-  fi
+    # Install VS Code non-interactively
+    if sudo DEBIAN_FRONTEND=noninteractive apt install -y code >/dev/null 2>&1; then
+        log "✅ Visual Studio Code installed successfully."
+    else
+        log "⚠️ VS Code installation failed."
+        dialog --msgbox "VS Code installation failed!" 6 40
+        return
+    fi
 
-  # Loop through selected extensions and install each one
-  for extension_id in $selected_extensions; do
-    install_extension "$extension_id"
-  done
+    # Select extensions using dialog checklist
+    log "Selecting VS Code extensions to install..."
+    checkboxes=""
+    for ext in "${extensions[@]}"; do
+        checkboxes="$checkboxes $ext $ext off"
+    done
 
-  log "🔍 Installation process completed."
+    selected_extensions=$(dialog --title "VS Code Extensions" \
+        --checklist "Select extensions to install:" 20 70 15 $checkboxes 2>&1 >/dev/tty)
+    clear
+
+    [[ -z "$selected_extensions" ]] && { log "No extensions selected. Skipping."; return; }
+
+    # Install selected extensions with retries
+    for ext in $selected_extensions; do
+        attempts=0
+        MAX_RETRIES=3
+        WAIT=5
+        while (( attempts < MAX_RETRIES )); do
+            log "Installing extension: $ext (Attempt $((attempts+1))/$MAX_RETRIES)..."
+            if code --user-data-dir="$HOME/.vscode-data" --install-extension "$ext" --force >/dev/null 2>&1; then
+                log "✅ Installed: $ext"
+                break
+            else
+                log "⚠️ Failed: $ext. Retrying in $WAIT seconds..."
+                sleep $WAIT
+                attempts=$((attempts+1))
+            fi
+        done
+        if (( attempts == MAX_RETRIES )); then
+            log "❌ Could not install $ext after $MAX_RETRIES attempts."
+        fi
+    done
+
+    dialog --msgbox "VS Code extensions installation complete!" 6 50
+    log "✅ VS Code extensions installation complete."
 }
 
-# Function: Check Disk Space & Memory
-check_system_health() {
-  log "💾 Checking system disk space and memory..."
-  df -h | grep "^/dev" | tee -a "$LOGFILE"
-  free -h | tee -a "$LOGFILE"
+# -------------------------
+# Change DNS
+# -------------------------
+change_dns() {
+  dialog --yesno "Change DNS?" 7 40
+  [ $? -ne 0 ] && return
+  CHOICE=$(dialog --menu "Select DNS provider:" 15 50 5 1 "Google" 2 "Cloudflare" 3 "OpenDNS" 4 "Quad9" 5 "Custom" 3>&1 1>&2 2>&3)
+  case $CHOICE in
+    1) dns1="8.8.8.8"; dns2="8.8.4.4" ;;
+    2) dns1="1.1.1.1"; dns2="1.0.0.1" ;;
+    3) dns1="208.67.222.222"; dns2="208.67.220.220" ;;
+    4) dns1="9.9.9.9"; dns2="149.112.112.112" ;;
+    5) dns1=$(dialog --inputbox "Primary DNS:" 8 40 3>&1 1>&2 2>&3); dns2=$(dialog --inputbox "Secondary DNS:" 8 40 3>&1 1>&2 2>&3) ;;
+    *) return ;;
+  esac
+  active=$(nmcli -t -f NAME c show --active | head -n 1)
+  [[ -z "$active" ]] && { dialog --msgbox "No active connection."; return; }
+  sudo nmcli con mod "$active" ipv4.dns "$dns1 $dns2"
+  sudo nmcli networking off && sudo nmcli networking on
+  dialog --msgbox "DNS updated to:\n$dns1\n$dns2" 7 40
 }
 
-# Function: Optimize System
+# -------------------------
+# Disable KDE Sounds
+# -------------------------
+disable_kde_sounds() {
+  kwriteconfig5 --file kdeglobals --group Sounds --key Enable false
+  kwriteconfig5 --file kdeglobals --group Notifications --key PopupSounds false
+  kquitapp5 plasmashell >/dev/null 2>&1 && kstart5 plasmashell >/dev/null 2>&1 &
+  dialog --msgbox "KDE system sounds disabled." 6 40
+}
+
+# -------------------------
+# System Optimization
+# -------------------------
 optimize_system() {
   log "🚀 Optimizing system..."
   sudo apt autoremove -y && sudo apt autoclean -y
-  log "✅ System optimized!"
-  clear # Clear the screen before exiting
-  check_system_health
+  log "✅ Optimization complete!"
+  clear
+  df -h | tee -a "$LOGFILE"
+  free -h | tee -a "$LOGFILE"
 }
 
-# Function to disable selected services using dialog
+# -------------------------
+# Service Management
+# -------------------------
 manage_services() {
-  # Create checkboxes for dialog UI
-  checkboxes=""
-  for service in "${services_to_disable[@]}"; do
-    checkboxes="$checkboxes $service $service off"
-  done
-
-  # Use dialog to allow users to select services to disable
-  selected_services=$(dialog --title "Service Disable Selection" \
-    --checklist "Select services to disable" 20 70 15 \
-    $checkboxes 2>&1 >/dev/tty)
-
-  clear # Clear the dialog screen
-
-  # If no selection is made, log and do nothing
-  if [[ -z "$selected_services" ]]; then
-    echo -e "${YELLOW}No services selected. Skipping disable process.${RESET}"
-    return 0 # Exit function without disabling anything
-  fi
-
-  # Loop through selected services and disable each one
-  for service in $selected_services; do
-    disable_service "$service"
-  done
-
-  echo -e "${GREEN}Service disabling process completed.${RESET}"
+  options=""
+  for svc in "${services_to_disable[@]}"; do options="$options $svc $svc off"; done
+  selected=$(dialog --title "Disable Services" --checklist "Select services:" 20 70 15 $options 2>&1 >/dev/tty)
+  clear
+  [[ -z "$selected" ]] && { echo -e "${YELLOW}No services selected.${RESET}"; return; }
+  for svc in $selected; do disable_service "$svc"; done
+  echo -e "${GREEN}Service management done.${RESET}"
 }
 
-change_dns() {
-    echo "Do you want to change DNS? (y/n)"
-    read -r choice
-    if [[ "$choice" =~ ^[Yy]$ ]]; then
-        echo "Select a DNS provider:"
-        echo "1) Google (8.8.8.8, 8.8.4.4)"
-        echo "2) Cloudflare (1.1.1.1, 1.0.0.1)"
-        echo "3) OpenDNS (208.67.222.222, 208.67.220.220)"
-        echo "4) Quad9 (9.9.9.9, 149.112.112.112)"
-        echo "5) Custom DNS"
-
-        read -r dns_choice
-        case $dns_choice in
-            1) dns1="8.8.8.8"; dns2="8.8.4.4";;
-            2) dns1="1.1.1.1"; dns2="1.0.0.1";;
-            3) dns1="208.67.222.222"; dns2="208.67.220.220";;
-            4) dns1="9.9.9.9"; dns2="149.112.112.112";;
-            5)
-                echo "Enter primary DNS:"
-                read -r dns1
-                echo "Enter secondary DNS:"
-                read -r dns2
-                ;;
-            *) echo "Invalid choice. Exiting."; return 1;;
-        esac
-
-        log "Changing DNS to $dns1 and $dns2..."
-
-        # Get active connection name
-        active_con=$(nmcli -t -f NAME c show --active | head -n 1)
-
-        if [[ -z "$active_con" ]]; then
-            log "No active connection found. Exiting."
-            return 1
-        fi
-
-        # Apply DNS settings without reconnecting
-        sudo nmcli con mod "$active_con" ipv4.dns "$dns1 $dns2"
-        sudo nmcli networking off && sudo nmcli networking on  # Restart networking instead of reconnecting
-
-        log "DNS updated successfully."
-    else
-        log "Skipping DNS change."
-    fi
-}
-
-# Function: Run Everything in One Step
+# -------------------------
+# Run All Tasks
+# -------------------------
 run_all_tasks() {
-  log "🚀 Running all tasks in sequence..."
-  manage_services
-  install_packages
-  update_hosts
-  install_vscode_extensions
-  change_dns
-  optimize_system
-  log "✅ All tasks completed!"
+    tasks=("manage_services" "install_packages" "update_hosts" "install_vscode_extensions" "change_dns" "optimize_system" "disable_kde_sounds")
+    total=${#tasks[@]}
+
+    # Use a named pipe for the gauge
+    exec 3> >(dialog --title "Running Tasks" --gauge "Starting..." 10 60 0)
+
+    for i in "${!tasks[@]}"; do
+        percent=$(( (i + 1) * 100 / total ))
+        echo "XXX" >&3
+        echo "$percent" >&3
+        echo "Running ${tasks[i]}..." >&3
+        "${tasks[i]}"  # Run the task
+        sleep 0.2      # Slight delay so gauge updates visually
+    done
+
+    echo "XXX" >&3
+    echo "100" >&3
+    echo "All tasks completed!" >&3
+    echo "XXX" >&3
+    exec 3>&-
+    dialog --msgbox "All tasks completed successfully!" 6 50
 }
 
-# Function: Show Main Menu
+# -------------------------
+# Main Menu
+# -------------------------
 show_menu() {
-  CHOICE=$(dialog --title "Install Kubuntu Extras Script" --menu "Choose an action:" 14 45 10 \
-    1 "Run All Tasks (Recommended)" \
-    2 "Install packages" \
-    3 "Block Websites (Update /etc/hosts)" \
-    4 "Change DNS" \
-    5 "Install VS Code + Extensions" \
-    6 "Optimize System" \
-    7 "Exit" \
-    3>&1 1>&2 2>&3)
-
-  case $CHOICE in
-    1) run_all_tasks ;;
-    2) install_packages ;;
-    3) update_hosts ;;
-    4) change_dns ;;
-    5) install_vscode_extensions ;;
-    6) optimize_system ;;
-    7)
-      log "🚀 Exiting script."
-      exit 0
-      ;;
-  esac
+  while true; do
+    CHOICE=$(dialog --clear --title "Kubuntu Utility" --menu "Choose action:" 15 50 12 \
+      1 "Run All Tasks" \
+      2 "Install Packages" \
+      3 "Block Websites" \
+      4 "Change DNS" \
+      5 "Install VS Code + Extensions" \
+      6 "Optimize System" \
+      7 "Disable KDE Sounds" \
+      8 "Exit" 3>&1 1>&2 2>&3)
+    [[ $? -ne 0 ]] && { clear; echo "Exited menu."; exit; }
+    case $CHOICE in
+      1) run_all_tasks ;;
+      2) install_packages ;;
+      3) update_hosts ;;
+      4) change_dns ;;
+      5) install_vscode_extensions ;;
+      6) optimize_system ;;
+      7) disable_kde_sounds ;;
+      8) log "Exiting script."; clear; exit ;;
+    esac
+  done
 }
 
-# Main Execution
-log "🚀 Starting system CUTE utility script..."
-install_package "dialog" # Ensure dialog is installed
-
+# -------------------------
+# Script Start
+# -------------------------
+log "🚀 Starting Kubuntu Utility Script..."
+install_package "dialog"
 show_menu
