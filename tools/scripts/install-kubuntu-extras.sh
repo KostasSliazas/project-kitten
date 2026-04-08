@@ -1,6 +1,6 @@
 #!/bin/bash
-# Kubuntu System Utility Script - Fully Improved Version
-# Author: Your Name
+# Kubuntu System Utility Script
+# Author: Kostas Šliažas
 # License: MIT
 
 # -------------------------
