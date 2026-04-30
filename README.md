@@ -5,7 +5,7 @@
 [![Issues](https://img.shields.io/github/issues/KostasSliazas/project-kitten)](https://github.com/KostasSliazas/project-kitten/issues)
 [![Last Commit](https://img.shields.io/github/last-commit/KostasSliazas/project-kitten)](https://github.com/KostasSliazas/project-kitten/commits)
 
-Funny project for ((home page)(web-browser default page)) contains WEB-based tools and links for Developers, Creators and others. 
+Project for ((home page)(web-browser default page)) for Developers, Creators and others. 
 
 ## Table of Contents
 
