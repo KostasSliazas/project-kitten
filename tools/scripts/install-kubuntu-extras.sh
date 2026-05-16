@@ -228,6 +228,7 @@ BLOCKED_DOMAINS=(
   "attack-router.com"
   "clickdisguise.com"
   "fraudulent-redirect.com"
+  "loto.lt"
 )
 
 # -------------------------
