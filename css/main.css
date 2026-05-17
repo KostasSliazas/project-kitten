@@ -124,11 +124,11 @@ table {
 }
 
 :root {
-  --color0: #5E7687;
-  --color1: #8C98A6;
-  --color2: #434A54;
-  --color3: #181C22;
-  --color4: #F4F5F7;
+  --color0: #7A8FA3;
+  --color1: #3B4453;
+  --color2: #252C38;
+  --color3: #14181F;
+  --color4: #FAFAF9;
   --bg: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQIW2NgAAIAAAUAAR4f7BQAAAAASUVORK5CYII=);
   --repeat: no-repeat;
   --size: center/cover;
@@ -254,11 +254,11 @@ html {
 }
 
 .d {
-  --color0: #122f3f;
+  --color0: #122F3F;
   --color1: #202326;
   --color2: #141617;
-  --color3: #0a0a0a;
-  --color4: #cccccc;
+  --color3: #0A0A0A;
+  --color4: #9A9996;
 }
 
 .d.bg-image {
