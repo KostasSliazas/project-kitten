@@ -164,7 +164,11 @@ apps=(
 
   # Additional FFmpeg codecs
   "libavcodec-extra"
-
+  "musepack-tools"
+  "ffmpeg"
+  "lame"
+  "vorbis-tools"
+  "flac"
   # VLC media player
   "vlc"
 
@@ -459,25 +463,27 @@ select_domains() {
   local options=()
 
   for domain in "${BLOCKED_DOMAINS[@]}"; do
-    options+=("$domain" "" on)
+    if grep -q "$domain" /etc/hosts; then
+      options+=("$domain" "$domain (BLOCKED)" off)
+    else
+      options+=("$domain" "$domain (NOT BLOCKED)" off)
+    fi
   done
 
   local selected
-
   selected=$(dialog \
     --separate-output \
-    --checklist "Select domains:" \
+    --checklist "Toggle domains (block/unblock):" \
     22 76 16 \
     "${options[@]}" \
     2>&1 >/dev/tty)
 
   clear
 
-  [[ -z "$selected" ]] && return 1
-
-  mapfile -t SELECTED_DOMAINS <<< "$selected"
-
-  return 0
+  SELECTED_DOMAINS=()
+  for d in $selected; do
+    SELECTED_DOMAINS+=("$d")
+  done
 }
 
 # ==========================================
@@ -594,24 +600,72 @@ update_hosts() {
 
   select_domains
 
-  [[ ${#SELECTED_DOMAINS[@]:-0} -eq 0 ]] && return
+  [[ ${#SELECTED_DOMAINS[@]} -eq 0 ]] && return
 
   cp /etc/hosts "/etc/hosts.bak.$(date +%F_%T)"
 
+  local start="# ==== KUBUNTU BLOCK START ===="
+  local end="# ==== KUBUNTU BLOCK END ===="
+
+  # -----------------------------------
+  # Extract existing block section (if any)
+  # -----------------------------------
+  local existing
+  existing=$(awk "/$start/{flag=1; next} /$end/{flag=0} flag" /etc/hosts 2>/dev/null || true)
+
+  # -----------------------------------
+  # Convert to array for manipulation
+  # -----------------------------------
+  declare -A blocked_map
+
+  for line in $existing; do
+    domain=$(echo "$line" | awk '{print $2}')
+    [[ -n "$domain" ]] && blocked_map["$domain"]=1
+  done
+
+  # -----------------------------------
+  # Toggle logic
+  # -----------------------------------
   for domain in "${SELECTED_DOMAINS[@]}"; do
 
-    if ! grep -q "$domain" /etc/hosts; then
-      echo "127.0.0.1 $domain" >> /etc/hosts
-      echo "127.0.0.1 www.$domain" >> /etc/hosts
-      log "Blocked: $domain"
+    if [[ ${blocked_map["$domain"]+x} ]]; then
+      unset "blocked_map[$domain]"
+      log "🔓 Unblocked: $domain"
     else
-      log "Already blocked: $domain"
+      blocked_map["$domain"]=1
+      log "🚫 Blocked: $domain"
     fi
+
   done
+
+  # -----------------------------------
+  # Rebuild block section
+  # -----------------------------------
+  local new_block=""
+  for d in "${!blocked_map[@]}"; do
+    new_block+="0.0.0.0 $d"$'\n'
+  done
+
+  # -----------------------------------
+  # Rebuild full hosts file safely
+  # -----------------------------------
+  awk -v start="$start" -v end="$end" '
+    $0 == start {print; inblock=1; next}
+    $0 == end {inblock=0; next}
+    inblock == 0 {print}
+  ' /etc/hosts > /etc/hosts.tmp
+
+  {
+    echo "$start"
+    echo -n "$new_block"
+    echo "$end"
+  } >> /etc/hosts.tmp
+
+  mv /etc/hosts.tmp /etc/hosts
 
   flush_dns_cache
 
-  dialog --msgbox "Selected domains blocked." 6 50
+  dialog --msgbox "Domain blocklist updated successfully." 6 60
 }
 
 # ==========================================
