@@ -228,7 +228,7 @@
   const textarea = d.getElementsByTagName('TEXTAREA')[0];
   const bg = d.querySelector('#bg-file');
   const styles = ['width', 'height', 'left', 'top'];
-  const blockDefaults = 'width:960px;height:48px;left:0px;top:0px;,width:492px;height:48px;left:0px;top:48px;,width:156px;height:48px;left:0px;top:120px;,width:156px;height:48px;left:0px;top:216px;,width:120px;height:48px;left:840px;top:48px;,width:168px;height:156px;left:156px;top:96px;,width:168px;height:72px;left:324px;top:96px;,width:168px;height:168px;left:324px;top:168px;,width:168px;height:144px;left:324px;top:336px;,width:168px;height:96px;left:324px;top:480px;,width:168px;height:144px;left:324px;top:576px;,width:156px;height:48px;left:0px;top:96px;,width:156px;height:252px;left:0px;top:264px;,width:168px;height:96px;left:324px;top:720px;,width:168px;height:564px;left:156px;top:252px;,width:120px;height:48px;left:492px;top:48px;,width:156px;height:48px;left:0px;top:168px;,width:144px;height:48px;left:612px;top:48px;,width:132px;height:108px;left:0px;top:72px;,width:156px;height:300px;left:0px;top:516px;,width:960px;height:48px;left:0px;top:24px;,width:168px;height:84px;left:132px;top:72px;,width:192px;height:756px;left:300px;top:72px;,width:144px;height:96px;left:816px;top:96px;,width:144px;height:264px;left:816px;top:240px;,width:144px;height:48px;left:816px;top:192px;,width:156px;height:384px;left:492px;top:432px;,width:156px;height:168px;left:492px;top:264px;,width:168px;height:72px;left:648px;top:264px;,width:168px;height:480px;left:648px;top:336px;,width:156px;height:168px;left:492px;top:96px;,width:168px;height:96px;left:648px;top:168px;,width:144px;height:312px;left:816px;top:504px;,width:168px;height:72px;left:648px;top:96px;,width:84px;height:48px;left:756px;top:48px;';
+  const blockDefaults = 'width:960px;height:48px;left:0px;top:0px;,width:492px;height:48px;left:0px;top:48px;,width:156px;height:48px;left:0px;top:120px;,width:156px;height:48px;left:0px;top:216px;,width:120px;height:48px;left:840px;top:48px;,width:168px;height:156px;left:156px;top:96px;,width:168px;height:72px;left:324px;top:96px;,width:168px;height:168px;left:324px;top:168px;,width:168px;height:144px;left:324px;top:336px;,width:168px;height:96px;left:324px;top:480px;,width:168px;height:144px;left:324px;top:576px;,width:156px;height:48px;left:0px;top:96px;,width:156px;height:252px;left:0px;top:264px;,width:168px;height:96px;left:324px;top:720px;,width:168px;height:564px;left:156px;top:252px;,width:120px;height:48px;left:492px;top:48px;,width:156px;height:48px;left:0px;top:168px;,width:144px;height:48px;left:612px;top:48px;,width:132px;height:108px;left:0px;top:72px;,width:156px;height:300px;left:0px;top:516px;,width:960px;height:48px;left:0px;top:24px;,width:168px;height:84px;left:132px;top:72px;,width:192px;height:756px;left:300px;top:72px;,width:144px;height:96px;left:816px;top:96px;,width:144px;height:264px;left:816px;top:240px;,width:144px;height:48px;left:816px;top:192px;,width:156px;height:384px;left:492px;top:432px;,width:156px;height:168px;left:492px;top:264px;,width:168px;height:72px;left:648px;top:264px;,width:168px;height:480px;left:648px;top:336px;,width:156px;height:168px;left:492px;top:96px;,width:168px;height:96px;left:648px;top:168px;,width:144px;height:312px;left:816px;top:504px;,width:168px;height:72px;left:648px;top:96px;,width:84px;height:48px;left:756px;top:48px;,width:;height:;left:960px;top:0px;';
   const textAreaDefaults = 'Good day! You can reposition these blocks by clicking and dragging the corner handles (□ or ▭).  Double-click (▭) to maximize them or minimize (□). If the layout is locked, click the background a few times to unlock it, then enter the default PIN: 1204. Alternatively, you can clear your browser’s localStorage, since this project saves data such as the PIN (password) and other settings there ([ctrl]+[`]=Reset to Defaults). You can start typing your text here.';
   const counts = {
     allMouseClicks: 0,
@@ -1749,6 +1749,27 @@
     e.preventDefault(); // block browser’s default scrolling
     e.currentTarget.scrollTop += Math.sign(e.deltaY) * 24;
   }
+
+  const input = document.getElementById('search');
+  const items = document.querySelectorAll('.movable');
+
+  input.addEventListener('input', function () {
+    const query = input.value.toLowerCase();
+
+    for (let i = 0; i < items.length; i++) {
+
+      if (items[i].querySelector('#search')) {
+        continue;
+      }
+
+      const text = items[i].textContent.toLowerCase();
+
+      items[i].style.display =
+      text.includes(query)
+      ? ''
+      : 'none';
+    }
+  });
 
   d.addEventListener('DOMContentLoaded', init, { once: true });
 })(window, document);
