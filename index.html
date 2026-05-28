@@ -173,7 +173,6 @@
                 <div class="movable scroll mw96">
                     <h1>linux commands</h1>
                     <div class="oxs mode-numbering links">
-                        <p>find . -depth -type d -exec rmdir {} \; 2>/dev/null<span>Silently removes directories only if they are empty after processing</span></p>
                         <p>find . -type f \( -iname "*.jpg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.jpeg" -o -iname "*.webp" -o -iname "*.svg" \) | sed 's|^\./|./photos/|' | awk -F'/' '{filename=$NF; gsub(/\.[^\.]+$/, "", filename); print "&lt;img src=\"" $0 "\" alt=\"" filename "\"&gt;"}' &gt; file.txt <span>Image list command to generate HTML tags with alt attributes</span></p>
                         <p>ffmpeg -loop 1 -i f.png -i f.mp3 -c:v libx264 -tune stillimage -c:a aac -b:a 192k -pix_fmt yuv420p -shortest out.mp4 <span>Create a video from a single image and audio</span></p>
                         <p>find . -name "*.png" -exec convert "{}" -fill white "{}" -opaque transparent "{}" -alpha off "{}" \; <span>Convert PNG files to opaque images with white background</span></p>
@@ -189,11 +188,13 @@
                         <p>convert -resize 768x576 -delay 20 -loop 0 `ls -v` image.gif <span>Resize images and create an animated GIF</span></p>
                         <p>find . -type f -name '*.jpg' -exec basename{} \; &gt; file.txt <span>Recursively list only file names with a specific extension</span></p>
                         <p>mogrify -background white -flatten -format jpg *.png <span>Batch convert PNG to JPG with white background</span></p>
+                        <p>find . -depth -type d -exec rmdir {} \; 2&gt;/dev/null<span>Silently removes directories only if they are empty after processing</span></p>
                         <p>mogrify -resample 72x72 -resize 256x256 *.JPG <span>Resample and resize JPG images in batch</span></p>
                         <p>find . -type f ! -name 'file.txt' &gt; file.txt <span>Recursively list files without including file.txt</span></p>
                         <p>sudo systemctl restart NetworkManager <span>Restart network</span></p>
                         <p>sudo apt update ; sudo apt upgrade -y <span>Update &amp; Upgrade System</span></p>
                         <p>find . -type f ! -name '*.txt' -print <span>-print/-delete ALL except with file extension 'txt'</span></p>
+                        <p>jpegoptim -f -s --strip-all *.jpg<span>JPG Image optimize</span></p>
                         <p>grep "(root|nobody)" /etc/passwd <span>Regular expressions to search in files (find one of two things)</span></p>
                         <p>sudo chmod -R 755 directoryname <span>Change File/Directory Permissions to 755 in Linux</span></p>
                         <p>find . -type d -empty -print <span>-print/-delete empty folders</span></p>
@@ -208,7 +209,6 @@
                         <p>ls -1a &gt; file.txt <span>File list to file</span></p>
                         <p>cat -n /etc/hosts <span>View Hosts File with Line Numbers</span></p>
                         <p>less -s filename <span>Remove multiple blank lines</span></p>
-                        <p>jpegoptim -f -s --strip-all *.jpg<span>JPG Image optimize</span></p>
                         <p>rm -rf folder <span>Force and recursively remove all files and subdirectories</span></p>
                         <p>mkdir newdir <span>Make a directory</span></p>
                         <p>lsusb | nl<span>List usb devices with numbering</span></p>
