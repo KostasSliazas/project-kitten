@@ -1753,52 +1753,77 @@ function onScroll(e) {
 const input = document.getElementById('search');
 const items = document.querySelectorAll('.movable');
 
+
+function resetSearch() {
+  input.value = '';
+
+  for (const item of items) {
+    item.style.display = '';
+    clearHighlights(item);
+  }
+}
+
 function clearHighlights(root) {
-  root.querySelectorAll('.highlight')
-  .forEach(el => el.classList.remove('highlight'));
+  const els = root.getElementsByClassName('highlight');
+
+  for (let i = els.length - 1; i >= 0; i--) {
+    els[i].classList.remove('highlight');
+  }
 }
 
 function findBestMatchElement(textNode) {
-  const el = textNode.parentElement;
+  const selectors = 'span, code, a, p';
 
-  // 1. prefer inline wrappers first
-  let preferred = el.closest('span, code, a, p');
+  let el = textNode.parentElement;
 
-  if (preferred) return preferred;
+  if (!el) return null;
 
-  // 2. otherwise fallback to direct parent element
-  return el;
+  let best = null;
+
+  // Check current element + all ancestors
+  while (el) {
+    if (el.matches && el.matches(selectors)) {
+      // Keep deepest/smallest match
+      best = el;
+    }
+
+    el = el.parentElement;
+  }
+
+  return best || textNode.parentElement;
 }
+input.addEventListener('dblclick', resetSearch);
 
-input.addEventListener('input', () => {
+input.addEventListener('input', handleSearch);
+
+function handleSearch() {
   const q = input.value.toLowerCase().trim();
 
   for (const item of items) {
-
-    if (item.querySelector('#search')) continue;
+    if (item.contains(input)) continue;
 
     clearHighlights(item);
+
+    if (!q) {
+      item.style.display = '';
+      continue;
+    }
 
     let matchEl = null;
 
     const walker = document.createTreeWalker(item, NodeFilter.SHOW_TEXT);
 
-
     let node;
-
     while ((node = walker.nextNode())) {
-
       if (q && node.textContent.toLowerCase().includes(q)) {
         matchEl = findBestMatchElement(node);
-        if (matchEl && q) {
-          matchEl.classList.add('highlight');
-        }
+        if (matchEl) matchEl.classList.add('highlight');
       }
     }
-    const show = matchEl || !q;
-    item.style.display = show ? '' : 'none';
+
+    item.style.display = (!q || matchEl) ? '' : 'none';
   }
-});
+}
 
 d.addEventListener('DOMContentLoaded', init, { once: true });
  })(window, document);
