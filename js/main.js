@@ -411,11 +411,11 @@ const loopElem = widthMatch => {
         }
 
         if (state.target !== null) {
-          state.target.style.removeProperty('z-index');
+          state.target.classList.remove("active");
         }
 
         state.target = this;
-        state.target.style.zIndex = 2;
+        state.target.classList.add("active");
 
         if (!clickTimeout) {
           // If no pending click, set a timeout for single click action

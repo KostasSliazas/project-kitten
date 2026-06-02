@@ -658,7 +658,6 @@ p>span {
   pointer-events: none;
   transition: opacity .1s 0.1s ease-in-out;
   box-shadow: 0 0 7px;
-  z-index: 10;
 }
 
 p:has(span):active span {
@@ -677,7 +676,9 @@ h2,
 h3 {
   padding: 1.25em 0
 }
-
+.active{
+  z-index: 2;
+}
 .xxl {
   font-size: 1.71428571em;
   line-height: 1;
@@ -807,7 +808,6 @@ div.moves {
   white-space: nowrap;
   transition: .1s;
   margin: 0 auto;
-  z-index: 1
 }
 
 .movable {
