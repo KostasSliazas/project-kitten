@@ -410,7 +410,7 @@ const loopElem = widthMatch => {
           state.moving = true;
         }
 
-        if (state.target !== null) {
+        if (state.target !== null && state.target.id !== "always-visible") {
           state.target.classList.remove("active");
         }
 
