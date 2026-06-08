@@ -13,6 +13,7 @@ Project for ((home page)(web-browser default page)) for Developers, Creators and
 * [Getting Started](#getting-started)
 * [License](#license)
 * [Disclaimer](#disclaimer)
+* [Suport](#Suport)
 
 ## Screenshots
 ![Project K Screenshot](screenshots.png)
@@ -67,3 +68,7 @@ This project is licensed under the [MIT License](LICENSE).
 ## Disclaimer
 
 Please remember: this project is shared openly with the community. By downloading or using it, you agree to take responsibility for your own use. The maintainers and contributors are not liable for any issues that may arise — use it with care and enjoy building with it!
+
+## Suport
+
+[Suport](https://www.paypal.com/donate?hosted_button_id=TFEXXCXM48T4Y)
