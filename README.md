@@ -5,7 +5,7 @@
 [![Issues](https://img.shields.io/github/issues/KostasSliazas/project-kitten)](https://github.com/KostasSliazas/project-kitten/issues)
 [![Last Commit](https://img.shields.io/github/last-commit/KostasSliazas/project-kitten)](https://github.com/KostasSliazas/project-kitten/commits)
 
-Project for ((home page)(web-browser default page)) for Developers, Creators and others. 
+THE finest Project for ((home page)(web-browser default page)) for Developers, Creators and others. 
 
 ## Table of Contents
 
