@@ -71,4 +71,4 @@ Please remember: this project is shared openly with the community. By downloadin
 
 ## Support
 
-[Support](https://www.paypal.com/donate?hosted_button_id=TFEXXCXM48T4Y)
+[donate](https://www.paypal.com/donate?hosted_button_id=TFEXXCXM48T4Y)
