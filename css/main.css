@@ -207,7 +207,6 @@ z-index: 1
   background-blend-mode: var(--blend)
 }
 
-.j,
 .m,
 .n{
   --color4: #000000
@@ -320,10 +319,11 @@ z-index: 1
 }
 
 .j {
-  --color0: #c5beb3;
-  --color1: #747c84;
-  --color2: #96938d;
-  --color3: #333333;
+  --color0: #FFF;
+  --color1: #F9FCFF;
+  --color2: #E2F1FF;
+  --color3: #5E6A75;
+  --color4: #034;
   --size: center/403px
 }
 
