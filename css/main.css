@@ -128,11 +128,11 @@ table {
 }
 
 :root {
-  --color0: #374959;
-  --color1: #374045;
-  --color2: #212532;
-  --color3: #17181F;
-  --color4: #C7BFBC;
+  --color0: #3F4B57;
+  --color1: #353C48;
+  --color2: #262C36;
+  --color3: #171A21;
+  --color4: #2FBF71;
   --bg: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQIW2NgAAIAAAUAAR4f7BQAAAAASUVORK5CYII=);
   --repeat: no-repeat;
   --size: center/cover;
@@ -501,7 +501,8 @@ z-index: 1
 .d,
 .g,
 .b,
-.a {
+.a,
+.x {
   font-variant-caps: all-small-caps;
 }
 
@@ -702,7 +703,6 @@ form {
   padding: 0 1px 0 0;
   width: min-content;
   min-width: 100%;
-  margin: 0 1px 1px 0
 }
 
 .center h1,
@@ -1174,8 +1174,9 @@ textarea {
 }
 
 input[type=text] {
-  display: block;
-  height: 23px
+  font-size: inherit;
+  max-block-size: 22px;
+  line-height: inherit;
 }
 
 .forms,
