@@ -1701,7 +1701,7 @@ input[type=text]:focus {
 
   .main,
   .movable.minimized div {
-    display: block !important
+    flex-direction: column;
   }
 
   .minimized {
@@ -1723,7 +1723,9 @@ input[type=text]:focus {
   .movable {
     pointer-events: none;
   }
-
+  #always-visible {
+  order: -1;
+  }
   .movable > * {
     pointer-events: auto;
   }
