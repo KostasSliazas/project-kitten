@@ -59,7 +59,11 @@ a {
 p::after {
   display: inline-block
 }
-.visited {opacity:.7}
+
+.visited {
+  opacity: .7
+}
+
 .forms,
 button {
   min-inline-size: 48px
@@ -113,10 +117,12 @@ ul {
   margin: 0;
   padding: 0
 }
+
 .highlight {
   color: #eee !important;
   background: #111 !important;
 }
+
 ol,
 ul {
   list-style: none
@@ -132,7 +138,7 @@ table {
   --color1: #353C48;
   --color2: #262C36;
   --color3: #171A21;
-  --color4: #2FBF71;
+  --color4: #C0BFB7;
   --bg: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQIW2NgAAIAAAUAAR4f7BQAAAAASUVORK5CYII=);
   --repeat: no-repeat;
   --size: center/cover;
@@ -147,31 +153,31 @@ html {
 }
 
 #loader {
-line-height: 100dvh;
-background: url(../safari-pinned-tab.svg) center/contain no-repeat;
-font-size: 12px
+  line-height: 100dvh;
+  background: url(../safari-pinned-tab.svg) center/contain no-repeat;
+  font-size: 12px
 }
 
 #loader:after {
-content: '';
-display: block;
-border: 7px solid #ccc;
-border-top: 7px solid #777;
-border-radius: 50%;
-width: 77px;
-height: 77px;
-position: absolute;
-top: 50%;
-left: 50%;
-animation: .34s linear infinite spin
+  content: '';
+  display: block;
+  border: 7px solid #ccc;
+  border-top: 7px solid #777;
+  border-radius: 50%;
+  width: 77px;
+  height: 77px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  animation: .34s linear infinite spin
 }
 
 #overlay {
-left: 0;
-width: 100%;
-height: 100%;
-background: var(--color2);
-z-index: 1
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--color2);
+  z-index: 1
 }
 
 .bg-lines.main::before,
@@ -208,7 +214,7 @@ z-index: 1
 }
 
 .m,
-.n{
+.n {
   --color4: #000000
 }
 
@@ -678,9 +684,11 @@ h2,
 h3 {
   padding: 1.25em 0
 }
-.active{
+
+.active {
   z-index: 2;
 }
+
 .xxl {
   font-size: 1.71428571em;
   line-height: 1;
@@ -735,7 +743,7 @@ a {
   font-size: 12px;
   white-space: preserve nowrap;
   counter-increment: section;
-  content: counter(section,decimal-leading-zero);
+  content: counter(section, decimal-leading-zero);
   box-shadow: 0 0 0 1px currentcolor;
   height: 16px;
   width: 16px;
@@ -865,7 +873,7 @@ textarea:hover {
 }
 
 #clipboard {
-white-space: normal
+  white-space: normal
 }
 
 #clock,
@@ -952,8 +960,8 @@ white-space: normal
 
 #clock,
 #today {
-letter-spacing: 2px;
-font-weight: 400
+  letter-spacing: 2px;
+  font-weight: 400
 }
 
 .digit {
@@ -974,14 +982,14 @@ font-weight: 400
 }
 
 #sunshine {
-background: var(--color0);
-height: 23px;
-scale: 1;
-shape-rendering: geometricprecision;
+  background: var(--color0);
+  height: 23px;
+  scale: 1;
+  shape-rendering: geometricprecision;
 }
 
 #battery {
-height: 77px
+  height: 77px
 }
 
 .tr {
@@ -1389,7 +1397,7 @@ fieldset {
   margin: 0 auto;
   writing-mode: sideways-lr;
   place-content: end;
-  padding:0;
+  padding: 0;
 }
 
 .fixed {
@@ -1672,10 +1680,12 @@ input[type=text]:focus {
     line-height: 3;
     font-size: 16px
   }
+
   #content {
-  padding: 0 1em;
-  overflow:hidden;
+    padding: 0 1em;
+    overflow: hidden;
   }
+
   .movable h1,
   .movable h1 a,
   .movable::before {
@@ -1695,8 +1705,8 @@ input[type=text]:focus {
     max-width: initial
   }
 
-  #timer{
-  display: none !important
+  #timer {
+    display: none !important
   }
 
   .main,
@@ -1720,22 +1730,40 @@ input[type=text]:focus {
   .movable h1:first-child {
     padding: 0 0 0 48px
   }
+
   .movable {
     pointer-events: none;
   }
+
   #always-visible {
-  order: -1;
+    order: -1;
   }
-  .movable > * {
+
+  .movable>* {
     pointer-events: auto;
   }
+
   #sunshine {
-  background: 0 0;
-  max-width: initial;
-  height: 48px
+    background: 0 0;
+    max-width: initial;
+    height: 48px
   }
-  #settings,.e .movable:first-child, .e .movable:nth-child(16), .e .movable:nth-child(18), .e .movable:nth-child(19), .e .movable:nth-child(2), .e .movable:nth-child(21), .e .movable:nth-child(22), .e .movable:nth-child(23), .e .movable:nth-child(3), .e .movable:nth-child(35), .hide, .mode-cute .cute img, p::after {
-  display: none;
+
+  #settings,
+  .e .movable:first-child,
+  .e .movable:nth-child(16),
+  .e .movable:nth-child(18),
+  .e .movable:nth-child(19),
+  .e .movable:nth-child(2),
+  .e .movable:nth-child(21),
+  .e .movable:nth-child(22),
+  .e .movable:nth-child(23),
+  .e .movable:nth-child(3),
+  .e .movable:nth-child(35),
+  .hide,
+  .mode-cute .cute img,
+  p::after {
+    display: none;
   }
 }
 
