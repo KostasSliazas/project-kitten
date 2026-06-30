@@ -15,7 +15,9 @@ p::after {
   position: absolute;
   top: 0
 }
-
+.nobg{
+  background:none;
+}
 .e .movable:first-child,
 .e .movable:nth-child(16),
 .e .movable:nth-child(18),
@@ -135,10 +137,10 @@ table {
 
 :root {
   --color0: #3F4B57;
-  --color1: #353C48;
-  --color2: #262C36;
-  --color3: #171A21;
-  --color4: #C0BFB7;
+  --color1: #262C36;
+  --color2: #353C48;
+  --color3: #000124;
+  --color4: #AEAAE7;
   --bg: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQIW2NgAAIAAAUAAR4f7BQAAAAASUVORK5CYII=);
   --repeat: no-repeat;
   --size: center/cover;
@@ -1372,6 +1374,9 @@ fieldset {
 
 .forms legend {
   padding: 0;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
   line-height: 24px
 }
 
@@ -1380,6 +1385,10 @@ fieldset {
 }
 
 .cnt {
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: block !important;
+  overflow: hidden;
   place-self: center
 }
 
