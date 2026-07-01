@@ -147,7 +147,7 @@
   const root = d.documentElement;
   const rootLocked = ()=>StorageNamespace.getItem('is-locked');
   const bodyElement = d.body;
-  const version = 1.33;
+  const version = 1.34;
   const negativeOrPositive = number => (number > 0 ? `+${number}` : `${number}`);
   const main = d.getElementById('main');
   const overlay = d.getElementById('overlay');
@@ -661,7 +661,7 @@
     if(rootLocked()) return;
     themeName.textContent = longNames[index] || 'other';
     if (index) root.className = classNameVariables[index];
-    else root.classList.add('default');
+    else root.className = "default";
 
     if (d.getElementById('bg-image').checked === true) {
       root.classList.add('bg-image');
