@@ -15,9 +15,11 @@ p::after {
   position: absolute;
   top: 0
 }
-.nobg{
-  background:none;
+
+.nobg {
+  background: none;
 }
+
 .e .movable:first-child,
 .e .movable:nth-child(16),
 .e .movable:nth-child(18),
@@ -517,11 +519,6 @@ html {
 .f,
 .y {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif
-}
-
-.s,
-.v {
-  font-family: Andale Mono, AndaleMono, monospace
 }
 
 .c,
