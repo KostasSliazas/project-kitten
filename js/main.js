@@ -401,7 +401,7 @@
           e.style.height = roundToTen(e.offsetHeight) + 'px';
         }
         if (e.firstElementChild) {
-          e.firstElementChild.title = ' (block index' + movable.indexOf(e) + ')';
+          //e.firstElementChild.title = ' (block index' + movable.indexOf(e) + ')';
           e.addEventListener('dblclick', elemDblclic);
         }
         if (e.id === 'text-area') textarea.style.height = e.style.height;
@@ -491,8 +491,6 @@
 
     return formatter.format(d).slice(0, 10);
   }
-  // api current list temperatures
-  //const api_url_current = "https://api.open-meteo.com/v1/forecast?latitude=55.7068&longitude=21.1391&current=temperature_2m";
   // api url list temperatures
   const api_url = 'https://api.open-meteo.com/v1/forecast?latitude=55.7068&longitude=21.1391&hourly=temperature_2m';
   // Defining async function
