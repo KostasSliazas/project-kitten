@@ -23,7 +23,6 @@ p::after {
 .e .movable:first-child,
 .e .movable:nth-child(16),
 .e .movable:nth-child(18),
-.e .movable:nth-child(19),
 .e .movable:nth-child(2),
 .e .movable:nth-child(21),
 .e .movable:nth-child(22),
@@ -1135,7 +1134,7 @@ textarea {
 }
 
 .t30 {
-  grid-template-columns: repeat(2, minmax(70%, auto));
+  grid-template-columns: repeat(2, minmax(1em, auto));
   grid-template-rows: repeat(30, minmax(1em, auto))
 }
 
