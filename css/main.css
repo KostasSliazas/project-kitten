@@ -138,8 +138,8 @@ table {
 
 :root {
   --color0: #3F4B57;
-  --color1: #262C36;
-  --color2: #353C48;
+  --color1: #353C48;
+  --color2: #262C36;
   --color3: #000124;
   --color4: #AEAAE7;
   --bg: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQIW2NgAAIAAAUAAR4f7BQAAAAASUVORK5CYII=);
@@ -1709,7 +1709,7 @@ input[type=text]:focus {
     width: 100% !important;
     max-width: initial
   }
-
+  #positions,
   #timer {
     display: none !important
   }
