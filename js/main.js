@@ -147,7 +147,7 @@
   const root = d.documentElement;
   const rootLocked = ()=>StorageNamespace.getItem('is-locked');
   const bodyElement = d.body;
-  const version = 1.6;
+  const version = 1.7;
   const negativeOrPositive = number => (number > 0 ? `+${number}` : `${number}`);
   const main = d.getElementById('main');
   const overlay = d.getElementById('overlay');
