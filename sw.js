@@ -1,4 +1,4 @@
-const CACHE_VERSION = "v1.6";
+const CACHE_VERSION = "v1.7";
 const CACHE_NAME = "project-k-v" + CACHE_VERSION;
 
 const urlsToCache = [
