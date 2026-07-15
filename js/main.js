@@ -1708,8 +1708,9 @@
     }
   }
 
-  function resizeElementToFullSize() {
+  async function resizeElementToFullSize() {
     const padding = 48;
+    await delay(250);
 
     // Reset height to natural before measuring
     main.style.height = '';
@@ -1719,7 +1720,6 @@
     const fullHeight = Math.max(w.innerHeight, root.scrollHeight);
 
     const adjusted = fullHeight + padding;
-
     // Set final height
     main.style.height = `${adjusted}px`;
     overlay.style.height = `${adjusted}px`;
