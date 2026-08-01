@@ -552,7 +552,7 @@ html {
 p::after {
   background: var(--color3)
 }
-
+.mode-cute output,
 .mode-cute #content button,
 .mode-cute input,
 .mode-cute input[type=checkbox],
@@ -584,10 +584,6 @@ p::after {
 
 .move {
   --color3: #000 !important
-}
-
-.mode-cute .movable {
-  clip-path: polygon(0 var(--c), var(--c) 0, calc(100% - var(--c)) 0, 100% var(--c), 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, var(--c) 100%, 0 calc(100% - var(--c)));
 }
 
 .container div,
