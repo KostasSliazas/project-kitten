@@ -13,7 +13,7 @@ The weirdest Project for kittens, Creators and even aliens (web-browser default 
 * [Getting Started](#getting-started)
 * [License](#license)
 * [Disclaimer](#disclaimer)
-* [Suport](#Suport)
+* [Support](#support)
 
 ## Screenshots
 ![Project K Screenshot](screenshots.png)
