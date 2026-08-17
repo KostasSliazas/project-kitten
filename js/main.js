@@ -1721,9 +1721,8 @@
     }
   }
 
-  async function resizeElementToFullSize() {
+  function resizeElementToFullSize() {
     const padding = 24;
-    await delay(370);
 
     // Reset height to natural before measuring
     main.style.height = '';
@@ -1751,7 +1750,6 @@
           movable[i].addEventListener('dblclick', elemDblclic);
         }
       }
-      resizeElementToFullSize();
 
     } else {
       movable.forEach(e => {
@@ -1759,8 +1757,8 @@
         e.removeEventListener('dblclick', elemDblclic);
         e.addEventListener('click', elemDblclic);
       });
-      main.style.height = "auto"
     }
+    resizeElementToFullSize();
   }
 
   function onScroll(e) {
