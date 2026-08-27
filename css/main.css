@@ -136,11 +136,11 @@ table {
 }
 
 :root {
-  --color0: #3F4B57;
-  --color1: #353C48;
-  --color2: #262C36;
-  --color3: #000124;
-  --color4: #AEAAE7;
+  --color0: #586A77;
+  --color1: #485767;
+  --color2: #334B67;
+  --color3: #3D3847;
+  --color4: #BFCDD7;
   --bg: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQIW2NgAAIAAAUAAR4f7BQAAAAASUVORK5CYII=);
   --repeat: no-repeat;
   --size: center/cover;
@@ -493,11 +493,11 @@ html {
 }
 
 .y {
-  --color0: #bebebe;
-  --color1: #565656;
-  --color2: #222222;
-  --color3: #8a8a8a;
-  --color4: #f2f2f2;
+  --color0: #9A9A9A;
+  --color1: #343434;
+  --color2: #1C1C1C;
+  --color3: #707070;
+  --color4: #E8E8E8;
   --blend: color-burn
 }
 
@@ -1171,12 +1171,15 @@ textarea {
   overflow: hidden;
   width: 100%;
   font-family: inherit;
-  font-size: inherit
+  font-size: inherit;
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 1px 0;
 }
 
 input[type=text] {
   font-size: inherit;
-  max-block-size: 22px;
+  max-block-size: 23px;
   line-height: inherit;
 }
 
@@ -1738,6 +1741,7 @@ input[type=text]:focus {
   #always-visible {
     order: -1;
     z-index: 9;
+    place-items: stretch;
   }
 
   .movable>* {
