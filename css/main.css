@@ -188,7 +188,7 @@ html {
 }
 
 .bg-image {
-  --bg: url(../img/k.svg?v=1)
+  --bg: url(../img/a.svg?v=1)
 }
 
 .bg-repeat,
@@ -231,7 +231,7 @@ html {
 }
 
 .a.bg-image {
-  --bg: url(../img/a.svg?v=1)
+  --bg: url(../img/k.svg?v=1)
 }
 
 .b {
