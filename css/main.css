@@ -136,11 +136,11 @@ table {
 }
 
 :root {
-  --color0: #586A77;
-  --color1: #485767;
-  --color2: #334B67;
-  --color3: #3D3847;
-  --color4: #BFCDD7;
+  --color0: #374A5C;
+  --color1: #1E2C3A;
+  --color2: #000;
+  --color3: #354A73;
+  --color4: #C0CEDB;
   --bg: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQIW2NgAAIAAAUAAR4f7BQAAAAASUVORK5CYII=);
   --repeat: no-repeat;
   --size: center/cover;
@@ -967,7 +967,7 @@ textarea:hover {
 }
 
 .svg-holder path {
-  stroke: var(--color3)
+  stroke: var(--color4)
 }
 
 .svg-holder path:hover {
@@ -975,7 +975,6 @@ textarea:hover {
 }
 
 #sunshine {
-  background: var(--color0);
   height: 23px;
   scale: 1;
   shape-rendering: geometricprecision;
