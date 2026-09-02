@@ -229,7 +229,7 @@
   const textarea = d.getElementsByTagName('TEXTAREA')[0];
   const bg = d.querySelector('#bg-file');
   const styles = ['width', 'height', 'left', 'top'];
-  const blockDefaults = 'width:960px;height:48px;left:0px;top:0px;,width:492px;height:48px;left:0px;top:48px;,width:156px;height:48px;left:0px;top:144px;,width:156px;height:48px;left:0px;top:216px;,width:120px;height:48px;left:840px;top:48px;,width:168px;height:96px;left:156px;top:96px;,width:168px;height:72px;left:324px;top:96px;,width:168px;height:168px;left:324px;top:168px;,width:168px;height:144px;left:324px;top:336px;,width:168px;height:96px;left:324px;top:480px;,width:168px;height:144px;left:324px;top:576px;,width:156px;height:72px;left:0px;top:120px;,width:156px;height:252px;left:0px;top:264px;,width:168px;height:96px;left:324px;top:720px;,width:168px;height:624px;left:156px;top:192px;,width:120px;height:48px;left:492px;top:48px;,width:156px;height:48px;left:0px;top:168px;,width:144px;height:48px;left:612px;top:48px;,width:156px;height:108px;left:0px;top:96px;,width:156px;height:300px;left:0px;top:516px;,width:960px;height:48px;left:0px;top:24px;,width:168px;height:84px;left:0px;top:72px;,width:324px;height:756px;left:168px;top:72px;,width:144px;height:96px;left:492px;top:96px;,width:144px;height:240px;left:492px;top:336px;,width:144px;height:48px;left:492px;top:192px;,width:156px;height:384px;left:804px;top:432px;,width:156px;height:168px;left:804px;top:264px;,width:168px;height:72px;left:636px;top:264px;,width:168px;height:480px;left:636px;top:336px;,width:156px;height:168px;left:804px;top:96px;,width:168px;height:96px;left:636px;top:168px;,width:144px;height:240px;left:492px;top:576px;,width:168px;height:72px;left:636px;top:96px;,width:144px;height:96px;left:492px;top:240px;,width:84px;height:48px;left:756px;top:48px;,width:156px;height:48px;left:804px;top:0px;';
+  const blockDefaults = 'width:960px;height:48px;left:0px;top:0px;,width:492px;height:48px;left:0px;top:48px;,width:156px;height:48px;left:0px;top:144px;,width:156px;height:48px;left:0px;top:216px;,width:120px;height:48px;left:840px;top:48px;,width:168px;height:72px;left:156px;top:96px;,width:168px;height:72px;left:324px;top:96px;,width:168px;height:168px;left:324px;top:168px;,width:168px;height:144px;left:324px;top:336px;,width:168px;height:96px;left:324px;top:480px;,width:168px;height:144px;left:324px;top:576px;,width:156px;height:72px;left:0px;top:120px;,width:156px;height:252px;left:0px;top:264px;,width:168px;height:96px;left:324px;top:720px;,width:168px;height:648px;left:156px;top:168px;,width:120px;height:48px;left:492px;top:48px;,width:156px;height:48px;left:0px;top:168px;,width:144px;height:48px;left:612px;top:48px;,width:156px;height:108px;left:0px;top:96px;,width:156px;height:300px;left:0px;top:516px;,width:960px;height:1272px;left:0px;top:24px;,width:168px;height:84px;left:0px;top:72px;,width:324px;height:756px;left:168px;top:72px;,width:144px;height:96px;left:492px;top:96px;,width:144px;height:240px;left:492px;top:336px;,width:144px;height:48px;left:492px;top:192px;,width:156px;height:384px;left:804px;top:432px;,width:156px;height:168px;left:804px;top:264px;,width:168px;height:72px;left:636px;top:264px;,width:168px;height:480px;left:636px;top:336px;,width:156px;height:168px;left:804px;top:96px;,width:168px;height:96px;left:636px;top:168px;,width:144px;height:240px;left:492px;top:576px;,width:168px;height:72px;left:636px;top:96px;,width:144px;height:96px;left:492px;top:240px;,width:84px;height:48px;left:756px;top:48px;,width:156px;height:48px;left:804px;top:0px;';
   const textAreaDefaults = 'Good day! You can reposition these blocks by clicking and dragging the corner handles (□ or ▭).  Double-click (▭) to maximize them or minimize (□). If the layout is locked, click the background a few times to unlock it, then enter the default PIN: 1204. Alternatively, you can clear your browser’s localStorage, since this project saves data such as the PIN (password) and other settings there ([ctrl]+[`]=Reset to Defaults). You can start typing your text here.';
   const counts = {
     allMouseClicks: 0,
@@ -1231,6 +1231,9 @@
       // loopElem();
       // centerElements();
     }
+    if(target === 'export-colors') {
+      exportRootColors();
+    }
     // set att once theme lines class and item of localStorage
     const bgLines = 'bg-lines';
     if (target === bgLines) {
@@ -1488,6 +1491,31 @@
       parentElement.style.width = 'auto';
       parentElement.style.height = 'auto';
     }
+  }
+
+  function exportRootColors() {
+    const rootStyles = getComputedStyle(document.documentElement);
+    let css = ':root {\n';
+
+    for (let i = 0; i < rootStyles.length; i++) {
+      const name = rootStyles[i];
+
+      if (name.startsWith('--color')) {
+        css += `  ${name}: ${rootStyles.getPropertyValue(name).trim()};\n`;
+      }
+    }
+
+    css += '}\n';
+
+    const blob = new Blob([css], { type: 'text/css' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+
+    a.href = url;
+    a.download = 'colors.css';
+    a.click();
+
+    URL.revokeObjectURL(url);
   }
 
   function centerElements() {
