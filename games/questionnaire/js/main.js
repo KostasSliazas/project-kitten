@@ -119,14 +119,11 @@
 
     // loader (spiner) on init show counting percents
     for (let i = 0; i <= 100; i++) {
-      (function (ind) {
-        setTimeout(
-          function () {
-            loader.childNodes[2].nodeValue = ind + '%';
-          },
-          100 + 10 * ind
-        );
-      })(i);
+      setTimeout(() => {
+        if (loader) {
+          loader.textContent = i + '%';
+        }
+      }, 100 + 10 * i);
     }
     Object.assign(G.elems, { scor, loader, button, getMainDiv, getQuestio, getMessage, starBtn, star, stat, seco, imag });
     G.elems.starBtn.removeEventListener('click', init);
