@@ -136,11 +136,11 @@ table {
 }
 
 :root {
-  --color0: #374A5C;
-  --color1: #1E2C3A;
-  --color2: #000;
-  --color3: #354A73;
-  --color4: #C0CEDB;
+  --color4: #D2DAE2;
+  --color3: #4A5D78;
+  --color2: #353C47;
+  --color1: #121C28;
+  --color0: #2B3744;
   --bg: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQIW2NgAAIAAAUAAR4f7BQAAAAASUVORK5CYII=);
   --repeat: no-repeat;
   --size: center/cover;
@@ -314,11 +314,11 @@ html {
 }
 
 .h {
-  --color0: #d2e6e4;
-  --color1: #9fbfc0;
-  --color2: #6b9da4;
-  --color3: #40646f;
-  --color4: #1f2f34;
+  --color4: #243A4A;
+  --color3: #527589;
+  --color2: #8FAEAE;
+  --color1: #C5D6D5;
+  --color0: #EDF4F3;
   --blend: luminosity
 }
 
@@ -327,11 +327,11 @@ html {
 }
 
 .j {
-  --color0: #FFF;
-  --color1: #F9FCFF;
-  --color2: #E2F1FF;
-  --color3: #5E6A75;
-  --color4: #034;
+  --color0: #FFFFFF;
+  --color1: #F5FAFF;
+  --color2: #DCEEFF;
+  --color3: #667789;
+  --color4: #034A67;
   --size: center/403px
 }
 
@@ -1237,6 +1237,7 @@ input[type=reset] {
   line-height: inherit;
   box-sizing: border-box;
   font-family: inherit;
+  text-transform: lowercase;
   transition: .1s .1s
 }
 
