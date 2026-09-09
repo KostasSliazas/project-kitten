@@ -21,14 +21,11 @@ p::after {
 }
 
 .e .movable:first-child,
-.e .movable:nth-child(16),
-.e .movable:nth-child(18),
 .e .movable:nth-child(2),
 .e .movable:nth-child(21),
 .e .movable:nth-child(22),
-.e .movable:nth-child(36),
 .e .movable:nth-child(23),
-.e .movable:nth-child(5),
+.e .movable:nth-child(12),
 .hide,
 .mode-cute .cute img,
 p::after {

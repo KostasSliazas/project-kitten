@@ -145,9 +145,9 @@
   }
 
   const root = d.documentElement;
-  const rootLocked = ()=>StorageNamespace.getItem('is-locked');
+  const rootLocked = () => StorageNamespace.getItem('is-locked');
   const bodyElement = d.body;
-  const version = 2.5;
+  const version = 2.7;
   const negativeOrPositive = number => (number > 0 ? `+${number}` : `${number}`);
   const main = d.getElementById('main');
   const overlay = d.getElementById('overlay');
@@ -229,21 +229,25 @@
   const textarea = d.getElementsByTagName('TEXTAREA')[0];
   const bg = d.querySelector('#bg-file');
   const styles = ['width', 'height', 'left', 'top'];
-  const blockDefaults = 'width:960px;height:48px;left:0px;top:0px;,width:492px;height:48px;left:0px;top:48px;,width:156px;height:48px;left:0px;top:144px;,width:156px;height:48px;left:0px;top:216px;,width:120px;height:48px;left:840px;top:48px;,width:168px;height:72px;left:156px;top:96px;,width:168px;height:72px;left:324px;top:96px;,width:168px;height:168px;left:324px;top:168px;,width:168px;height:144px;left:324px;top:336px;,width:168px;height:96px;left:324px;top:480px;,width:168px;height:144px;left:324px;top:576px;,width:156px;height:72px;left:0px;top:120px;,width:156px;height:252px;left:0px;top:264px;,width:168px;height:96px;left:324px;top:720px;,width:168px;height:648px;left:156px;top:168px;,width:120px;height:48px;left:492px;top:48px;,width:156px;height:48px;left:0px;top:168px;,width:144px;height:48px;left:612px;top:48px;,width:156px;height:108px;left:0px;top:96px;,width:156px;height:300px;left:0px;top:516px;,width:960px;height:1272px;left:0px;top:24px;,width:168px;height:84px;left:0px;top:72px;,width:324px;height:756px;left:168px;top:72px;,width:144px;height:96px;left:492px;top:96px;,width:144px;height:240px;left:492px;top:336px;,width:144px;height:48px;left:492px;top:192px;,width:156px;height:384px;left:804px;top:432px;,width:156px;height:168px;left:804px;top:264px;,width:168px;height:72px;left:636px;top:264px;,width:168px;height:480px;left:636px;top:336px;,width:156px;height:168px;left:804px;top:96px;,width:168px;height:96px;left:636px;top:168px;,width:144px;height:240px;left:492px;top:576px;,width:168px;height:72px;left:636px;top:96px;,width:144px;height:96px;left:492px;top:240px;,width:84px;height:48px;left:756px;top:48px;,width:156px;height:48px;left:804px;top:0px;';
-  const textAreaDefaults = 'Good day! You can reposition these blocks by clicking and dragging the corner handles (□ or ▭).  Double-click (▭) to maximize them or minimize (□). If the layout is locked, click the background a few times to unlock it, then enter the default PIN: 1204. Alternatively, you can clear your browser’s localStorage, since this project saves data such as the PIN (password) and other settings there ([ctrl]+[`]=Reset to Defaults). You can start typing your text here.';
+  const blockDefaults = 'width:960px;height:624px;left:0px;top:24px;,width:420px;height:360px;left:0px;top:48px;,width:156px;height:48px;left:168px;top:240px;,width:156px;height:48px;left:168px;top:168px;,width:144px;height:48px;left:816px;top:72px;,width:168px;height:120px;left:0px;top:72px;,width:168px;height:72px;left:324px;top:120px;,width:168px;height:168px;left:324px;top:192px;,width:168px;height:144px;left:324px;top:360px;,width:168px;height:96px;left:324px;top:504px;,width:168px;height:144px;left:324px;top:600px;,width:156px;height:72px;left:804px;top:48px;,width:156px;height:252px;left:168px;top:288px;,width:168px;height:96px;left:324px;top:744px;,width:168px;height:648px;left:0px;top:192px;,width:144px;height:48px;left:168px;top:72px;,width:156px;height:48px;left:168px;top:216px;,width:168px;height:48px;left:324px;top:72px;,width:156px;height:108px;left:168px;top:264px;,width:156px;height:300px;left:168px;top:540px;,width:960px;height:1272px;left:0px;top:0px;,width:168px;height:84px;left:636px;top:48px;,width:216px;height:756px;left:420px;top:48px;,width:144px;height:72px;left:816px;top:120px;,width:144px;height:240px;left:816px;top:528px;,width:144px;height:48px;left:660px;top:72px;,width:156px;height:384px;left:660px;top:456px;,width:156px;height:168px;left:660px;top:288px;,width:168px;height:72px;left:492px;top:240px;,width:168px;height:528px;left:492px;top:312px;,width:156px;height:168px;left:660px;top:120px;,width:168px;height:96px;left:492px;top:144px;,width:144px;height:240px;left:816px;top:192px;,width:168px;height:72px;left:492px;top:72px;,width:144px;height:96px;left:816px;top:432px;,width:144px;height:72px;left:816px;top:768px;,width:156px;height:48px;left:168px;top:120px;';
+  const textAreaDefaults = 'Good day! You can reposition these blocks by clicking and dragging the corner handles (□ or ▭).  Double-click (▭) to maximize them or minimize (□). If the layout is locked, click the background a few times to unlock it, then enter the default PIN: 0124. Alternatively, you can clear your browser’s localStorage, since this project saves data such as the PIN (password) and other settings there ([ctrl]+[`]=Reset to Defaults). You can start typing your text here.';
+
   const counts = {
     allMouseClicks: 0,
     clicks: 0,
   };
-  let saved = StorageNamespace.getItem('carbine') || [1, 2, 0, 4];
-  let minimized = [1, 21, 22, 20, 0, 11, 18];
-  let mousedown = false;
-  let scalingTarget = null;
-  let isEnterPass = false;
+
   const state = {
     target: null,
     moving: false,
   };
+
+  let saved = StorageNamespace.getItem('carbine') || [0, 1, 2, 4];
+  let minimized = [22,20,0,11,2,16,18,21,1];
+  let mousedown = false;
+  let scalingTarget = null;
+  let isEnterPass = false;
+
   // add all movable class eventlistener mousedown
   textarea.addEventListener('input', async e => {
     await delay(3000);
@@ -345,7 +349,7 @@
 
     await delay(150);
     if (e.target === copy) e.target.textContent = '';
-    if (e.target.tagName === "TEXTAREA") e.target.value = "";
+    if (e.target.tagName === 'TEXTAREA') e.target.value = '';
     if (clickTimeout) {
       w.clearTimeout(clickTimeout);
       clickTimeout = null;
@@ -406,7 +410,7 @@
           e.style.height = roundToTen(e.offsetHeight) + 'px';
         }
         if (e.firstElementChild) {
-          //e.firstElementChild.title = ' (block index' + movable.indexOf(e) + ')';
+          e.firstElementChild.title = ' (block index' + movable.indexOf(e) + ')';
           e.addEventListener('dblclick', elemDblclic);
         }
         if (e.id === 'text-area') textarea.style.height = e.style.height;
@@ -661,10 +665,10 @@
 
   // change main theme
   const changerClass = index => {
-    if(rootLocked()) return;
+    if (rootLocked()) return;
     themeName.textContent = longNames[index] || 'other';
     if (index) root.className = classNameVariables[index];
-    else root.className = "default";
+    else root.className = 'default';
 
     if (d.getElementById('bg-image').checked === true) {
       root.classList.add('bg-image');
@@ -710,7 +714,7 @@
 
   const isDisplayed = elem => {
     const style = w.getComputedStyle(elem);
-    const isDisplay = (style.getPropertyValue('display') === 'none' || elem.classList.contains("minimized")) ?  false : true;
+    const isDisplay = style.getPropertyValue('display') === 'none' || elem.classList.contains('minimized') ? false : true;
     return isDisplay;
   };
   // Retrieve all counter elements
@@ -956,12 +960,15 @@
   }
 
   function updateOnlineStatusUI(isOnline) {
+    const externalLinks = document.getElementsByClassName('external');
     if (isOnline) {
       onlineElement.classList.remove('small');
       onlineElement.textContent = 'connected';
+      Array.from(externalLinks).forEach(e => e.classList.remove('hide'));
     } else {
       onlineElement.classList.add('small');
       onlineElement.textContent = 'disconnected';
+      Array.from(externalLinks).forEach(e => e.classList.add('hide'));
     }
   }
   function init() {
@@ -1153,8 +1160,7 @@
     if (emailLink) {
       e.preventDefault();
 
-      window.location.href =
-      `mailto:${emailLink.dataset.name}@${emailLink.dataset.domain}.${emailLink.dataset.tld}`;
+      window.location.href = `mailto:${emailLink.dataset.name}@${emailLink.dataset.domain}.${emailLink.dataset.tld}`;
 
       return;
     }
@@ -1231,7 +1237,7 @@
       // loopElem();
       // centerElements();
     }
-    if(target === 'export-colors') {
+    if (target === 'export-colors') {
       exportRootColors();
     }
     // set att once theme lines class and item of localStorage
@@ -1493,6 +1499,14 @@
     }
   }
 
+  function getTimeForFileName() {
+    const now = new Date();
+
+    const pad = n => String(n).padStart(2, '0');
+
+    return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}_${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}`;
+  }
+
   function exportRootColors() {
     const rootStyles = getComputedStyle(document.documentElement);
     let css = ':root {\n';
@@ -1512,7 +1526,7 @@
     const a = document.createElement('a');
 
     a.href = url;
-    a.download = 'colors.css';
+    a.download = `colors_${getTimeForFileName()}.css`;
     a.click();
 
     URL.revokeObjectURL(url);
@@ -1778,7 +1792,6 @@
           movable[i].addEventListener('dblclick', elemDblclic);
         }
       }
-
     } else {
       movable.forEach(e => {
         e.removeAttribute('style');
