@@ -2,6 +2,7 @@
 /* ECMASCRIPT_2020 */
 (function (document) {
   'use strict';
+
   /**
    * Manages drag-and-drop functionality for draggable elements within a container.
    */
@@ -347,8 +348,8 @@
     const heading = document.createElement(tagName);
 
     // Preserve the class and id attributes from the input element (if they exist)
-    if (input.className) heading.setAttribute('class', input.className); // Preserve class on the heading
-    if (input.id) heading.setAttribute('id', input.id); // Preserve id on the heading
+    if (input.className) heading.className = input.className; // Preserve class on the heading
+    if (input.id) heading.id = input.id; // Preserve id on the heading
 
     // Set the text content of the heading from the input value (trim any surrounding whitespace)
     if (input.value) heading.textContent = input.value.trim();
@@ -366,51 +367,71 @@
    * It also handles the creation of links for email, phone number, and URLs.
    */
   function outs() {
-    // Select all 'select' elements and 'input' elements excluding the file input
-    const cvInputs = document.querySelectorAll('select, input:not(#image-file)');
+    const cvInputs = document.querySelectorAll(
+      'input:not(#image-file), select'
+    );
 
-    // Select the element with the ID 'name' for title and heading updates
     const nameElement = document.querySelector('#name');
 
-    // If the name element exists, update the document title and heading
     if (nameElement) {
-      // Get the name from the input's value or text content
-      const name = nameElement.value || nameElement.textContent;
+      const name =
+      nameElement.value !== undefined
+      ? nameElement.value
+      : nameElement.textContent.trim();
 
-      // Update the document's title to the name
       document.title = name;
 
-      // Update the heading element's text content with the name
-      heading.children[0].textContent = name;
+      const firstHeading = document.querySelector('#header h1, #header h2');
 
-      // Optionally, you can save the data to localStorage (commented out)
-      // localStorage.setItem(nameElement.innerText.replace(/\s+/g, ''), JSON.stringify(jsonData));
+      if (firstHeading) {
+        firstHeading.textContent = name;
+      }
     }
 
-    // Iterate over each input or select element
     cvInputs.forEach(input => {
-      let tagName = input.classList.contains('left') ? 'h2' : 'h3'; // Decide whether to use h2 or h3 based on class
+      const tagName = input.classList.contains('left') ? 'h2' : 'h3';
 
-      // Handle text input elements
       if (input.tagName === 'INPUT' && input.type === 'text') {
-        // Replace the text input with a heading (h2 or h3)
-        const newElement = replaceElementWithHeading(input, tagName);
+        // Save these BEFORE replacing the input
+        const id = input.id;
+        const value = input.value.trim();
+        const className = input.className;
 
-        // If the input is an email or number, replace it with a link
-        if (input.id === 'email' || input.id === 'number') {
-          newElement.innerHTML = ''; // Clear any existing content in the heading
-          newElement.appendChild(createLink(input)); // Add a link inside the heading
+        // Create heading
+        const newElement = document.createElement(tagName);
+
+        if (className) {
+          newElement.className = className;
         }
-        // If the input is a URL (http/https), create a regular link
-        else if (input.id === 'url' || (input.value && /https?:\/\//.test(input.value))) {
-          newElement.innerHTML = ''; // Clear existing content
-          newElement.appendChild(createLink(input)); // Append the link inside the heading
+
+        if (id) {
+          newElement.id = id;
         }
+
+        // Create link when required
+        if (
+          id === 'email' ||
+          id === 'number' ||
+          id === 'url' ||
+          /^https?:\/\//.test(value)
+        ) {
+          const link = createLink({
+            id,
+            value
+          });
+
+          newElement.appendChild(link);
+        } else {
+          newElement.textContent = value;
+        }
+
+        // Replace input only once
+        input.parentNode.replaceChild(newElement, input);
       }
 
-      // Handle select elements by replacing them with the selected option's value
       else if (input.tagName === 'SELECT') {
-        input.parentElement.innerText = input.options[input.selectedIndex].value; // Set parent element's text to selected option
+        input.parentElement.textContent =
+        input.options[input.selectedIndex].value;
       }
     });
   }
@@ -838,7 +859,37 @@ function uploadProgress(e) {
                   class: 'left',
                 })
               );
-              pairSection.appendChild(createHTMLElement('h3', subValue, object));
+              const valueElement = createHTMLElement('h3', '', object);
+
+              if (subKey === 'email') {
+                valueElement.appendChild(
+                  createLink({
+                    id: 'email',
+                    value: String(subValue)
+                  })
+                );
+              } else if (subKey === 'phone' || subKey === 'number') {
+                valueElement.appendChild(
+                  createLink({
+                    id: 'number',
+                    value: String(subValue)
+                  })
+                );
+              } else if (
+                subKey === 'url' ||
+                /^https?:\/\//i.test(String(subValue))
+              ) {
+                valueElement.appendChild(
+                  createLink({
+                    id: 'url',
+                    value: String(subValue)
+                  })
+                );
+              } else {
+                valueElement.textContent = subValue;
+              }
+
+              pairSection.appendChild(valueElement);
               inner.appendChild(pairSection);
               blockDiv.appendChild(inner); // Append inner block to main block
             }
@@ -1068,18 +1119,18 @@ function uploadProgress(e) {
    * from the HTML document and populates the `jsonData.basics` object.
    */
   function extractBasics() {
-    const label = document?.getElementById('label')?.textContent.trim() || null;
-    const name = document?.getElementById('name')?.textContent.trim() || null;
-    const email = document?.getElementById('email')?.getElementsByTagName('a')[0]?.textContent.replace(/\s+/g, '') || null;
-    const phone = document?.getElementById('number')?.getElementsByTagName('a')[0]?.textContent.replace(/\s+/g, '') || null;
-    const address = document?.getElementById('address')?.textContent.trim() || null;
-    const image = document?.getElementById('preview')?.src || null;
-    const url = document?.getElementById('url').getElementsByTagName('a')[0]?.href.trim() || null;
-    const postalCode = document?.getElementById('postal-code')?.textContent.trim() || null;
-    const city = document?.getElementById('city')?.textContent.trim() || null;
-    const countryCode = document?.getElementById('country-code')?.textContent.trim() || null;
-    const region = document?.getElementById('region')?.textContent.trim() || null;
-    const summary = document?.getElementById('summary')?.textContent.trim() || null;
+    const label = document?.getElementById('label')?.textContent.trim();
+    const name = document?.getElementById('name')?.textContent.trim();
+    const email = document?.getElementById('email')?.getElementsByTagName('a')[0]?.textContent.replace(/\s+/g, '');
+    const phone = document?.getElementById('number')?.getElementsByTagName('a')[0]?.textContent.replace(/\s+/g, '');
+    const address = document?.getElementById('address')?.textContent.trim();
+    const image = document?.getElementById('preview')?.src;
+    const url = document?.getElementById('url')?.getElementsByTagName('a')[0]?.href.trim();
+    const postalCode = document?.getElementById('postal-code')?.textContent.trim();
+    const city = document?.getElementById('city')?.textContent.trim();
+    const countryCode = document?.getElementById('country-code')?.textContent.trim();
+    const region = document?.getElementById('region')?.textContent.trim();
+    const summary = document?.getElementById('summary')?.textContent.trim();
 
     // Only add the fields if they exist
     if (name) jsonData.basics.name = name;
@@ -1109,13 +1160,13 @@ function uploadProgress(e) {
 
     workElements.forEach(work => {
       let workExperience = {};
-      const dateStart = work?.getElementsByTagName('h3')[0]?.textContent.trim() || null;
-      const dateEnd = work?.getElementsByTagName('h3')[1]?.textContent.trim() || null;
-      const position = work?.getElementsByTagName('h3')[2]?.textContent.trim() || null;
-      const name = work?.getElementsByTagName('h3')[4]?.textContent.trim() || null;
-      const highlights = work?.getElementsByTagName('h3')[5]?.textContent.trim() || null;
-      const summary = work?.getElementsByTagName('h3')[3]?.textContent.trim() || null;
-      const url = work?.getElementsByTagName('h3')[6]?.getElementsByTagName('a')[0]?.href || null;
+      const dateStart = work?.getElementsByTagName('h3')[0]?.textContent.trim();
+      const dateEnd = work?.getElementsByTagName('h3')[1]?.textContent.trim();
+      const position = work?.getElementsByTagName('h3')[2]?.textContent.trim();
+      const name = work?.getElementsByTagName('h3')[4]?.textContent.trim();
+      const highlights = work?.getElementsByTagName('h3')[5]?.textContent.trim();
+      const summary = work?.getElementsByTagName('h3')[3]?.textContent.trim();
+      const url = work?.getElementsByTagName('h3')[6]?.getElementsByTagName('a')[0]?.href;
 
       // Only add fields if they exist
       if (name) workExperience.name = name;
@@ -1140,13 +1191,13 @@ function uploadProgress(e) {
 
     educationSections.forEach(eduSection => {
       let education = {};
-      const dateStart = eduSection?.getElementsByTagName('h3')[0]?.textContent.trim() || null;
-      const dateEnd = eduSection?.getElementsByTagName('h3')[1]?.textContent.trim() || null;
-      const studyType = eduSection?.getElementsByTagName('h3')[2]?.textContent.trim() || null;
-      const area = eduSection?.getElementsByTagName('h3')[3]?.textContent.trim() || null;
-      const institution = eduSection?.getElementsByTagName('h3')[4]?.textContent.trim() || null;
-      const score = eduSection?.getElementsByTagName('h3')[5]?.textContent.trim() || null;
-      const url = eduSection?.getElementsByTagName('h3')[6]?.getElementsByTagName('a')[0]?.href || null;
+      const dateStart = eduSection?.getElementsByTagName('h3')[0]?.textContent.trim();
+      const dateEnd = eduSection?.getElementsByTagName('h3')[1]?.textContent.trim();
+      const studyType = eduSection?.getElementsByTagName('h3')[2]?.textContent.trim();
+      const area = eduSection?.getElementsByTagName('h3')[3]?.textContent.trim();
+      const institution = eduSection?.getElementsByTagName('h3')[4]?.textContent.trim();
+      const score = eduSection?.getElementsByTagName('h3')[5]?.textContent.trim();
+      const url = eduSection?.getElementsByTagName('h3')[6]?.getElementsByTagName('a')[0]?.href;
 
       // Only add fields if they exist
       if (institution) education.institution = institution;
@@ -1172,9 +1223,9 @@ function uploadProgress(e) {
     skillElements.forEach(skill => {
       let skillData = {};
 
-      const level = skill?.getElementsByClassName('right')[0]?.textContent.trim() || null;
-      const keywordsInput = skill?.getElementsByClassName('right')[1]?.textContent.trim() || null;
-      const name = skill?.getElementsByClassName('left')[0]?.textContent.trim() || null;
+      const level = skill?.getElementsByClassName('right')[0]?.textContent.trim();
+      const keywordsInput = skill?.getElementsByClassName('right')[1]?.textContent.trim();
+      const name = skill?.getElementsByClassName('left')[0]?.textContent.trim();
 
       // Convert keywords into an array (comma-separated values)
       const keywordsArray = keywordsInput ? keywordsInput.split(',').map(keyword => keyword.trim()) : [];
@@ -1198,8 +1249,8 @@ function uploadProgress(e) {
     languageElements.forEach(lang => {
       let languageData = {};
 
-      const language = lang.querySelector('.left')?.textContent.trim() || null;
-      const fluency = lang.querySelector('.right')?.textContent.trim() || null;
+      const language = lang.querySelector('.left')?.textContent.trim();
+      const fluency = lang.querySelector('.right')?.textContent.trim();
 
       if (language) languageData.language = language;
       if (fluency) languageData.fluency = fluency;
@@ -1289,10 +1340,10 @@ function uploadProgress(e) {
    */
   function html() {
     // Set default file name
-    const nameElement = document.querySelector('#name');
+    const nameElement = document?.querySelector('#name');
     const defaultTextNode = 'cv-';
 
-    const name = containsOnlyLetters(nameElement.textContent) || defaultTextNode;
+    const name = containsOnlyLetters(nameElement?.textContent || defaultTextNode) ;
     const date = generateDate();
 
     // Clone the HTML content
@@ -1323,9 +1374,9 @@ function uploadProgress(e) {
 
   function json(){
     // Set default file name
-    const nameElement = document.querySelector('#name');
+    const nameElement = document?.querySelector('#name');
     const defaultTextNode = 'cv-json-';
-    const name = containsOnlyLetters(nameElement.textContent) || defaultTextNode;
+    const name = containsOnlyLetters(nameElement?.textContent || defaultTextNode);
     const date = generateDate();
     // Extract data from the page
     extractLanguages();
