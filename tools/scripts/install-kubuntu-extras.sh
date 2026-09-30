@@ -305,6 +305,7 @@ BLOCKED_DOMAINS=(
   "phishing-host.com"
   "malwarehost.com"
   "unsafe-surf.com"
+  "loto.lt'
 )
 
 # ==========================================
