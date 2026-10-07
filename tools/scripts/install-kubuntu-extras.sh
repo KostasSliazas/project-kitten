@@ -247,9 +247,6 @@ apps=(
   # System Utilities
   # --------------------------------------
 
-  # System restore snapshots
-  "timeshift"
-
   # System cleanup utility
   "bleachbit"
 
@@ -305,7 +302,6 @@ BLOCKED_DOMAINS=(
   "phishing-host.com"
   "malwarehost.com"
   "unsafe-surf.com"
-  "loto.lt'
 )
 
 # ==========================================
