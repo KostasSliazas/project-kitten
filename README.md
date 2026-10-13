@@ -5,7 +5,7 @@
 [![Issues](https://img.shields.io/github/issues/KostasSliazas/project-kitten)](https://github.com/KostasSliazas/project-kitten/issues)
 [![Last Commit](https://img.shields.io/github/last-commit/KostasSliazas/project-kitten)](https://github.com/KostasSliazas/project-kitten/commits)
 
-The weirdest Project for kittens, Creators and even aliens (web-browser default page). (The improved professional version with classes will not be released. Why bother? Nobody cares anyway.)
+The weirdest Project for kittens, Creators and even aliens (web-browser default page). (The improved professional version with classes will not be released. Why bother? Nobody cares anyway.) If I receive any donation, I’ll share the PRO version. It’s not about money; it’s about respect. I paid for lessons, I paid for AI, I paid for school—and for what?
 
 ## Table of Contents
 
